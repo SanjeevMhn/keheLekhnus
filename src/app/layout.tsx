@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Header from './_components/Header'
+import Header from './(components)/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Kehe Leknus',
-  description: 'A platform for writers, story tellers and poets or just for someone to express their feeling with words',
+  title: 'Sanu\'s Nursery',
+  description: 'Buy vegetable sapling along with your every gardening need.',
 }
 
 export default function RootLayout({
