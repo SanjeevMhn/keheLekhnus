@@ -1,0 +1,23 @@
+.products-container {
+    display: grid;
+    grid-template-columns: 25% auto;
+    gap: 15px;
+}
+
+.product-categories-list .category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.product-categories-list .category-list .list-item {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.product-categories-list .category-list .list-item.active,
+.product-categories-list .category-list .list-item:hover {
+    background-color: var(--card-color);
+    color: #fff;
+    border-radius: 100vh;
+}

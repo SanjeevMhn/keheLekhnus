@@ -2,34 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./styles/header.css";
+@import "./styles/cart.css";
+@import "./styles/product-card.css";
+@import "./styles/product-detail.css";
+@import "./styles/products.css";
+
 :root {
-  /* --base-color: #ffeabf; */
-  --base-color: #fefae0;
-  --card-color: #7ca982;
+  --base-color: #edeec9;
+  --card-color: #4a7c59;
 }
 
 body {
   background-color: var(--base-color);
 }
 
+.brand-name{
+  color: var(--card-color);
+}
+
+.btn-outline {
+  border: 1px solid var(--card-color);
+  color: var(--card-color);
+  border-radius: 100vh;
+  padding: 3px 5px;
+}
+
+.login-btn {
+  min-width: 80px;
+}
+
+.login-btn .icon-container {
+  height: 25px;
+  width: 25px;
+}
+
+.login-btn .icon-container svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--card-color);
+}
+
 .main-wrapper {
   max-width: 960px;
   margin: 0 auto;
-}
-
-.main-navigation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.main-navigation .nav-list {
-  display: flex;
-  padding: 10px 0;
-}
-
-.main-navigation .nav-link {
-  padding: 10px 15px;
 }
 
 .product-list {
@@ -38,154 +54,9 @@ body {
   gap: 20px;
 }
 
-.product-card {
-  background: #b4b4b4;
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-}
-
-.product-card .img-container {
-  max-height: 320px;
-  height: auto;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-}
-
-.product-card .product-details {
-  padding: 10px 15px;
-  background-color: var(--card-color);
-  width: 100%;
-}
-
-.product-card .img-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.product-detail-container {
-  display: grid;
-  grid-template-columns: 45% auto;
-  gap: 20px;
-  padding: 25px;
-  border-radius: 50px;
-  background-color: var(--card-color);
-}
-
-.product-detail-container .img-container {
-  grid-column: 1;
-  grid-row: 1 / span 3;
-  max-height: 350px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #b4b4b4;
-  border-radius: 25px;
-  overflow: hidden;
-}
-
-.product-detail-container .img-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.product-detail-container .product-detail {
-  align-self: center;
-}
-
-.product-detail-container .product-quantity{
-  grid-column: 2;
-  grid-row: 2;
-  align-self: center;
-  display: flex;
-}
-
-.product-detail-container .product-quantity > *{
-  height: 50px;
-  width: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.product-detail-container .product-quantity .btn{
-  background-color: var(--base-color);
-}
-
-.product-detail-container .product-quantity .btn.minus{
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-}
-
-.product-detail-container .product-quantity .btn.plus{
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
-
-.product-detail-container .product-quantity .btn svg{
-  height: 25px;
-  width: 25px;
-}
-
-.product-detail-container .product-quantity input{
-  background-color: #ffe2aa;
-}
-
-.product-detail-container .product-quantity input::-webkit-inner-spin-button,
-.product-detail-container .product-quantity input::-webkit-outer-spin-button{
+.product-quantity input::-webkit-inner-spin-button,
+.product-quantity input::-webkit-outer-spin-button {
   appearance: none;
 }
 
-.product-detail-container .product-action {
-  grid-column: 2;
-  grid-row: 3;
-  align-self: center;
-  display: flex;
-  gap: 10px;
-}
 
-.product-detail-container .product-action .btn {
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-size: 20px;
-  background-color: var(--base-color);
-}
-
-.product-detail-container .product-action .btn:last-child {
-  background-color: unset;
-  border: 2px solid var(--base-color);
-  color: var(--base-color);
-  font-weight: 500;
-}
-
-.products-container{
-  display: grid;
-  grid-template-columns: 25% auto;
-  gap: 15px;
-}
-
-.product-categories-list .category-list {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.product-categories-list .category-list .list-item{
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.product-categories-list .category-list .list-item.active,
-.product-categories-list .category-list .list-item:hover{
-  background-color: var(--card-color);
-  color: #fff;
-  border-radius: 100vh;
-}

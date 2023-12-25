@@ -1,0 +1,106 @@
+.product-detail-container {
+    display: grid;
+    grid-template-columns: 45% auto;
+    gap: 20px;
+    padding: 25px;
+    border-radius: 50px;
+    background-color: var(--card-color);
+    /* border: 1px solid var(--card-color); */
+    /* background-color: var(--base-secondary); */
+}
+
+.product-detail-container .img-container {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    max-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #b4b4b4;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.product-detail-container .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.product-detail-container .product-detail {
+    align-self: center;
+    /* color: var(--card-color); */
+    color: var(--base-color);
+}
+
+.product-detail-container .product-quantity {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    display: flex;
+}
+
+.product-detail-container .product-quantity>* {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-detail-container .product-quantity .btn {
+    background-color: var(--base-color);
+}
+
+.product-detail-container .product-quantity .btn.minus {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border: 1px solid var(--base-color);
+    border-width: 1px 0 1px 1px;
+}
+
+.product-detail-container .product-quantity .btn.plus {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 1px solid var(--base-color);
+    border-width: 1px 1px 1px 0;
+}
+
+.product-detail-container .product-quantity .btn svg {
+    height: 20px;
+    width: 20px;
+    fill: var(--card-color);
+}
+
+.product-detail-container .product-quantity input {
+    border: 1px solid var(--card-color);
+    border-width: 0 1px 0 1px;
+    color: var(--card-color);
+}
+
+.product-detail-container .product-action {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: center;
+    display: flex;
+    gap: 10px;
+}
+
+.product-detail-container .product-action .btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 20px;
+    /* background-color: var(--card-color);
+    color: var(--base-color); */
+    background-color: var(--base-color);
+    color: var(--card-color);
+    font-weight: 500;
+}
+
+.product-detail-container .product-action .btn:last-child {
+    background-color: unset;
+    /* border: 2px solid var(--card-color);
+    color: var(--card-color); */
+    border: 2px solid var(--base-color);
+    color: var(--base-color);
+}

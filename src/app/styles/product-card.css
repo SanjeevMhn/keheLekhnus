@@ -1,0 +1,31 @@
+.product-card {
+    background: #b4b4b4;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.product-card .img-container {
+    max-height: 320px;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.product-card .product-details {
+    padding: 10px 15px;
+    background-color: var(--card-color);
+    width: 100%;
+}
+
+.product-card .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

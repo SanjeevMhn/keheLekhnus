@@ -10,7 +10,7 @@ const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
             <div className="img-container">
                 <img src={product.prod_img} alt="" srcset="" />
             </div>
-            <div className="product-detail text-white">
+            <div className="product-detail">
                 <h2 className="product-name text-[35px]">
                     {product.prod_name}
                 </h2>
