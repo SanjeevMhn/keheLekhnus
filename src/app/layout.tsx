@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Lobster } from 'next/font/google'
 import './globals.css'
 import Header from './(components)/Header'
+import ReduxProvider from './(components)/redux-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 export const lobster = Lobster({
@@ -23,10 +24,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
+        <ReduxProvider>
+          <Header />
+        </ReduxProvider>
         <main>
           <section className='main-wrapper p-8 p-md-11 p-lg-24'>
-            {children}
+            <ReduxProvider>
+              {children}
+            </ReduxProvider>
           </section>
         </main>
       </body>
