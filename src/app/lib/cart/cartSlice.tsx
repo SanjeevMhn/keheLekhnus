@@ -32,10 +32,9 @@ export const cartSlice = createSlice({
             !checkDuplicate(state, action.payload) ? state.push(action.payload) : ''
         },
         removeFromCart: (state, action: PayloadAction<CartItem>) => {
-            console.log([...state]);
             return state.filter((item:CartItem) => {
-                item.id !== action.payload.id;
-            })
+                return item.id !== action.payload.id;
+            });
         },
     }
 }) 
