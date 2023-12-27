@@ -24,11 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider>
-          <Header />
-        </ReduxProvider>
+        <Header />
         <main>
-          <section className='main-wrapper p-8 p-md-11 p-lg-24'>
+          <section className='main-wrapper py-8'>
             <ReduxProvider>
               {children}
             </ReduxProvider>

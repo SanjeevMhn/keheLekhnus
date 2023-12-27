@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "@reduxjs/toolkit/query";
 
 export type CartItem = {
     id: number,
@@ -9,18 +8,17 @@ export type CartItem = {
     price: string,
     img: string,
     quantity: number,
-    total: number 
+    total: number
 }
 
-type CartState = Array<CartItem> 
+type CartState = Array<CartItem>
 
 const initialState: CartState = [];
 
-const checkDuplicate = (cart: CartState, item:CartItem):boolean => {
+const checkDuplicate = (cart: CartState, item: CartItem): boolean => {
     let duplicate = cart.filter((ct) => {
-        return ct.id == item.id 
+        return ct.id == item.id
     })
-
     return duplicate.length > 0 ? true : false;
 }
 
@@ -32,12 +30,30 @@ export const cartSlice = createSlice({
             !checkDuplicate(state, action.payload) ? state.push(action.payload) : ''
         },
         removeFromCart: (state, action: PayloadAction<CartItem>) => {
-            return state.filter((item:CartItem) => {
+            return state.filter((item: CartItem) => {
                 return item.id !== action.payload.id;
             });
         },
+        incrementQuantity: (state, action: PayloadAction<CartItem>) => {
+            const itemToUpdate = state.find((item: CartItem) => item.id == action.payload.id);
+            if (itemToUpdate) {
+                itemToUpdate.quantity += 1;
+                itemToUpdate.total = itemToUpdate.quantity * Number(itemToUpdate.price);
+            }
+            return state;
+        },
+        decrementQuantity: (state, action: PayloadAction<CartItem>) => {
+            const itemToUpdate = state.find((item: CartItem) => item.id == action.payload.id);
+            if (itemToUpdate) {
+                if (itemToUpdate.quantity > 1) {
+                    itemToUpdate.quantity -= 1;
+                    itemToUpdate.total = itemToUpdate.quantity * Number(itemToUpdate.price);
+                }
+            }
+            return state;
+        }
     }
-}) 
+})
 
-export const { addToCart, removeFromCart } = cartSlice.actions
+export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity } = cartSlice.actions
 export default cartSlice.reducer;

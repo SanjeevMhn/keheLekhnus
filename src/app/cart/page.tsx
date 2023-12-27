@@ -1,7 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import Link from "next/link";
 import { CartItem } from "../lib/cart/cartSlice";
 import CartItemRow from "../(components)/cart-item";
 export default function Page() {
