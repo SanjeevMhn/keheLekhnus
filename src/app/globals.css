@@ -64,17 +64,27 @@ body {
   bottom: 0;
   padding: 50px;
   right: 0;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .notification-list .notification {
   background: var(--base-color);
   padding: 25px;
   box-shadow: 6px 5px 16px 1px #7a7a60;
-  border: 2px solid var(--card-color);
   border-radius: 10px;
   position: relative;
   font-size: 17px;
   overflow: hidden;
+}
+
+.notification-list .notification.success{
+  border: 2px solid var(--card-color);
+}
+
+.notification-list .notification.error{
+  border: 2px solid #b82317;
 }
 
 .notification-list .notification.success::after,
