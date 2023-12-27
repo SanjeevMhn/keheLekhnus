@@ -4,6 +4,7 @@ import { CartItem, decrementQuantity } from "../lib/cart/cartSlice";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, incrementQuantity } from "../lib/cart/cartSlice";
+import { showNotification } from "../lib/notifications/notificationSlice";
 
 const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
 
   const handleRemoveCartItem = (item: CartItem) => {
     dispatch(removeFromCart(item))
+    dispatch(showNotification({id: Date.now(), message: 'Item removed from cart', type: 'success'}))
   }
   return (
     <>

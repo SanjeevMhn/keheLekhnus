@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { lobster } from '../layout';
 import CartMenuItem from './cart-menu-item';
-import ReduxProvider from './redux-provider';
 
 export default function Header() {
 	return (
@@ -22,9 +21,7 @@ export default function Header() {
 					</li>
 				</ul>
 				<ul className="nav-list gap-5">
-					<ReduxProvider>
-						<CartMenuItem />
-					</ReduxProvider>
+					<CartMenuItem />
 					<li className="nav-item">
 						<button className="btn-outline login-btn font-medium text-md flex items-center gap-2">
 							<span className="icon-container">
