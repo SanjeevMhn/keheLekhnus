@@ -1,23 +1,25 @@
-
+'use client'
 import Link from 'next/link';
 import { lobster } from '../layout';
 import CartMenuItem from './cart-menu-item';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
+	const pathName = usePathname();
 	return (
 		<nav className="shadow-xl">
 			<div className="main-wrapper main-navigation">
-				<Link href="/" className={`${lobster.className} text-[28px] brand-name`}>Sanu's Nursery</Link>
+				<Link href="/" className={`text-[28px] brand-name`}>Sanu's Nursery</Link>
 				<ul className="nav-list">
 					<li className="nav-item">
-						<Link href="/" className="nav-link">Home</Link>
+						<Link href="/" className={`nav-link ${pathName === '/' ? 'active' : ''}`}>Home</Link>
 					</li>
 					<li className="nav-item">
-						<Link href="/products/" className="nav-link">Products</Link>
+						<Link href="/products/" className={`nav-link ${pathName === '/products' ? 'active' : ''}`}>Products</Link>
 					</li>
 
 					<li className="nav-item">
-						<Link href="/about" className="nav-link">About</Link>
+						<Link href="/about" className={`nav-link ${pathName === '/about' ? 'active' : ''}`}>About</Link>
 					</li>
 				</ul>
 				<ul className="nav-list gap-5">

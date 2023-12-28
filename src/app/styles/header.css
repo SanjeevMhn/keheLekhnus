@@ -11,6 +11,13 @@
 
 .main-navigation .nav-link {
     padding: 10px 15px;
+    font-size: 18px;
+}
+
+
+.main-navigation .nav-link.active{
+    color: var(--card-color);
+    font-weight: 700; 
 }
 
 .cart {

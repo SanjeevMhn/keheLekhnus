@@ -21,6 +21,7 @@ body {
 
 .brand-name {
   color: var(--card-color);
+  font-family: var(--font-lobster);
 }
 
 .btn-outline {
