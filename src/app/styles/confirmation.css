@@ -1,0 +1,74 @@
+.confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0000007a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmation-overlay .confirmation-box {
+    border-radius: 8px;
+    min-width: 270px;
+    width: auto;
+    overflow: hidden;
+}
+
+.confirmation-overlay .confirmation-box .confirm-header{
+    background-color: var(--card-color);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.confirmation-overlay .confirmation-box .confirm-header .close-btn{
+    fill: var(--base-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.confirmation-overlay .confirmation-box .confirm-header .close-btn svg{
+    height: 20px;
+    width: 20px;
+}
+
+.confirmation-overlay .confirmation-box .confirm-body{
+    padding: 20px 20px 0; 
+    background-color: var(--base-color);
+}
+
+.confirmation-overlay .confirmation-box .message {
+    font-size: 18px;
+    text-align: center;
+}
+
+.confirmation-overlay .confirmation-box .actions {
+    padding: 20px 0;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--base-color);
+}
+
+.confirmation-overlay .confirmation-box .actions .btn {
+    padding: 2px 5px;
+    border-radius: 8px;
+    min-width: 60px;
+    font-size: 17px;
+}
+
+.confirmation-overlay .confirmation-box .actions .btn.confirm {
+    background: var(--card-color);
+    border: 1px solid var(--card-color);
+    color: var(--base-color);
+}
+
+.confirmation-overlay .confirmation-box .actions .btn.cancel {
+    border: 1px solid var(--card-color);
+    color: var(--card-color);
+}
