@@ -12,9 +12,15 @@
 
 .confirmation-overlay .confirmation-box {
     border-radius: 8px;
-    min-width: 270px;
-    width: auto;
+    max-width: 400px;
+    width: 70%;
     overflow: hidden;
+}
+
+.confirmation-overlay .confirmation-box.search-dialog{
+    max-width: 550px;
+    max-height: 600px;
+    height: 90%;
 }
 
 .confirmation-overlay .confirmation-box .confirm-header{
@@ -71,4 +77,33 @@
 .confirmation-overlay .confirmation-box .actions .btn.cancel {
     border: 1px solid var(--card-color);
     color: var(--card-color);
+}
+
+.confirmation-overlay .confirmation-box.search-dialog .confirm-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.confirmation-overlay .confirmation-box.search-dialog .confirm-body .input-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.confirmation-overlay .confirmation-box.search-dialog .confirm-body .input-group input{
+    width: 100%;
+    font-size: 18px;
+    padding: 5px 8px;
+    border-radius: 8px;
+    padding-right: 32px;
+    border: 1px solid var(--card-color);
+}
+
+.confirmation-overlay .confirmation-box.search-dialog .confirm-body .input-group .search-btn{
+    position: absolute;
+    right: 8px;
 }
