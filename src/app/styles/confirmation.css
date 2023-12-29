@@ -107,3 +107,17 @@
     position: absolute;
     right: 8px;
 }
+
+.search-result-list .list-item .product-item{
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.search-result-list .list-item .product-item .img-container{
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.search-result-list .list-item:nth-child(odd) .product-item{
+    background-color: #4a7c59a6;
+}
