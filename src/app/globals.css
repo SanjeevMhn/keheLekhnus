@@ -61,3 +61,34 @@ body {
 .product-quantity input::-webkit-outer-spin-button {
   appearance: none;
 }
+
+.breadcrumb-nav{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
+.breadcrumb-nav .breadcrumb-list{
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-nav .breadcrumb-list .breadcrumb-link{
+  color: var(--card-color);
+  font-size: 15px;
+  line-height: 1;
+  padding: 10px 0;
+  padding-right: 20px;
+  position: relative;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breadcrumb-nav .breadcrumb-list .breadcrumb-item:not(:last-child) .breadcrumb-link::after{
+  content: '>';
+  position: absolute;
+  right: 5px
+}

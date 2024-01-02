@@ -1,5 +1,7 @@
 import Link from "next/link";
 import ProductList from "../../(components)/product-list";
+import BreadCrumb from "@/app/(components)/breadcrumb";
+import { TBreadCrumb } from "@/app/(components)/breadcrumb";
 
 type CategoryType = {
   prod_cat_id: number,
@@ -15,8 +17,20 @@ export default async function Page({ params }: { params: ParamsType }) {
   const response = await fetch("http://localhost:8080/api/v1/products/categories")
   const { categories } = await response.json();
 
+  const crumbs:Array<TBreadCrumb> = [
+    {
+      name: 'home',
+      link: '/'
+    },
+    {
+      name: 'products',
+      link: '/products'
+    }
+  ]
 
   return (
+    <>
+      <BreadCrumb crumbs={crumbs} />
     <section className="products-container">
       <aside className="product-categories-list">
         <ul className="category-list">
@@ -42,5 +56,6 @@ export default async function Page({ params }: { params: ParamsType }) {
         <ProductList category={params.category} />
       </article>
     </section>
+    </>
   )
 }

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { CartItem } from "../lib/cart/cartSlice";
 import CartItemRow from "../(components)/cart-item";
 import Link from "next/link";
+import BreadCrumb, { TBreadCrumb } from "../(components)/breadcrumb";
 export default function Page() {
   const cart = useSelector((state: any) => state.cart)
 
@@ -15,9 +16,23 @@ export default function Page() {
     return sum;
   }
 
+  const crumbs: Array<TBreadCrumb> = [
+    {
+      name: 'home',
+      link: '/'
+    },
+    {
+      name: 'cart',
+      link: '/cart'
+    }
+  ]
+
 
   return (
-    cart.length > 0 ? (
+    <>
+    <BreadCrumb crumbs={crumbs}/>
+    {
+     cart.length > 0 ? (
       <div className="cart-container flex justify-center">
         <table className="cart-table">
           <thead>
@@ -67,5 +82,8 @@ export default function Page() {
         </Link>
       </div>
     )
+    }
+
+    </>
   )
 }
