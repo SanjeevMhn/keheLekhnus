@@ -1,21 +1,14 @@
-import { AppProps } from 'next/app';
-import ProductList from './(components)/product-list';
-import BreadCrumb, { TBreadCrumb } from './(components)/breadcrumb';
+import { AppProps } from "next/app";
+import ProductList from "./(components)/product-list";
+import Link from "next/link";
 
-export default async function Home () {
-  const crumbs:Array<TBreadCrumb> = [
-    {
-      name: 'home',
-      link: '/' 
-    }
-  ] 
+export default async function Home() {
   return (
-    <>
-      <BreadCrumb crumbs={crumbs} />
-      <main className="flex min-h-screen flex-col items-center justify-between">
-        <ProductList/>
-      </main>
-    </>
-  )
+    <main className="flex flex-col items-center justify-between pb-[20px]">
+      <ProductList product_count={4} />
+      <Link href="/products">
+        <button className="primary-btn">Show More</button>
+      </Link>
+    </main>
+  );
 }
-
