@@ -47,7 +47,10 @@
 }
 
 .cart-table tbody tr td .product-detail .img-container{
-    max-width: 110px;
+    max-width: 90px;
+    border: 2px solid var(--card-color);
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 .cart-table tbody tr td .product-detail .img-container img{
