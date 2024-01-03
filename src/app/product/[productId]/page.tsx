@@ -35,9 +35,9 @@ export default async function ProductDetail({
   ];
 
   return (
-    <>
+    <div className="main-wrapper">
       <BreadCrumb crumbs={crumbs} />
       <ProductDetailCard product={product[0]} />
-    </>
+    </div>
   );
 }

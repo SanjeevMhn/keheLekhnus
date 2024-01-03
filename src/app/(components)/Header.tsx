@@ -21,7 +21,7 @@ export default function Header() {
   }
 
   return (
-    <nav className="md: px-[20px] shadow-xl">
+    <nav className="md: px-[20px] shadow-xl sticky top-0 bg-[var(--base-color)]">
       <div className="main-wrapper main-navigation">
         <Link href="/" className={`text-[28px] brand-name`}>
           Sanu's Nursery

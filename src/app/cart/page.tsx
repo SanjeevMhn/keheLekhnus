@@ -39,7 +39,7 @@ export default function Page() {
 
 
   return (
-    <div className="pb-[40px]">
+    <div className="pb-[40px] main-wrapper">
       <BreadCrumb crumbs={crumbs} />
       {
         cart.length > 0 ? (

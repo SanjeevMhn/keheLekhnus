@@ -27,7 +27,7 @@ export default function RootLayout({
         <main className={lobster.variable}>
           <ReduxProvider>
             <Header />
-            <div className="main-wrapper">{children}</div>
+            <div className="wrapper">{children}</div>
           </ReduxProvider>
         </main>
       </body>

@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: ParamsType }) {
   ];
 
   return (
-    <>
+    <div className="main-wrapper">
       <BreadCrumb crumbs={crumbs} />
       <section className="products-container">
         <aside className="product-categories-list">
@@ -69,6 +69,6 @@ export default async function Page({ params }: { params: ParamsType }) {
           <ProductList category={params.category} />
         </article>
       </section>
-    </>
+    </div>
   );
 }

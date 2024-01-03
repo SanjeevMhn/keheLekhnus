@@ -15,8 +15,10 @@
 :root {
   /* --base-color: #edeec9; */
   --base-color: #e8eec9;
-  /* --card-color: #3b6548; */
-  --card-color: #4a7c59;
+  --base-nav-color: #e8e7e3;
+  --card-color: #3b6548;
+  /* --card-color: #25512e; */
+  /* --card-color: #4a7c59; */
 }
 
 body {
@@ -26,6 +28,15 @@ body {
 .brand-name {
   color: var(--card-color);
   font-family: var(--font-lobster);
+}
+
+.hero-banner{
+  background-image: url('../../public/hero.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
 }
 
 .btn-outline {
