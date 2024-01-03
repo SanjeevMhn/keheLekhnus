@@ -6,14 +6,19 @@ import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { showDialog } from "../lib/dialog/dialogSlice";
 import SearchProducts from "./search-products";
+import LoginForm from "./login-form";
 
 export default function Header() {
   const pathName = usePathname();
   const dispatch = useDispatch();
 
   const handleShowSearchDialog = () => {
-    dispatch(showDialog({ show: true, title: 'Search Products', component: SearchProducts}));
+    dispatch(showDialog({ show: true, title: 'Search Products', component: SearchProducts }));
   };
+
+  const handleShowLoginDialog = () => {
+    dispatch(showDialog({show: true, title: 'Login', component: LoginForm}));
+  }
 
   return (
     <nav className="md: px-[20px] shadow-xl">
@@ -38,7 +43,14 @@ export default function Header() {
               Products
             </Link>
           </li>
-
+          <li className="nav-item">
+            <Link
+              href="/contact"
+              className={`nav-link ${pathName === "/contact" ? "active" : ""}`}
+            >
+              Contact
+            </Link>
+          </li>
           <li className="nav-item">
             <Link
               href="/about"
@@ -68,21 +80,19 @@ export default function Header() {
           </li>
           <CartMenuItem />
           <li className="nav-item ml-5">
-            <Link href="/login">
-              <button className="btn-outline login-btn font-medium text-md flex items-center gap-2">
-                <span className="icon-container">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="16"
-                    width="16"
-                    viewBox="0 0 512 512"
-                  >
-                    <path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                  </svg>
-                </span>
-                Sign In
-              </button>
-            </Link>
+            <button className="btn-outline login-btn font-medium text-md flex items-center gap-2" onClick={() => handleShowLoginDialog()}>
+              <span className="icon-container">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="16"
+                  width="16"
+                  viewBox="0 0 512 512"
+                >
+                  <path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+                </svg>
+              </span>
+              Sign In
+            </button>
           </li>
         </ul>
       </div>

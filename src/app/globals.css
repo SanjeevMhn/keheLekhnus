@@ -13,7 +13,9 @@
 @import "./styles/forms.css";
 
 :root {
-  --base-color: #edeec9;
+  /* --base-color: #edeec9; */
+  --base-color: #e8eec9;
+  /* --card-color: #3b6548; */
   --card-color: #4a7c59;
 }
 
@@ -37,7 +39,7 @@ body {
   background: var(--card-color);
   color: var(--base-color);
   border: 2px solid var(--card-color);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .btn-outline-md {
@@ -51,6 +53,8 @@ body {
   padding: 5px 20px;
   font-size: 17px;
   border-radius: 100vh;
+  max-width: 250px;
+  min-width: 150px;
 }
 
 .login-btn {

@@ -21,7 +21,8 @@
 .confirmation-overlay .confirmation-box.dialog{
     max-width: 550px;
     max-height: 600px;
-    height: 90%;
+    height: auto;
+    /* height: 90%; */
 }
 
 .confirmation-overlay .confirmation-box .confirm-header{
