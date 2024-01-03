@@ -12,7 +12,7 @@
   font-size: 15px;
   line-height: 1;
   padding: 10px 0;
-  padding-right: 20px;
+  padding-right: 25px;
   position: relative;
   display: flex;
   align-items: center;
@@ -31,7 +31,8 @@
   .breadcrumb-list
   .breadcrumb-item:not(:last-child)
   .breadcrumb-link::after {
-  content: "\2B9E";
+/*  content: "\2B9E";*/
+  content: "\27A4";
   color: var(--card-color);
   position: absolute;
   top: 50%;

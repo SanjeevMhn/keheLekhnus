@@ -13,7 +13,7 @@ const BreadCrumb: FC<{ crumbs: Array<TBreadCrumb>}> = ({ crumbs }) => {
       <ul className="breadcrumb-list">
         {
           crumbs.map((crumb:TBreadCrumb, index: number) => (
-            <li className="breadcrumb-item">
+            <li className="breadcrumb-item" key={index}>
               <Link href={crumb.link} className="breadcrumb-link">
                 {crumb.name}
               </Link>

@@ -4,14 +4,15 @@ import { lobster } from "../layout";
 import CartMenuItem from "./cart-menu-item";
 import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { showSearchDialog } from "../lib/search-dialog/searchDialogSlice";
+import { showDialog } from "../lib/dialog/dialogSlice";
+import SearchProducts from "./search-products";
 
 export default function Header() {
   const pathName = usePathname();
   const dispatch = useDispatch();
 
   const handleShowSearchDialog = () => {
-    dispatch(showSearchDialog({ show: true }));
+    dispatch(showDialog({ show: true, title: 'Search Products', component: SearchProducts}));
   };
 
   return (

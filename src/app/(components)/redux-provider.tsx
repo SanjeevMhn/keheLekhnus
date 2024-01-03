@@ -5,7 +5,7 @@ import React, { ReactNode } from 'react';
 import { Provider } from "react-redux";
 import NotificationList from "./notification-list";
 import ConfrimationContainer from "./confirmation-container";
-import SearchDialog from "./search-dialog";
+import Dialog from "./dialog";
 
 type ReduxProviderType = {
     children: ReactNode
@@ -17,6 +17,6 @@ export default function ReduxProvider({ children }: ReduxProviderType) {
             {children}
             <NotificationList />
             <ConfrimationContainer />
-            <SearchDialog />
+            <Dialog />
         </Provider>)
 }

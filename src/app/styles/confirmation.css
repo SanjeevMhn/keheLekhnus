@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 100;
 }
 
 .confirmation-overlay .confirmation-box {
@@ -17,7 +18,7 @@
     overflow: hidden;
 }
 
-.confirmation-overlay .confirmation-box.search-dialog{
+.confirmation-overlay .confirmation-box.dialog{
     max-width: 550px;
     max-height: 600px;
     height: 90%;
@@ -79,14 +80,26 @@
     color: var(--card-color);
 }
 
-.confirmation-overlay .confirmation-box.search-dialog .confirm-body{
+.confirmation-overlay .confirmation-box.dialog .confirm-header{
+    align-items: center;
+    justify-content: space-between!important;
+    padding-left: 10px;
+}
+
+.confirmation-overlay .confirmation-box.dialog .confirm-header .title{
+    color: var(--base-color);
+    font-size: 18px;
+}
+
+.confirmation-overlay .confirmation-box.dialog .confirm-body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
+    height: calc(100% - 40px);
+    padding: 20px!important;
 }
 
-.confirmation-overlay .confirmation-box.search-dialog .confirm-body .input-group{
+.confirmation-overlay .confirmation-box.dialog .confirm-body .input-group{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,7 +107,7 @@
     width: 100%;
 }
 
-.confirmation-overlay .confirmation-box.search-dialog .confirm-body .input-group input{
+.confirmation-overlay .confirmation-box.dialog .confirm-body .input-group input{
     width: 100%;
     font-size: 18px;
     padding: 5px 8px;
@@ -103,7 +116,7 @@
     border: 1px solid var(--card-color);
 }
 
-.confirmation-overlay .confirmation-box.search-dialog .confirm-body .input-group .search-btn{
+.confirmation-overlay .confirmation-box.dialog .confirm-body .input-group .search-btn{
     position: absolute;
     right: 8px;
 }

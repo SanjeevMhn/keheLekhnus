@@ -7,7 +7,7 @@ export default async function Home() {
     <main className="flex flex-col items-center justify-between pb-[20px]">
       <ProductList product_count={4} />
       <Link href="/products">
-        <button className="primary-btn">Show More</button>
+        <button className="btn-primary">Show More</button>
       </Link>
     </main>
   );
