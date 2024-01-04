@@ -4,7 +4,7 @@ import { DialogState, hideDialog, initialDialogState } from "../lib/dialog/dialo
 
 
 const Dialog = () => {
-    const state: DialogState = useSelector((state: any) => state.dialog);
+    const state: DialogState = useSelector((state:any) => state.dialog);
     const dispatch = useDispatch();
 
 
@@ -29,7 +29,6 @@ const Dialog = () => {
                         </button>
                     </div>
                     <div className="confirm-body">
-                        
                         <DynamicComponent />
                     </div>
                 </div>

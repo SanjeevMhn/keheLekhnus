@@ -10,7 +10,7 @@ export default async function Home() {
           <div className="intro-info max-w-[50%]">
             <p className="text-[22px]">Hello, Welcome to</p>
             <h2 className="text-[55px] brand-name">Sanu's Nursery</h2>
-            <p className="text-[22px] pb-[20px]">We specilize in growing plants ranging from vegetables, fruits to flowers and everything in between. We sell greminated plants which is ready for you to plant directly.</p>
+            <p className="text-[20px] pb-[20px]">We specilize in growing and selling plants ranging from vegetables, fruits to flowers and everything in between. We sell greminated plants which are ready for you to plant directly in your gardens.</p>
             <Link href="/products/">
               <button className="btn-primary">View Products</button>
             </Link>

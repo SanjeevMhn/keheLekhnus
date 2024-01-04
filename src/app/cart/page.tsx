@@ -44,7 +44,7 @@ export default function Page() {
       {
         cart.length > 0 ? (
           <div className="cart-container flex flex-col items-center gap-[45px]">
-            <table className="cart-table">
+            <table className="cart-table w-full">
               <thead>
                 <tr>
                   <th>SN</th>
@@ -75,7 +75,7 @@ export default function Page() {
                   <td></td>
                   <td></td>
                   <td>Sub Total</td>
-                  <td className="text-right">{getCartTotal()}</td>
+                  <td className="text-right">Rs.&nbsp;{getCartTotal()}</td>
                 </tr>
               </tfoot>
             </table>

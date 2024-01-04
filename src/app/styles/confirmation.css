@@ -31,6 +31,14 @@
     justify-content: flex-end;
 }
 
+.confirmation-overlay .confirmation-box.dialog .confirm-header{
+    justify-content: unset;
+}
+
+.confirmation-overlay .confirmation-box.dialog .confirm-header .title{
+    margin: 0 auto;
+}
+
 .confirmation-overlay .confirmation-box .confirm-header .close-btn{
     fill: var(--base-color);
     display: flex;
@@ -83,13 +91,12 @@
 
 .confirmation-overlay .confirmation-box.dialog .confirm-header{
     align-items: center;
-    justify-content: space-between!important;
     padding-left: 10px;
 }
 
 .confirmation-overlay .confirmation-box.dialog .confirm-header .title{
     color: var(--base-color);
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .confirmation-overlay .confirmation-box.dialog .confirm-body{
