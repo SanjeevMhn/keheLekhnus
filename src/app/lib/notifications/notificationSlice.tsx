@@ -13,8 +13,8 @@ export const notificationReducer = createSlice({
     name: 'notification',
     initialState,
     reducers: {
-        showNotification: (state, action: PayloadAction<NotificationType>) => {
-            state.push(action.payload);
+        showNotification: (state, action: PayloadAction<{message: string, type: string}>) => {
+            state.push({id: Date.now(), message: action.payload.message, type: action.payload.type});
         },
         removeNotification: (state, action: PayloadAction<NotificationType>) => {
             return state.filter((item: NotificationType) => {

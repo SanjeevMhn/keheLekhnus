@@ -23,7 +23,7 @@ const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
     }
     dispatch(addToCart(cartObj))
 
-    dispatch(showNotification({ id: Date.now(), message: "Item Added To Cart", type: "success" }))
+    dispatch(showNotification({ message: "Item Added To Cart", type: "success" }))
   }
 
   const handleBuyNow = (product: Product) => {

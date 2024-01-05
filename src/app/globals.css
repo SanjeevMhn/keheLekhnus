@@ -29,7 +29,7 @@ body {
   font-family: var(--font-lobster);
 }
 
-.hero-banner{
+.hero-banner {
   background-image: url('../../public/hero.jpg');
   background-position: center;
   background-repeat: no-repeat;
@@ -40,7 +40,7 @@ body {
   isolation: isolate;
 }
 
-.hero-banner::after{
+.hero-banner::after {
   content: '';
   position: absolute;
   top: 0;
@@ -79,21 +79,6 @@ body {
   border-radius: 100vh;
   max-width: 250px;
   min-width: 150px;
-}
-
-.login-btn {
-  min-width: 80px;
-}
-
-.login-btn .icon-container {
-  height: 25px;
-  width: 25px;
-}
-
-.login-btn .icon-container svg {
-  width: 100%;
-  height: 100%;
-  fill: var(--card-color);
 }
 
 .main-wrapper {

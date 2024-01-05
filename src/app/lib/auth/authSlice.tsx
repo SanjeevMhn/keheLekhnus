@@ -7,7 +7,7 @@ export type TUserInfo = {
     is_admin: boolean
 }
 
-type TAuthState = {
+export type TAuthState = {
     is_authenticated: boolean,
     user_token: string | null,
     user_info: TUserInfo | null
@@ -23,11 +23,11 @@ export const authReducer = createSlice({
     name: 'auth',
     initialState: initialAuthState,
     reducers: {
-        login: (state: TAuthState, action: PayloadAction<TAuthState>) => {
+        login: (state: TAuthState, action: PayloadAction<string>) => {
             return {
                 ...state,
                 is_authenticated: true,
-                user_token: action.payload.user_token
+                user_token: action.payload
             }
         },
 
@@ -38,17 +38,11 @@ export const authReducer = createSlice({
             }
         },
 
-        getUserData: (state: TAuthState) => {
-            return {
-                ...state
-            }
-        },
-        
         logout: () => {
             return initialAuthState;
         }
     }
 })
 
-export const { login , setUserData, getUserData, logout } = authReducer.actions;
+export const { login , setUserData, logout } = authReducer.actions;
 export default authReducer.reducer;

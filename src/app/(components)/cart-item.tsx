@@ -17,7 +17,7 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
       message: "Remove item from cart?",
       onConfirm: () => {
         dispatch(removeFromCart(item))
-        dispatch(showNotification({ id: Date.now(), message: 'Item removed from cart', type: 'success' }))
+        dispatch(showNotification({ message: 'Item removed from cart', type: 'success' }))
       }
     }))
 
