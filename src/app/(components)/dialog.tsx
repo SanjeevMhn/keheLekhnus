@@ -9,7 +9,7 @@ const Dialog = () => {
 
 
     const handleHideDialog = () => {
-        dispatch(hideDialog(initialDialogState));
+        dispatch(hideDialog());
     }
 
     const DynamicComponent: (() => JSX.Element ) | null | undefined  = state?.component;

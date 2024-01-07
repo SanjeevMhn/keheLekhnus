@@ -17,7 +17,7 @@ export const dialogReducer = createSlice({
 	name: 'dialog',
 	initialState: initialDialogState,
 	reducers: {
-		showDialog: (state: DialogState, action: PayloadAction<DialogState>) => {
+		showDialog: (state: DialogState, action: PayloadAction<{ title: string, component: () => JSX.Element }>) => {
 			return {
 				show: true,
 				title: action.payload.title,
@@ -25,7 +25,7 @@ export const dialogReducer = createSlice({
 			}
 		},
 
-		hideDialog: (state, action: PayloadAction<DialogState>) => {
+		hideDialog: () => {
 			return initialDialogState
 		}
 	}

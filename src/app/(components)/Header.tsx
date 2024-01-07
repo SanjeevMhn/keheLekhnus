@@ -17,11 +17,11 @@ export default function Header() {
   const dispatch = useDispatch();
   const authUser: TAuthState = useSelector((state: any) => state.auth)
   const handleShowSearchDialog = () => {
-    dispatch(showDialog({ show: true, title: 'Search Products', component: SearchProducts }));
+    dispatch(showDialog({ title: 'Search Products', component: SearchProducts }));
   };
 
   const handleShowLoginDialog = () => {
-    dispatch(showDialog({ show: true, title: 'Login', component: LoginForm }));
+    dispatch(showDialog({ title: 'Login', component: LoginForm }));
   }
 
   const handleLogout = async () => {
@@ -34,15 +34,20 @@ export default function Header() {
           authorization: `Bearer ${authUser.user_token}`
         },
       }
-      dispatch(logout());
-      dispatch(showNotification({
-        message: 'User Logged Out',
-        type: 'success'
-      }));
-      const logoutRes: AxiosResponse = await axios(logoutConfig);
-      if (logoutRes.status == 200) {
+      dispatch(showConfirm({
+        message: 'Do you want to logout?',
+        onConfirm: async() => {
+          const logoutRes: AxiosResponse = await axios(logoutConfig);
+          if (logoutRes.status == 200) {
+            dispatch(logout());
+            dispatch(showNotification({
+              message: 'User Logged Out',
+              type: 'success'
+            }));
+          }
+        }
+      }))
 
-      }
 
     } catch (e: any) {
       console.error(e);

@@ -10,11 +10,11 @@ const ConfrimationContainer = () => {
         if (confirm.onConfirm) {
             confirm.onConfirm();
         }
-        dispatch(hideConfirm(confirm))
+        dispatch(hideConfirm())
     }
 
     const handleCancel = () => {
-        dispatch(hideConfirm(confirm))
+        dispatch(hideConfirm())
     }
 
     return (

@@ -17,7 +17,7 @@ export const confirmationReducer = createSlice({
     name: 'confirmation',
     initialState,
     reducers: {
-        showConfirm: (state, action: PayloadAction<ConfirmationType>) => {
+        showConfirm: (state, action: PayloadAction<{ message: string, onConfirm: () => void }>) => {
             return {
                 ...state,
                 show: true,
@@ -25,7 +25,7 @@ export const confirmationReducer = createSlice({
                 onConfirm: action.payload.onConfirm
             }
         },
-        hideConfirm: (state, action: PayloadAction<ConfirmationType>) => {
+        hideConfirm: () => {
             return initialState
         }
     }

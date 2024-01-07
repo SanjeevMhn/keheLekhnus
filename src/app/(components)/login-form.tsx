@@ -3,7 +3,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hideDialog, initialDialogState } from "../lib/dialog/dialogSlice";
 import { FormEvent } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { TAuthState, login, setUserData } from "../lib/auth/authSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 
@@ -46,41 +46,40 @@ const LoginForm = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            const config = {
+            const config: AxiosRequestConfig = {
                 method: 'post',
                 url: 'http://localhost:8080/api/v1/auth',
                 data: {
                     user_email: email,
                     user_password: password
-                }
+                },
+                withCredentials: true
             }
-            const result:AxiosResponse = await axios(config);
-            const data = await result.data;
+            const result: AxiosResponse = await axios(config);
+            const data = result.data;
+            const token = data.accessToken;
             dispatch(login(data.accessToken))
             handleCloseLogin();
             dispatch(showNotification({
                 message: 'User Logged Successully',
                 type: 'success'
             }))
-
-            const userDataConfig = {
+            const userDataConfig: AxiosRequestConfig = {
                 method: 'get',
                 url: 'http://localhost:8080/api/v1/auth/me',
                 headers: {
-                    'authorization': `Bearer ${authUser.user_token}`
-                }
+                    'authorization': `Bearer ${token}`
+                },
+                withCredentials: true
             }
 
-            setTimeout(async () => {
-                const userDataRes = await axios(userDataConfig);
-                const userData = await userDataRes.data;
-                dispatch(setUserData({
-                    user_name: userData.user[0].user_name,
-                    user_email: userData.user[0].user_email,
-                    is_admin: userData.user[0].user_role === 'admin' ? true : false
-                }))
-            },2200)
-
+            const userDataRes = await axios(userDataConfig);
+            const userData = await userDataRes.data;
+            dispatch(setUserData({
+                user_name: userData.user[0].user_name,
+                user_email: userData.user[0].user_email,
+                is_admin: userData.user[0].user_role === 'admin' ? true : false
+            }))
         } catch (e: any) {
             setErrMsg(e.response.data.message)
         }
