@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import CartMenuItem from "./cart-menu-item";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { showDialog } from "../lib/dialog/dialogSlice";
 import SearchProducts from "./search-products";
@@ -18,6 +18,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const authUser: TAuthState = useSelector((state: any) => state.auth)
   const store = useStore();
+  const router = useRouter();
   const handleShowSearchDialog = () => {
     dispatch(showDialog({ title: 'Search Products', component: SearchProducts }));
   };
@@ -67,6 +68,9 @@ export default function Header() {
           user_email: checkUserRes.user[0].user_email,
           is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false
         }))
+        if(checkUserRes.user[0].user_role === 'admin'){
+          router.push('/admin/');
+        }
       }
 
     }
