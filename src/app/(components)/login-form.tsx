@@ -17,7 +17,7 @@ const LoginForm = () => {
     const [errMsg, setErrMsg] = useState<string | null>(null);
 
     const handleCloseLogin = () => {
-        dispatch(hideDialog(initialDialogState))
+        dispatch(hideDialog())
         setEmail(null);
         setPassword(null);
         setErrMsg(null);

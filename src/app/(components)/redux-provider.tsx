@@ -1,11 +1,16 @@
 "use client"
 
 import { store } from "../lib/store";
-import React, { ReactNode } from 'react';
-import { Provider } from "react-redux";
+import React, { ReactNode, useEffect } from 'react';
+import { Provider, useSelector, useDispatch } from "react-redux";
 import NotificationList from "./notification-list";
 import ConfrimationContainer from "./confirmation-container";
 import Dialog from "./dialog";
+import axios, { AxiosRequestConfig } from "axios";
+import { setUserData } from "../lib/auth/authSlice";
+import { injectStore } from "../service/interceptor/interceptor";
+
+injectStore(store);
 
 type ReduxProviderType = {
     children: ReactNode

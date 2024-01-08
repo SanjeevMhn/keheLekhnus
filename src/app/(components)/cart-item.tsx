@@ -13,7 +13,6 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
 
   const handleRemoveCartItem = (item: CartItem) => {
     dispatch(showConfirm({
-      show: true,
       message: "Remove item from cart?",
       onConfirm: () => {
         dispatch(removeFromCart(item))

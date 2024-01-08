@@ -1,21 +1,23 @@
 "use client";
 import Link from "next/link";
-import { lobster } from "../layout";
 import CartMenuItem from "./cart-menu-item";
 import { usePathname } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { showDialog } from "../lib/dialog/dialogSlice";
 import SearchProducts from "./search-products";
 import LoginForm from "./login-form";
-import { TAuthState, logout } from "../lib/auth/authSlice";
+import { TAuthState, logout, setUserData } from "../lib/auth/authSlice";
 import { showConfirm } from "../lib/confirmation/confirmationSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { useEffect } from "react";
+import api from "../service/interceptor/interceptor";
 
 export default function Header() {
   const pathName = usePathname();
   const dispatch = useDispatch();
   const authUser: TAuthState = useSelector((state: any) => state.auth)
+  const store = useStore();
   const handleShowSearchDialog = () => {
     dispatch(showDialog({ title: 'Search Products', component: SearchProducts }));
   };
@@ -36,7 +38,7 @@ export default function Header() {
       }
       dispatch(showConfirm({
         message: 'Do you want to logout?',
-        onConfirm: async() => {
+        onConfirm: async () => {
           const logoutRes: AxiosResponse = await axios(logoutConfig);
           if (logoutRes.status == 200) {
             dispatch(logout());
@@ -54,6 +56,22 @@ export default function Header() {
     }
 
   }
+
+  useEffect(() => {
+    const checkUser = async () => {
+      if (!authUser.is_authenticated) {
+        const checkUserReq = await api.get('http://localhost:8080/api/v1/auth/me');
+        const checkUserRes = checkUserReq.data;
+        dispatch(setUserData({
+          user_name: checkUserRes.user[0].user_name,
+          user_email: checkUserRes.user[0].user_email,
+          is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false
+        }))
+      }
+
+    }
+    checkUser();
+  }, [])
 
   return (
     <nav className="md: px-[20px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40">
