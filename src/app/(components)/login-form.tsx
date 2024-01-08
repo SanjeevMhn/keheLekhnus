@@ -6,6 +6,7 @@ import { FormEvent } from "react";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { TAuthState, login, setUserData } from "../lib/auth/authSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const LoginForm = () => {
     const [emailErr, setEmailErr] = useState<string | null>(null);
     const [passwordErr, setPasswordErr] = useState<string | null>(null);
     const [errMsg, setErrMsg] = useState<string | null>(null);
+    const router = useRouter();
 
     const handleCloseLogin = () => {
         dispatch(hideDialog())
@@ -80,6 +82,11 @@ const LoginForm = () => {
                 user_email: userData.user[0].user_email,
                 is_admin: userData.user[0].user_role === 'admin' ? true : false
             }))
+
+            if(userData.user[0].user_role === 'admin'){
+                router.push('/admin');
+            }
+
         } catch (e: any) {
             setErrMsg(e.response.data.message)
         }

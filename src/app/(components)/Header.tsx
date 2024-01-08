@@ -80,58 +80,72 @@ export default function Header() {
           Sanu's Nursery
         </Link>
         <ul className="nav-list">
-          <li className="nav-item">
-            <Link
-              href="/"
-              className={`nav-link ${pathName === "/" ? "active" : ""}`}
-            >
-              Home
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              href="/products/"
-              className={`nav-link ${pathName === "/products" ? "active" : ""}`}
-            >
-              Products
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              href="/contact"
-              className={`nav-link ${pathName === "/contact" ? "active" : ""}`}
-            >
-              Contact
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              href="/about"
-              className={`nav-link ${pathName === "/about" ? "active" : ""}`}
-            >
-              About
-            </Link>
-          </li>
+          {
+            !authUser.user_info?.is_admin ? (
+              <>
+                <li className="nav-item">
+                  <Link
+                    href="/"
+                    className={`nav-link ${pathName === "/" ? "active" : ""}`}
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    href="/products/"
+                    className={`nav-link ${pathName === "/products" ? "active" : ""}`}
+                  >
+                    Products
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    href="/contact"
+                    className={`nav-link ${pathName === "/contact" ? "active" : ""}`}
+                  >
+                    Contact
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    href="/about"
+                    className={`nav-link ${pathName === "/about" ? "active" : ""}`}
+                  >
+                    About
+                  </Link>
+                </li>
+              </>
+            ) : null
+          }
+
         </ul>
         <ul className="nav-list">
-          <li className="nav-item">
-            <button
-              className="nav-link"
-              onClick={() => handleShowSearchDialog()}
-            >
-              <div className="icon-container">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="16"
-                  width="16"
-                  viewBox="0 0 512 512"
-                >
-                  <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
-                </svg>
-              </div>
-            </button>
-          </li>
-          <CartMenuItem />
+          {
+            !authUser.user_info?.is_admin ? (
+              <>
+                <li className="nav-item">
+                  <button
+                    className="nav-link"
+                    onClick={() => handleShowSearchDialog()}
+                  >
+                    <div className="icon-container">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="16"
+                        width="16"
+                        viewBox="0 0 512 512"
+                      >
+                        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                      </svg>
+                    </div>
+                  </button>
+                </li>
+                <CartMenuItem />
+              </>
+            ): null
+          }
+
           <li className="nav-item ml-5">
             {
               authUser.user_info ? (
@@ -149,7 +163,11 @@ export default function Header() {
                   <ul className="dropdown-list">
                     {authUser.user_info.is_admin ? (
                       <>
-                        <li className="dropdown-item">Dashboard</li>
+                        <li className="dropdown-item">
+                          <Link href="/admin/">
+                            Dashboard
+                          </Link>
+                        </li>
                         <li className="dropdown-item">Products</li>
                         <li className="dropdown-item">Orders</li>
                         <li className="dropdown-item">Profile</li>

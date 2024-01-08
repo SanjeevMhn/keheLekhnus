@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useDispatch } from 'react-redux';
 import { hideDialog, initialDialogState } from '../lib/dialog/dialogSlice';
+import api from '../service/interceptor/interceptor';
 
 const SearchProducts = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -15,14 +16,14 @@ const SearchProducts = () => {
     }
 
     const handleHideDialog = () => {
-        dispatch(hideDialog(initialDialogState));
+        dispatch(hideDialog());
     }
 
     useEffect(() => {
         const timeoutId = setTimeout(async () => {
             try {
                 if (searchTerm !== '') {
-                    let response = await axios(`http://localhost:8080/api/v1/products/name?prod_name=${searchTerm}`);
+                    let response = await api.get(`http://localhost:8080/api/v1/products/name?prod_name=${searchTerm}`);
                     let data = await response.data;
                     setSearchResult(data.products);
                 } else {
