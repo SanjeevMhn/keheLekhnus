@@ -83,8 +83,11 @@ const LoginForm = () => {
                 is_admin: userData.user[0].user_role === 'admin' ? true : false
             }))
 
+            router.refresh();
+
             if(userData.user[0].user_role === 'admin'){
                 router.push('/admin');
+                router.refresh();
             }
 
         } catch (e: any) {

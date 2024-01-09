@@ -11,6 +11,7 @@
 @import "./styles/confirmation.css";
 @import "./styles/breadcrumb.css";
 @import "./styles/forms.css";
+@import "./styles/sidenav.css";
 
 :root {
   /* --base-color: #edeec9; */
@@ -27,6 +28,7 @@ body {
 .brand-name {
   color: var(--card-color);
   font-family: var(--font-lobster);
+  font-size: 28px;
 }
 
 .hero-banner {

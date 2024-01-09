@@ -9,6 +9,9 @@ import Dialog from "./dialog";
 import axios, { AxiosRequestConfig } from "axios";
 import { setUserData } from "../lib/auth/authSlice";
 import { injectStore } from "../service/interceptor/interceptor";
+import Header from "./Header";
+import Link from "next/link";
+import SideNav from "./sidenav";
 
 injectStore(store);
 
@@ -17,9 +20,22 @@ type ReduxProviderType = {
 }
 
 export default function ReduxProvider({ children }: ReduxProviderType) {
+    const adminUser = store.getState().auth.user_info?.is_admin;
+    console.log(adminUser);
     return (
         <Provider store={store}>
-            {children}
+            <div className={`wrapper ${adminUser ? 'has-sidenav' : ''}`}>
+                {
+                    adminUser ? (
+                        <SideNav/>
+                    ) : null
+                }
+                <Header />
+                <section className="child-container">
+                    {children}
+                </section>
+
+            </div>
             <NotificationList />
             <ConfrimationContainer />
             <Dialog />

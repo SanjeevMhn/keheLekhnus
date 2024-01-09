@@ -1,0 +1,68 @@
+.wrapper.has-sidenav {
+    height: 100vh;
+    margin-left: 300px;
+}
+
+.wrapper.has-sidenav .sidenav-container {
+
+    background-color: var(--card-color);
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    left: 0;
+}
+
+.wrapper.has-sidenav .sidenav-container .brand-link {
+    padding: 10px 40px;
+    position: relative;
+}
+
+.wrapper.has-sidenav .sidenav-container .brand-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--base-color);
+}
+
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist {
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 40px;
+    font-size: 18px;
+    color: var(--base-color);
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .sub-menulist{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link .icon-container svg{
+    fill: var(--base-color);
+}
+
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .sub-menulist .list-item .list-link{
+    padding-left: 70px;
+}
+
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link:hover,
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link.active {
+    background-color: #5b996e;
+}
+
+.wrapper.has-sidenav .child-container {
+    padding: 25px;
+}

@@ -47,9 +47,12 @@ export default function Header() {
               message: 'User Logged Out',
               type: 'success'
             }));
+            router.push('/');
+            window.location.reload();
           }
         }
       }))
+
 
 
     } catch (e: any) {
@@ -68,8 +71,9 @@ export default function Header() {
           user_email: checkUserRes.user[0].user_email,
           is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false
         }))
-        if(checkUserRes.user[0].user_role === 'admin'){
+        if (checkUserRes.user[0].user_role === 'admin') {
           router.push('/admin/');
+          router.refresh();
         }
       }
 
@@ -78,9 +82,9 @@ export default function Header() {
   }, [])
 
   return (
-    <nav className="md: px-[20px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40">
-      <div className="main-wrapper main-navigation">
-        <Link href="/" className={`text-[28px] brand-name`}>
+    <nav className="md: px-[40px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40">
+      <div className={`main-navigation ${!authUser.user_info?.is_admin ? 'main-wrapper' : ''}`}>
+        <Link href="/" className={`brand-name ${authUser.user_info?.is_admin ? 'hidden' : ''}`}>
           Sanu's Nursery
         </Link>
         <ul className="nav-list">
@@ -147,7 +151,7 @@ export default function Header() {
                 </li>
                 <CartMenuItem />
               </>
-            ): null
+            ) : null
           }
 
           <li className="nav-item ml-5">
@@ -165,26 +169,8 @@ export default function Header() {
                     </svg>
                   </span>
                   <ul className="dropdown-list">
-                    {authUser.user_info.is_admin ? (
-                      <>
-                        <li className="dropdown-item">
-                          <Link href="/admin/">
-                            Dashboard
-                          </Link>
-                        </li>
-                        <li className="dropdown-item">Products</li>
-                        <li className="dropdown-item">Orders</li>
-                        <li className="dropdown-item">Profile</li>
-                        <li className="dropdown-item">Settings</li>
-                      </>
-
-                    ) : (
-                      <>
-                        <li className="dropdown-item">Profile</li>
-                        <li className="dropdown-item">Settings</li>
-                      </>
-
-                    )}
+                    <li className="dropdown-item">Profile</li>
+                    <li className="dropdown-item">Settings</li>
                     <li className="dropdown-item" onClick={handleLogout}>Logout</li>
                   </ul>
                 </button>
