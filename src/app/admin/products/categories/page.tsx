@@ -1,11 +1,16 @@
 'use client'
 import BreadCrumb, { TBreadCrumb } from "@/app/(components)/breadcrumb";
 import DataTable from "@/app/(components)/data-table";
+import { TAuthState } from "@/app/lib/auth/authSlice";
 import api from "@/app/service/interceptor/interceptor"
-import { useEffect, useState } from "react";
+import axios, { AxiosRequestConfig } from "axios";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Page() {
     const [categories, setCategories] = useState<Array<any>>([]);
+    const authUser:TAuthState = useSelector((state: any) => state.auth);
+    const categoriesFetched = useRef<boolean>(false)
     const crumbs: Array<TBreadCrumb> = [
         {
             name: 'admin',
@@ -43,7 +48,13 @@ export default function Page() {
     }
 
     useEffect(() => {
-        getCategories();
+        if(!categoriesFetched.current){
+            getCategories();
+        }
+        return () => {
+            categoriesFetched.current = true;
+        }
+
     }, [])
 
     return (
