@@ -1,0 +1,172 @@
+.data-table-container{
+    box-shadow: 0 5px 10px #00000075;
+    height: 100%;
+    border-radius: 12px;
+    height: calc(100% - 55px); 
+}
+
+.data-table{
+    height: calc(100% - 60px); 
+    overflow-y: auto;
+}
+
+.data-table table{
+    height: auto;
+    width: 100%;
+}
+
+.data-table table thead{
+    background-color: var(--card-color);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.data-table table thead th{
+    color: var(--base-color);
+    padding: 10px 15px;
+    font-size: 18px;
+}
+
+.data-table table tbody td{
+    padding: 12px 15px;
+    font-size: 16px;
+}
+
+.data-table table thead th,
+.data-table table tbody td{
+    text-align: left;
+    font-weight: 500;
+    text-transform: capitalize;
+    position: relative;
+}
+
+.data-table table thead th:first-child{
+    border-top-left-radius: 12px;
+    width: 100px;
+}
+
+.data-table table thead th:nth-child(2){
+    width: 180px;
+}
+
+.data-table table thead th:last-child{
+    border-top-right-radius: 12px;
+}
+
+.data-table table thead th:not(:last-child)::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    border-radius: 100vh;
+    height: 70%;
+    background-color: var(--base-color);
+}
+
+.data-table table tbody{
+    overflow-y: auto;
+}
+
+.data-table table tbody tr:nth-child(even) td{
+    background-color: #d7d09b;
+}
+
+.data-table table tbody tr td .data-action{
+    display: flex;
+    gap: 5px;
+}
+
+.data-table table tbody tr td .data-action .btn{
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    min-width: 60px;
+}
+
+.data-table table tbody tr td .data-action .btn.delete{
+    border: 2px solid var(--card-color);
+    color: var(--card-color);
+    font-weight: 600;
+    background-color: var(--base-color);
+}
+
+.data-table table tbody tr td .data-action .btn.edit{
+    border: 2px solid var(--card-color);
+    background-color: var(--card-color);
+    color: var(--base-color);
+}
+
+.data-table table tbody tr td .img-container{
+    height: 90px;
+    width: 90px;
+    display: flex;
+    flex: 0 0 90px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: rgb(130, 179, 231);
+}
+
+.data-table table tbody tr td .img-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.data-table-pager{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-top: 2px solid var(--card-color);
+}
+
+.data-table-pager .page-size-container{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.data-table-pager .page-size{
+    height: 35px;
+    width: 35px;
+}
+
+.data-table-pager .page-size input{
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid var(--card-color);
+    border-radius: 8px;
+}
+
+.data-table-container .navigate-pages{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.data-table-container .navigate-pages .btn{
+    height: 35px;
+    min-width: 35px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 16px;
+    border: 1px solid var(--card-color);
+    background-color: var(--card-color);
+}
+
+.data-table-container .navigate-pages .btn > *{
+    color: var(--base-color);
+    fill: var(--base-color);
+}
+
+.data-table-container .navigate-pages .btn.prev,
+.data-table-container .navigate-pages .btn.next{
+    padding: 5px 12px;
+}

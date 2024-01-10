@@ -64,5 +64,10 @@
 }
 
 .wrapper.has-sidenav .child-container {
-    padding: 25px;
+    padding: 10px 25px 25px;
+    height: calc(100% - 65px);
+}
+
+.wrapper.has-sidenav .child-container .root-wrapper{
+    height: 100%;
 }

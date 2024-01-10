@@ -12,6 +12,7 @@
 @import "./styles/breadcrumb.css";
 @import "./styles/forms.css";
 @import "./styles/sidenav.css";
+@import "./styles/data-table.css";
 
 :root {
   /* --base-color: #edeec9; */
@@ -97,4 +98,15 @@ body {
 .product-quantity input::-webkit-inner-spin-button,
 .product-quantity input::-webkit-outer-spin-button {
   appearance: none;
+}
+
+
+.grid-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.grid-container .data-table{
+  flex: 1;
 }

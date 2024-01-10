@@ -46,3 +46,13 @@
   .breadcrumb-link {
   padding-left: 4px;
 }
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .page-title{
+  font-size: 25px;
+}

@@ -21,7 +21,6 @@ type ReduxProviderType = {
 
 export default function ReduxProvider({ children }: ReduxProviderType) {
     const adminUser = store.getState().auth.user_info?.is_admin;
-    console.log(adminUser);
     return (
         <Provider store={store}>
             <div className={`wrapper ${adminUser ? 'has-sidenav' : ''}`}>
