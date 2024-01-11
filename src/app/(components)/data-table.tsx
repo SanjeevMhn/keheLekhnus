@@ -1,5 +1,6 @@
 'use client'
 
+import Link from "next/link"
 import { FC } from "react"
 
 type DataTableType = {
@@ -31,7 +32,7 @@ const DataTable: FC<DataTableType> = ({ columns, data }) => {
                                     <td>
                                         <div className="data-action">
                                             <button className="btn delete">Delete</button>
-                                            <button className="btn edit">Edit</button>
+                                            <Link role="button" href={`/admin/products/entry/${d.prod_id}`} className="btn edit text-center">Edit</Link>
                                         </div>
                                     </td>
                                     {

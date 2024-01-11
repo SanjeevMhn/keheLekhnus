@@ -4,12 +4,12 @@ import DataTable from "@/app/(components)/data-table";
 import { TAuthState } from "@/app/lib/auth/authSlice";
 import api from "@/app/service/interceptor/interceptor"
 import axios, { AxiosRequestConfig } from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function Page() {
     const [categories, setCategories] = useState<Array<any>>([]);
-    const authUser:TAuthState = useSelector((state: any) => state.auth);
+    const authUser: TAuthState = useSelector((state: any) => state.auth);
     const categoriesFetched = useRef<boolean>(false)
     const crumbs: Array<TBreadCrumb> = [
         {
@@ -42,13 +42,17 @@ export default function Page() {
     ]
 
     const getCategories = async () => {
-        const response = await api.get('http://localhost:8080/api/v1/categories')
-        const data = await response.data.categories;
-        setCategories([...categories, ...data]);
+        try {
+            const response = await api.get('http://localhost:8080/api/v1/categories')
+            const data = await response.data.categories;
+            setCategories([...categories, ...data]);
+        }catch(e){
+            console.error(e);
+        }
     }
 
     useEffect(() => {
-        if(!categoriesFetched.current){
+        if (!categoriesFetched.current) {
             getCategories();
         }
         return () => {

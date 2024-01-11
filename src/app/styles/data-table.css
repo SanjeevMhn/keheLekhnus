@@ -5,6 +5,55 @@
     height: calc(100% - 55px); 
 }
 
+.entry-form-container{
+    display: flex;
+    gap: 25px;
+    padding: 25px;
+}
+
+.entry-form-container .product-img-container{
+    flex: 0 0 32%;
+    border: 1px solid var(--card-color);
+    border-radius: 30px;
+    padding: 15px;
+    max-height: 550px;
+    height: auto;
+}
+
+.entry-form-container .product-img-container .upload-img-msg{
+    background-color: #005bccab;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--base-color);
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.entry-form-container .product-img-container .upload-img-msg input{
+    display: none;
+}
+
+.entry-form-container .product-img-container .img-container{
+    background-color: #005bccab;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.entry-form-container .product-img-container img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
 .data-table{
     height: calc(100% - 60px); 
     overflow-y: auto;
