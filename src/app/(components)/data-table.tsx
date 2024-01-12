@@ -5,10 +5,21 @@ import { FC } from "react"
 
 type DataTableType = {
     columns: Array<{ title: string, field: string }>,
-    data: Array<any>
+    data: Array<any>,
+    onEditAction: (id: number) => void,
+    onDeleteAction: (id: number) => void,
 }
 
-const DataTable: FC<DataTableType> = ({ columns, data }) => {
+const DataTable: FC<DataTableType> = ({ columns, data, onEditAction, onDeleteAction }) => {
+
+    const sendEditData = (id: number) => {
+        onEditAction(id);
+    }
+
+    const sendDeleteData = (id: number) => {
+        onDeleteAction(id);
+    }
+
     return (
         <div className="data-table-container">
             <div className="data-table">
@@ -31,8 +42,8 @@ const DataTable: FC<DataTableType> = ({ columns, data }) => {
                                     <td>{index + 1}</td>
                                     <td>
                                         <div className="data-action">
-                                            <button className="btn delete">Delete</button>
-                                            <Link role="button" href={`/admin/products/entry/${d.prod_id}`} className="btn edit text-center">Edit</Link>
+                                            <button onClick={() => sendDeleteData(d.prod_id)} className="btn delete">Delete</button>
+                                            <button onClick={() => sendEditData(d.prod_id)} className="btn edit text-center">Edit</button>
                                         </div>
                                     </td>
                                     {
