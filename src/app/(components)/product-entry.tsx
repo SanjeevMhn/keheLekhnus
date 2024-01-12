@@ -6,9 +6,11 @@ import { useDispatch } from "react-redux";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import { hideConfirm } from "../lib/confirmation/confirmationSlice";
 import { AxiosRequestConfig } from "axios";
+import { useRouter } from "next/navigation";
 
 const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const [productImg, setProductImg] = useState<string | null>(null);
     const [categories, setCategories] = useState<any>([]);
     const productFetched = useRef<boolean>(false)
@@ -65,9 +67,9 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
         try {
             const response = await api.get(`http://localhost:8080/api/v1/products/id/${id}`);
             const data = await response.data.product[0];
-            const updatedProductDetail = { ...productDetail, ...data };
-            setProductDetail(updatedProductDetail);
-            console.log(updatedProductDetail);
+            // const updatedProductDetail = { ...productDetail, ...data };
+            setProductDetail(data);
+            // console.log(updatedProductDetail);
             setCrumbs([...crumbs, { name: data.prod_name, link: `/admin/products/entry/${data.prod_id}` }])
             setProductImg(data.prod_img as string)
         } catch (e) {
@@ -86,11 +88,6 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
             }
             reader.readAsDataURL(file)
         }
-    }
-
-    const handleRadioChange = (value: boolean) => {
-        const updatedValue = { ...productDetail, prod_inStock: value };
-        setProductDetail(updatedValue);
     }
 
     const handleFormSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
@@ -137,31 +134,17 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
             formData.append('prod_name', productDetail.prod_name);
             formData.append('prod_category', productDetail.prod_category);
             formData.append('prod_price', productDetail.prod_price);
-            formData.append('prod_inStock', productDetail.prod_inStock);
-            formData.append('image', productDetail.prod_img);
-
-            // const productAddConfig: AxiosRequestConfig = {
-            //     url: 'http://localhost:8080/api/v1/products/',
-            //     method: 'post',
-            //     data: {
-            //         formData
-            //     },
-            //     withCredentials: true
-            // }
-
+            formData.append('prod_inStock',productDetail.prod_inStock);
             if (editMode) {
                 const response = await api.patch(`http://localhost:8080/api/v1/products/id/${productDetail.prod_id}`, formData);
-                const data = response.data;
-                for (let item in formData) {
-                    console.log(item);
-                }
-                if (response.status == 204) {
-                    dispatch(showNotification({ message: 'Product Added Successfully', type: 'success' }));   
-                    getProductDetail(productDetail.prod_id);
+                if (response.status == 200) {
+                    dispatch(showNotification({ message: 'Product updated Successfully', type: 'success' }));   
+                    router.push('/admin/products');
                 }
 
                 return;
             }
+            formData.append('image', productDetail.prod_img);
             const response = await api.post('http://localhost:8080/api/v1/products', formData);
             const data = response.data;
             if (response.status == 201) {
@@ -173,8 +156,7 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
                     'prod_img': null,
                     'prod_inStock': true
                 } 
-                const updatedDetail = { ...productDetail, ...initialState }
-                setProductDetail(updatedDetail)
+                router.push('/admin/products');
             }
         }
     }
@@ -217,7 +199,7 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
                                     <option value="default">--Choose Category--</option>
                                     {
                                         categories.map((cat: any, index: number) => (
-                                            <option value={cat.cat_id} key={cat.cat_id} selected={cat.category_name == productDetail?.prod_category}>{cat.category_name}</option>
+                                            <option value={cat.category_name} key={cat.cat_id} selected={cat.category_name == productDetail?.prod_category}>{cat.category_name}</option>
                                         ))
                                     }
                                 </select>
@@ -233,11 +215,11 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
                                 <div className="radio-container">
                                     <div className="option">
                                         <label htmlFor="true" className="form-label">True</label>
-                                        <input type="radio" name="inStock" id="true" className="form-radio" value="true" checked={productDetail.prod_inStock} onChange={() => handleRadioChange(true)} />
+                                        <input type="radio" name="inStock" id="true" className="form-radio" value="true" checked={productDetail.prod_inStock === true} onChange={() => setProductDetail({...productDetail, prod_inStock: true})} />
                                     </div>
                                     <div className="option">
                                         <label htmlFor="false" className="form-label">False</label>
-                                        <input type="radio" name="inStock" id="false" className="form-radio" value="false" checked={!productDetail.prod_inStock} onChange={() => handleRadioChange(false)} />
+                                        <input type="radio" name="inStock" id="false" className="form-radio" value="false" checked={productDetail.prod_inStock === false} onChange={() => setProductDetail({...productDetail, prod_inStock: false})} />
                                     </div>
                                 </div>
                             </div>
@@ -250,7 +232,7 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
                         </div>
                     </div>
                     <div className="form-actions !justify-end">
-                        <button type="cancel" className="btn-outline-md">Cancel</button>
+                        {/* <button type="button" className="btn-outline-md">Cancel</button> */}
                         <button type="submit" className="btn-primary">Submit</button>
                     </div>
                 </form>
