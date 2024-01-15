@@ -4,7 +4,7 @@ import CategoryEntry from "@/app/(components)/category-entry";
 import DataTable, { PagerConfig } from "@/app/(components)/data-table";
 import { TAuthState } from "@/app/lib/auth/authSlice";
 import { showConfirm } from "@/app/lib/confirmation/confirmationSlice";
-import { showDialog } from "@/app/lib/dialog/dialogSlice";
+import { DialogState, showDialog } from "@/app/lib/dialog/dialogSlice";
 import { showNotification } from "@/app/lib/notifications/notificationSlice";
 import api from "@/app/service/interceptor/interceptor"
 import axios, { AxiosRequestConfig } from "axios";
@@ -23,6 +23,7 @@ export default function Page() {
         totalPages: 1
     })
     const authUser: TAuthState = useSelector((state: any) => state.auth);
+    const dialogState: DialogState = useSelector((state: any) => state.dialog);
     const dispatch = useDispatch();
     const categoriesFetched = useRef<boolean>(false)
     const crumbs: Array<TBreadCrumb> = [
@@ -102,16 +103,17 @@ export default function Page() {
         dispatch(showConfirm({
             message: 'Delete this category?',
             onConfirm: async () => {
-                try{
+                try {
                     const response = await api.delete(`http://localhost:8080/api/v1/categories/id/${id}`);
-                    if(response.status == 200){
+                    if (response.status == 200) {
                         dispatch(showNotification({
                             message: 'Category deleted successfully',
                             type: 'success'
                         }))
+                        getCategories();
                         router.refresh();
                     }
-                }catch(e){
+                } catch (e) {
                     console.error(e)
                 }
             }
