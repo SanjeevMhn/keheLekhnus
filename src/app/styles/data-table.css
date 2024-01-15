@@ -180,7 +180,7 @@
 
 .data-table-pager .page-size{
     height: 35px;
-    width: 35px;
+    width: 50px;
 }
 
 .data-table-pager .page-size input{
@@ -218,4 +218,9 @@
 .data-table-container .navigate-pages .btn.prev,
 .data-table-container .navigate-pages .btn.next{
     padding: 5px 12px;
+}
+
+.data-table-container .navigate-pages .btn.disabled{
+    cursor: not-allowed;
+    opacity: .65;
 }

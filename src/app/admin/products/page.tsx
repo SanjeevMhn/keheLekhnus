@@ -1,6 +1,6 @@
 'use client'
 import BreadCrumb, { TBreadCrumb } from "@/app/(components)/breadcrumb";
-import DataTable from "@/app/(components)/data-table";
+import DataTable, { Columns, PagerConfig } from "@/app/(components)/data-table";
 import { showConfirm } from "@/app/lib/confirmation/confirmationSlice";
 import { showNotification } from "@/app/lib/notifications/notificationSlice";
 import api from "@/app/service/interceptor/interceptor";
@@ -12,6 +12,11 @@ export default function Page() {
     // const response = await fetch('http://localhost:8080/api/v1/products', { cache: 'no-cache', headers:{ 'Cache-Control' : 'no-cache' } })
     // const { products } = await response?.json();
     const [products, setProducts] = useState<Array<any>>([])
+    const [pagerConfig, setPagerConfig] = useState<PagerConfig>({
+        currentPage: 1,
+        pageSize: 6,
+        totalPages: 1
+    })
     const productsFetched = useRef<boolean>(false);
     const router = useRouter();
     const dispatch = useDispatch();
@@ -19,8 +24,14 @@ export default function Page() {
     const getProducts = async () => {
         try {
             const response = await api.get('http://localhost:8080/api/v1/products');
-            const data = await response.data.products;
-            setProducts(data);
+            const data = await response.data;
+            setProducts(data.products);
+            setPagerConfig({
+                currentPage: data.currentPage,
+                totalPages: data.totalPages,
+                pageSize: data.pageSize
+            })
+
         } catch (e) {
             console.error(e);
         }
@@ -47,7 +58,7 @@ export default function Page() {
         },
     ]
 
-    const gridCol: Array<{ title: string, field: string }> = [
+    const gridCol: Array<Columns> = [
         {
             title: 'id',
             field: 'prod_id',
@@ -80,7 +91,7 @@ export default function Page() {
 
     const handleProductDelete = (id: number) => {
         dispatch(showConfirm({
-            message: 'Do you want to delete this product', 
+            message: 'Do you want to delete this product',
             onConfirm: async () => {
                 try {
                     const response = await api.delete(`http://localhost:8080/api/v1/products/id/${id}`);
@@ -92,8 +103,38 @@ export default function Page() {
                     console.error(e);
                 }
             }
-        }))       
+        }))
 
+    }
+
+    const handlePagination = async (page: number) => {
+        try {
+            const response = await api.get(`http://localhost:8080/api/v1/products?page=${page}&pageSize=${pagerConfig.pageSize}`);
+            const data = await response.data;
+            setProducts(data.products);
+            setPagerConfig({
+                currentPage: data.currentPage,
+                totalPages: data.totalPages,
+                pageSize: data.pageSize
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const handleChangePageSize = async (pageSize: number) => {
+        try {
+            const response = await api.get(`http://localhost:8080/api/v1/products?page=${1}&pageSize=${pageSize}`);
+            const data = await response.data;
+            setProducts(data.products);
+            setPagerConfig({
+                currentPage: data.currentPage,
+                totalPages: data.totalPages,
+                pageSize: data.pageSize
+            })
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     return (
@@ -102,7 +143,7 @@ export default function Page() {
                 <h2 className="page-title">Products List</h2>
                 <BreadCrumb crumbs={crumbs} />
             </div>
-            <DataTable columns={gridCol} data={products} onEditAction={handleProductEdit} onDeleteAction={handleProductDelete} />
+            <DataTable columns={gridCol} data={products} pagerConfig={pagerConfig} onEditAction={handleProductEdit} onDeleteAction={handleProductDelete} onPaginate={handlePagination} onPageSizeChange={handleChangePageSize} />
         </div>
     )
 }
