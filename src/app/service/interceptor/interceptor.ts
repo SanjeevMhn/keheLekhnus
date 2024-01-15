@@ -10,12 +10,9 @@ export const injectStore = (_store:any) => {
 const api:AxiosInstance = axios.create();
 
 api.interceptors.request.use(
-    (config) => {
+    (config:any | AxiosRequestConfig) => {
         const accessToken = store.getState().auth.user_token;
-        if(accessToken && accessToken !== null){
-            config.headers.Authorization = `Bearer ${accessToken}`;
-            return config;
-        }
+        config.headers.Authorization = `Bearer ${accessToken}`;
         return config;
     },
     (error) => {

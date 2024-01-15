@@ -65,8 +65,8 @@ const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, onEditAction
                                     <td>{index + 1}</td>
                                     <td>
                                         <div className="data-action">
-                                            <button onClick={() => sendDeleteData(d.prod_id)} className="btn delete">Delete</button>
-                                            <button onClick={() => sendEditData(d.prod_id)} className="btn edit text-center">Edit</button>
+                                            <button onClick={() => sendDeleteData(d.prod_id || d.cat_id)} className="btn delete">Delete</button>
+                                            <button onClick={() => sendEditData(d.prod_id || d.cat_id )} className="btn edit text-center">Edit</button>
                                         </div>
                                     </td>
                                     {

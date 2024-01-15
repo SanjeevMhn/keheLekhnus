@@ -1,6 +1,6 @@
 'use client';
 import { useSelector, useDispatch } from "react-redux";
-import { DialogState, hideDialog, initialDialogState } from "../lib/dialog/dialogSlice";
+import { DialogComponentType, DialogState, hideDialog, initialDialogState } from "../lib/dialog/dialogSlice";
 
 
 const Dialog = () => {
@@ -12,7 +12,7 @@ const Dialog = () => {
         dispatch(hideDialog());
     }
 
-    const DynamicComponent: (() => JSX.Element ) | null | undefined  = state?.component;
+    const DynamicComponent: DialogComponentType  = state?.component;
 
 
 

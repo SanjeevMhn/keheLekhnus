@@ -53,6 +53,12 @@
   align-items: center;
 }
 
+.header .group{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .header .page-title{
   font-size: 25px;
 }
