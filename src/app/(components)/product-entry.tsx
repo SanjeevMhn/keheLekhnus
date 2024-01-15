@@ -8,11 +8,12 @@ import { hideConfirm } from "../lib/confirmation/confirmationSlice";
 import { AxiosRequestConfig } from "axios";
 import { useRouter } from "next/navigation";
 
-const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
+const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_id': number, 'prod_cat_name': string }> }> = ({ productId, prod_categories }) => {
     const dispatch = useDispatch();
     const router = useRouter();
     const [productImg, setProductImg] = useState<string | null>(null);
-    const [categories, setCategories] = useState<any>([]);
+    const [productNewImg, setProductNewImg] = useState<File | null>(null);
+    const [categories, setCategories] = useState<Array<{ 'prod_cat_id': number, 'prod_cat_name': string }>>(prod_categories);
     const productFetched = useRef<boolean>(false)
     const [editMode, setEditMode] = useState<boolean>(false);
     const [productDetail, setProductDetail] = useState<any>({
@@ -40,7 +41,6 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
 
     useEffect(() => {
         if (!productFetched.current) {
-            getCategories();
             if (productId) {
                 setEditMode(true)
                 getProductDetail(productId)
@@ -52,16 +52,6 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
         }
 
     }, [])
-
-    const getCategories = async () => {
-        try {
-            const response = await api.get('http://localhost:8080/api/v1/categories');
-            const data = await response.data.categories;
-            setCategories([...categories, ...data])
-        } catch (e) {
-            console.error(e)
-        }
-    }
 
     const getProductDetail = async (id: number) => {
         try {
@@ -85,6 +75,18 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
                 setProductImg(reader.result as string);
                 const updatedDetail = { ...productDetail, prod_img: file }
                 setProductDetail(updatedDetail);
+            }
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const handleNewImgUpload = (e:ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if(file){
+            const reader = new FileReader();
+            reader.onload = () => {
+                setProductNewImg(file);
+                setProductImg(reader.result as string);
             }
             reader.readAsDataURL(file)
         }
@@ -134,16 +136,20 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
             formData.append('prod_name', productDetail.prod_name);
             formData.append('prod_category', productDetail.prod_category);
             formData.append('prod_price', productDetail.prod_price);
-            formData.append('prod_inStock',productDetail.prod_inStock);
+            formData.append('prod_inStock', productDetail.prod_inStock);
             if (editMode) {
+                if(productNewImg !== null){
+                    formData.append('image', productNewImg);
+                }
                 const response = await api.patch(`http://localhost:8080/api/v1/products/id/${productDetail.prod_id}`, formData);
                 if (response.status == 200) {
-                    dispatch(showNotification({ message: 'Product updated Successfully', type: 'success' }));   
+                    dispatch(showNotification({ message: 'Product updated Successfully', type: 'success' }));
                     router.push('/admin/products');
                 }
 
                 return;
             }
+
             formData.append('image', productDetail.prod_img);
             const response = await api.post('http://localhost:8080/api/v1/products', formData);
             const data = response.data;
@@ -155,7 +161,7 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
                     'prod_price': null,
                     'prod_img': null,
                     'prod_inStock': true
-                } 
+                }
                 router.push('/admin/products');
             }
         }
@@ -179,9 +185,13 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
                                 <input type="file" name="upload_img" id="upload_img" onChange={handleImgUpload} />
                             </label>
                         ) : (
-                            <div className="img-container">
-                                <img src={productImg} alt="" />
-                            </div>
+
+                            <label className="upload-img-msg" htmlFor="upload_img">
+                                <div className="img-container">
+                                    <img src={productImg} alt="" />
+                                </div>
+                                <input type="file" name="upload_img" id="upload_img" onChange={handleNewImgUpload} />
+                            </label>
                         )
                     }
 
@@ -199,7 +209,7 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
                                     <option value="default">--Choose Category--</option>
                                     {
                                         categories.map((cat: any, index: number) => (
-                                            <option value={cat.category_name} key={cat.cat_id} selected={cat.category_name == productDetail?.prod_category}>{cat.category_name}</option>
+                                            <option value={cat.prod_cat_name} key={cat.prod_cat_id} selected={cat.prod_cat_name == productDetail?.prod_category}>{cat.prod_cat_name}</option>
                                         ))
                                     }
                                 </select>
@@ -215,11 +225,11 @@ const ProductEntry: FC<{ productId: number }> = ({ productId }) => {
                                 <div className="radio-container">
                                     <div className="option">
                                         <label htmlFor="true" className="form-label">True</label>
-                                        <input type="radio" name="inStock" id="true" className="form-radio" value="true" checked={productDetail.prod_inStock === true} onChange={() => setProductDetail({...productDetail, prod_inStock: true})} />
+                                        <input type="radio" name="inStock" id="true" className="form-radio" value="true" checked={productDetail.prod_inStock === true} onChange={() => setProductDetail({ ...productDetail, prod_inStock: true })} />
                                     </div>
                                     <div className="option">
                                         <label htmlFor="false" className="form-label">False</label>
-                                        <input type="radio" name="inStock" id="false" className="form-radio" value="false" checked={productDetail.prod_inStock === false} onChange={() => setProductDetail({...productDetail, prod_inStock: false})} />
+                                        <input type="radio" name="inStock" id="false" className="form-radio" value="false" checked={productDetail.prod_inStock === false} onChange={() => setProductDetail({ ...productDetail, prod_inStock: false })} />
                                     </div>
                                 </div>
                             </div>
