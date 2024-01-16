@@ -4,7 +4,7 @@ import CategoryEntry from "@/app/(components)/category-entry";
 import DataTable, { PagerConfig } from "@/app/(components)/data-table";
 import { TAuthState } from "@/app/lib/auth/authSlice";
 import { showConfirm } from "@/app/lib/confirmation/confirmationSlice";
-import { DialogState, showDialog } from "@/app/lib/dialog/dialogSlice";
+import { DialogState, hideDialog, showDialog } from "@/app/lib/dialog/dialogSlice";
 import { showNotification } from "@/app/lib/notifications/notificationSlice";
 import api from "@/app/service/interceptor/interceptor"
 import axios, { AxiosRequestConfig } from "axios";
@@ -80,6 +80,12 @@ export default function Page() {
         }
 
     }, [])
+
+    useEffect(() => {
+        if(dialogState.result){
+            getCategories();
+        }
+    },[dialogState])
 
     const handleAddCategory = () => {
         dispatch(showDialog({

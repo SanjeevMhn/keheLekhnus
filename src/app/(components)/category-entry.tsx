@@ -1,7 +1,7 @@
 'use client'
 
 import { useDispatch, useSelector } from "react-redux"
-import { DialogState, hideDialog } from "../lib/dialog/dialogSlice";
+import { DialogState, hideDialog, resultDialog } from "../lib/dialog/dialogSlice";
 import { ChangeEvent, FC, FormEvent, useEffect, useRef, useState } from "react";
 import api from "../service/interceptor/interceptor";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -56,8 +56,8 @@ const CategoryEntry: FC<{ catId?: number }> = ({ catId }) => {
                 const data = await editResponse.data
                 if (editResponse.status == 201) {
                     dispatch(showNotification({ message: 'Category Updated Successfully', type: 'success' }))
-                    dispatch(hideDialog());
-                    router.push('/admin/products/categories');
+                    dispatch(resultDialog())
+                    // dispatch(hideDialog());
                     router.refresh();
                 }
                 return;
@@ -66,9 +66,9 @@ const CategoryEntry: FC<{ catId?: number }> = ({ catId }) => {
             const data = await response.data;
             if (response.status == 201) {
                 dispatch(showNotification({ message: 'Category Added Successfully', type: 'success' }))
-                dispatch(hideDialog());
+                dispatch(resultDialog())
+                // dispatch(hideDialog());
                 router.refresh();
-                router.push('/admin/products/categories');
             }
 
         } catch (e) {

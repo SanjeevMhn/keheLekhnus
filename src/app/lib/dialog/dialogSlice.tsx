@@ -12,14 +12,16 @@ export type DialogState = {
 	show: boolean, 
 	title: string | null,
 	data?: any | null,
-	component: DialogComponentType
+	component: DialogComponentType,
+	result?: any | boolean | null
 }
 
 export const initialDialogState: DialogState = {
 	show: false,
 	title: null,
 	data: null,
-	component: null
+	component: null,
+	result: null,
 }
 
 export const dialogReducer = createSlice({
@@ -37,9 +39,16 @@ export const dialogReducer = createSlice({
 
 		hideDialog: () => {
 			return initialDialogState
-		}
+		},
+
+		resultDialog: () => {
+			return {
+				...initialDialogState,
+				result: true 
+			};
+		},
 	}
 });
 
-export const { showDialog, hideDialog } = dialogReducer.actions
+export const { showDialog, hideDialog, resultDialog } = dialogReducer.actions
 export default dialogReducer.reducer;
