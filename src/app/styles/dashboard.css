@@ -12,6 +12,7 @@
       -5px -5px 10px #00000045;
     display: grid;
     grid-template-columns: auto auto;
+    row-gap: 10px;
     overflow: hidden;
 }
 
@@ -22,7 +23,7 @@
     align-items: flex-end;
     grid-row: 1;
     grid-column: 2;
-    padding: 15px 15px 15px 0;
+    padding: 15px 15px 0 0;
 }
 
 .dashboard-card-container .card .data-col .num{
@@ -37,18 +38,16 @@
 }
 
 .dashboard-card-container .card .icon-container{
-    aspect-ratio: 1 / 1;
     display: flex;
     justify-content: center;
     grid-row: 1;
-    grid-column: 1 / 2;
-    padding: 15px 0 15px 15px;
-    /* align-items: center; */
+    grid-column: 1;
+    align-items: center;
 }
 
 .dashboard-card-container .card .icon-container svg{
-    height: 50%;
-    width: 50%;
+    height: 45%;
+    width: 45%;
     fill: var(--base-color);
 }
 
