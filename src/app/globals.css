@@ -13,6 +13,7 @@
 @import "./styles/forms.css";
 @import "./styles/sidenav.css";
 @import "./styles/data-table.css";
+@import "./styles/dashboard.css";
 
 :root {
   /* --base-color: #edeec9; */
