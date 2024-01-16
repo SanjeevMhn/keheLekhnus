@@ -14,7 +14,7 @@ type ParamsType = {
 
 export default async function Page({ params }: { params: ParamsType }) {
   const response = await fetch(
-    "http://localhost:8080/api/v1/products/categories",
+    "http://localhost:8080/api/v1/products/categories", { cache: 'no-cache' }
   );
   const { categories } = await response.json();
 
