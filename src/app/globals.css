@@ -101,12 +101,34 @@ body {
 }
 
 
-.grid-container{
+.grid-container {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.grid-container .data-table{
+.grid-container .data-table {
   flex: 1;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.input-group input {
+  width: 100%;
+  font-size: 18px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  padding-right: 32px;
+  border: 1px solid var(--card-color);
+}
+
+.input-group .search-btn {
+  position: absolute;
+  right: 25px;
+  opacity: .5;
 }

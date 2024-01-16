@@ -176,7 +176,7 @@ const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_i
                 </h2>
                 <BreadCrumb crumbs={crumbs} />
             </div>
-            <div className="data-table-container entry-form-container">
+            <div className="entry-form-container">
                 <div className="product-img-container">
                     {
                         productImg === null ? (

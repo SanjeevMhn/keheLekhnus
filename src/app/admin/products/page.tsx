@@ -18,6 +18,7 @@ export default function Page() {
         totalPages: 1
     })
     const productsFetched = useRef<boolean>(false);
+    const [searchText, setSearchText] = useState<string | null>(null);
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -44,7 +45,28 @@ export default function Page() {
         return () => {
             productsFetched.current = true;
         }
-    })
+    }, [])
+
+    useEffect(() => {
+        const timeoutId = setTimeout(async () => {
+            try {
+                if (searchText !== null && searchText !== '') {
+                    const response = await api.get(`http://localhost:8080/api/v1/products/name?prod_name=${searchText}`);
+                    const data = await response.data;
+                    setProducts(data.products);
+                }else{
+                    getProducts();
+                }
+            } catch (e) {
+                console.error(e)
+            }
+        }, 900)
+
+        return () => {
+            clearTimeout(timeoutId);
+        }
+    }, [searchText])
+
 
 
     const crumbs: Array<TBreadCrumb> = [
@@ -62,6 +84,7 @@ export default function Page() {
         {
             title: 'id',
             field: 'prod_id',
+            hidden: true,
         },
         {
             title: 'image',
@@ -137,13 +160,17 @@ export default function Page() {
         }
     }
 
+    const handleSearch = (search: string) => {
+        setSearchText(search)
+    }
+
     return (
         <div className="grid-container">
             <div className="header">
                 <h2 className="page-title">Products List</h2>
                 <BreadCrumb crumbs={crumbs} />
             </div>
-            <DataTable columns={gridCol} data={products} pagerConfig={pagerConfig} onEditAction={handleProductEdit} onDeleteAction={handleProductDelete} onPaginate={handlePagination} onPageSizeChange={handleChangePageSize} />
+            <DataTable columns={gridCol} data={products} pagerConfig={pagerConfig} onEditAction={handleProductEdit} onDeleteAction={handleProductDelete} onPaginate={handlePagination} onPageSizeChange={handleChangePageSize} onSearch={handleSearch} />
         </div>
     )
 }

@@ -3,12 +3,24 @@
     height: 100%;
     border-radius: 12px;
     height: calc(100% - 55px); 
+    display: flex;
+    flex-direction: column;
+}
+
+.data-table-container .input-group{
+    display: inline-flex!important;
+    padding: 12px 15px;
+    margin: 0 0 0 auto;
 }
 
 .entry-form-container{
     display: flex;
     gap: 25px;
     padding: 25px;
+    box-shadow: 0 5px 10px #00000075;
+    height: 100%;
+    border-radius: 12px;
+    height: calc(100% - 55px); 
 }
 
 .entry-form-container .product-img-container{
@@ -55,7 +67,7 @@
 }
 
 .data-table{
-    height: calc(100% - 60px); 
+    height: calc(100% - 120px); 
     overflow-y: auto;
 }
 
@@ -91,7 +103,7 @@
 }
 
 .data-table table thead th:first-child{
-    border-top-left-radius: 12px;
+    /* border-top-left-radius: 12px; */
     width: 100px;
 }
 
@@ -100,7 +112,7 @@
 }
 
 .data-table table thead th:last-child{
-    border-top-right-radius: 12px;
+    /* border-top-right-radius: 12px; */
 }
 
 .data-table table thead th:not(:last-child)::after{

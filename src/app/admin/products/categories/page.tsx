@@ -1,7 +1,7 @@
 'use client'
 import BreadCrumb, { TBreadCrumb } from "@/app/(components)/breadcrumb";
 import CategoryEntry from "@/app/(components)/category-entry";
-import DataTable, { PagerConfig } from "@/app/(components)/data-table";
+import DataTable, { Columns, PagerConfig } from "@/app/(components)/data-table";
 import { TAuthState } from "@/app/lib/auth/authSlice";
 import { showConfirm } from "@/app/lib/confirmation/confirmationSlice";
 import { DialogState, hideDialog, showDialog } from "@/app/lib/dialog/dialogSlice";
@@ -26,6 +26,7 @@ export default function Page() {
     const dialogState: DialogState = useSelector((state: any) => state.dialog);
     const dispatch = useDispatch();
     const categoriesFetched = useRef<boolean>(false)
+    const [searchText, setSearchText] = useState<string | null>(null)
     const crumbs: Array<TBreadCrumb> = [
         {
             name: 'admin',
@@ -41,10 +42,11 @@ export default function Page() {
         }
     ]
 
-    const gridCol: Array<{ title: string, field: string }> = [
+    const gridCol: Array<Columns> = [
         {
             title: 'id',
-            field: 'cat_id'
+            field: 'cat_id',
+            hidden: true
         },
         {
             title: 'name',
@@ -86,6 +88,26 @@ export default function Page() {
             getCategories();
         }
     },[dialogState])
+
+    useEffect(() => {
+        const timeoutId = setTimeout(async () => {
+            try{
+                if(searchText !== null && searchText !== ''){   
+                    const response = await api.get(`http://localhost:8080/api/v1/categories/name?category_name=${searchText}`);
+                    const data = response.data;
+                    setCategories(data.categories);
+                }else{
+                    getCategories();
+                }
+            }catch(e){
+                console.error(e)
+            }
+        },900)
+
+        return () => {
+            clearTimeout(timeoutId)
+        }
+    },[searchText])
 
     const handleAddCategory = () => {
         dispatch(showDialog({
@@ -145,6 +167,10 @@ export default function Page() {
         getCategories(pageSize);
     }
 
+    const handleSearch = (search: string) => {
+        setSearchText(search);
+    }
+
 
     return (
         <div className="grid-container">
@@ -158,7 +184,7 @@ export default function Page() {
                 </button>
                 <BreadCrumb crumbs={crumbs} />
             </div>
-            <DataTable columns={gridCol} data={categories} pagerConfig={pagerConfig} onEditAction={handleCategoryEdit} onDeleteAction={handleCategoryDelete} onPaginate={handlePagination} onPageSizeChange={handleChangePageSize} />
+            <DataTable columns={gridCol} data={categories} pagerConfig={pagerConfig} onEditAction={handleCategoryEdit} onDeleteAction={handleCategoryDelete} onPaginate={handlePagination} onPageSizeChange={handleChangePageSize} onSearch={handleSearch} />
         </div>
     )
 }
