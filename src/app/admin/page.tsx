@@ -4,6 +4,8 @@ import { FC, useEffect, useRef, useState } from "react";
 import BreadCrumb, { TBreadCrumb } from "../(components)/breadcrumb";
 import api from "../service/interceptor/interceptor";
 import Link from "next/link";
+import { Columns } from "../(components)/data-table";
+import ProductOrderFrequencyGrid from "../(components)/product-order-frequency-grid";
 
 export default function Home() {
     const [totalProducts, setTotalProducts] = useState<number>(0);
@@ -14,42 +16,22 @@ export default function Home() {
 
     useEffect(() => {
         if (!dashboardFetched.current) {
-            getTotalProducts();
-            getTotalCategories();
-            getTotalOrders();
+            getTotalCount();
         }
         return () => {
             dashboardFetched.current = true;
         }
     }, [])
 
-    const getTotalProducts = async () => {
+    const getTotalCount = async () => {
         try {
             const response = await api.get('http://localhost:8080/api/v1/products/count');
             const data = await response.data;
-            setTotalProducts(data.count)
+            setTotalProducts(data.productCount)
+            setTotalCategories(data.categoryCount)
+            setTotalOrders(data.ordersCount)
         } catch (e) {
             console.error(e);
-        }
-    }
-
-    const getTotalCategories = async () => {
-        try {
-            const response = await api.get('http://localhost:8080/api/v1/products/categories/count');
-            const data = await response.data;
-            setTotalCategories(data.count)
-        } catch (e) {
-            console.error(e)
-        }
-    }
-
-    const getTotalOrders = async () => {
-        try {
-            const response = await api.get('http://localhost:8080/api/v1/orders/count');
-            const data = response.data;
-            setTotalOrders(data.count);
-        } catch (e) {
-            console.error(e)
         }
     }
 
@@ -121,9 +103,18 @@ export default function Home() {
             <div className="dashboard-card-container">
                 {
                     dashboardCards.map((card: CardType, index: any) => (
-                        <Card label={card.label} total={card.total} icon={card.icon} link={card.link} key={index} />
+                        <Card 
+                            label={card.label} 
+                            total={card.total} 
+                            icon={card.icon} 
+                            link={card.link} 
+                            key={index} 
+                        />
                     ))
                 }
+            </div>
+            <div className="dashboard-grid-container">
+                <ProductOrderFrequencyGrid />
             </div>
         </div>
     )

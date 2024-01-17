@@ -5,7 +5,7 @@ import { ChangeEvent, FC } from "react"
 export type Columns = {
     title: string,
     field: string
-    hidden?: boolean 
+    hidden?: boolean
 }
 
 export type PagerConfig = {
@@ -18,6 +18,8 @@ type DataTableType = {
     columns: Array<Columns>,
     data: Array<any>,
     pagerConfig: PagerConfig,
+    title?: string,
+    showActionCol?: boolean,
     onEditAction: (id: number) => void,
     onDeleteAction: (id: number) => void,
     onPaginate: (page: number) => void,
@@ -25,7 +27,7 @@ type DataTableType = {
     onSearch: (search: string) => void
 }
 
-const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, onEditAction, onDeleteAction, onPaginate, onPageSizeChange, onSearch }) => {
+const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showActionCol, onEditAction, onDeleteAction, onPaginate, onPageSizeChange, onSearch }) => {
 
     const sendEditData = (id: number) => {
         onEditAction(id);
@@ -39,9 +41,9 @@ const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, onEditAction
         onPaginate(page);
     }
 
-    const changePageSize = (e:ChangeEvent<HTMLInputElement>) => {
+    const changePageSize = (e: ChangeEvent<HTMLInputElement>) => {
         let pageSize = Number(e.target.value);
-        if(pageSize == 0) pageSize = 1;
+        if (pageSize == 0) pageSize = 1;
         onPageSizeChange(pageSize);
     }
 
@@ -52,25 +54,31 @@ const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, onEditAction
 
     return (
         <div className="data-table-container">
-            <div className="input-group">
-                <input type="text" name="" id="" className="form-control" placeholder="Search..." onChange={(e) => handleInputChange(e)} />
-                <button className="search-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
-                        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
-                    </svg>
-                </button>
+            <div className="data-table-header">
+                <h4 className="title">{title}</h4>
+                <div className="input-group">
+                    <input type="text" name="" id="" className="form-control" placeholder="Search..." onChange={(e) => handleInputChange(e)} />
+                    <button className="search-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+                            <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
+
             <div className="data-table">
                 <table>
                     <thead>
                         <tr>
                             <th>S.N</th>
-                            <th>Action</th>
+                            {showActionCol === false ? null : (
+                                <th>Action</th>
+                            )}
                             {
                                 columns.map((col: any, index: number) => (
                                     !col.hidden ? (
                                         <th key={index}>{col.title}</th>
-                                    ): null
+                                    ) : null
                                 ))
                             }
                         </tr>
@@ -80,41 +88,45 @@ const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, onEditAction
                             data.map((d: any, index: number) => (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>
-                                        <div className="data-action">
-                                            <button onClick={() => sendDeleteData(d[Object.keys(d)[0]])} className="btn delete">Delete</button>
-                                            <button onClick={() => sendEditData(d[Object.keys(d)[0]])} className="btn edit text-center">Edit</button>
-                                        </div>
-                                    </td>
+                                    {
+                                        showActionCol === false ? null : (
+                                            <td>
+                                                <div className="data-action">
+                                                    <button onClick={() => sendDeleteData(d[Object.keys(d)[0]])} className="btn delete">Delete</button>
+                                                    <button onClick={() => sendEditData(d[Object.keys(d)[0]])} className="btn edit text-center">Edit</button>
+                                                </div>
+                                            </td>
+                                        )
+                                    }
                                     {
                                         columns.map((col: any, index: number) => {
                                             return (
                                                 !col.hidden ? (
-                                                Object.keys(d).map((value: any, index: number) => {
-                                                    if (value == col.field) {
-                                                        if (col.title === 'image') {
-                                                            return (
-                                                                <td key={index}>
-                                                                    <div className="img-container">
-                                                                        <img src={d[value]} alt="" />
-                                                                    </div>
-                                                                </td>
-                                                            )
-                                                        }
-                                                        switch (typeof d[value]) {
-                                                            case 'boolean':
+                                                    Object.keys(d).map((value: any, index: number) => {
+                                                        if (value == col.field) {
+                                                            if (col.title === 'image') {
                                                                 return (
-                                                                    <td key={index}>{JSON.stringify(d[value])}</td>
+                                                                    <td key={index}>
+                                                                        <div className="img-container">
+                                                                            <img src={d[value]} alt="" />
+                                                                        </div>
+                                                                    </td>
                                                                 )
-                                                            default:
-                                                                return (
-                                                                    <td key={index}>{d[value]}</td>
-                                                                )
+                                                            }
+                                                            switch (typeof d[value]) {
+                                                                case 'boolean':
+                                                                    return (
+                                                                        <td key={index}>{JSON.stringify(d[value])}</td>
+                                                                    )
+                                                                default:
+                                                                    return (
+                                                                        <td key={index}>{d[value]}</td>
+                                                                    )
 
+                                                            }
                                                         }
-                                                    }
 
-                                                })): null
+                                                    })) : null
                                             )
 
                                         })
