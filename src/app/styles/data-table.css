@@ -2,7 +2,6 @@
     box-shadow: 0 5px 10px #00000075;
     height: 100%;
     border-radius: 12px;
-    height: calc(100% - 55px); 
     display: flex;
     flex-direction: column;
     overflow-x: auto;
@@ -98,6 +97,7 @@
     color: var(--base-color);
     padding: 10px 15px;
     font-size: 18px;
+    text-transform: capitalize;
 }
 
 .data-table table tbody td{
@@ -109,8 +109,11 @@
 .data-table table tbody td{
     text-align: left;
     font-weight: 500;
-    text-transform: capitalize;
     position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 270px;
 }
 
 .data-table table thead th:first-child{
@@ -248,4 +251,10 @@
 .data-table-container .navigate-pages .btn.disabled{
     cursor: not-allowed;
     opacity: .65;
+}
+
+@media screen and (min-width: 1370px) {
+    .data-table-container{
+        height: calc(100% - 55px); 
+    }
 }

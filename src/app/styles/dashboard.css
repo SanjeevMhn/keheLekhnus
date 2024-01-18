@@ -62,14 +62,16 @@
 }
 
 .dashboard-grid-container{
-    padding-top: 20px;
+    padding: 20px 0;
     display: grid;
     grid-template-columns: auto;
     gap: 20px;
+
 }
 
-@media (min-width: 990px){
+@media (min-width: 1370px){
     .dashboard-grid-container{
         grid-template-columns: repeat(2,auto);
+        padding-bottom: 0;
     }
 }
