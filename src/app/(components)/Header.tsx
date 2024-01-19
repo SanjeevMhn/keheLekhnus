@@ -40,14 +40,14 @@ export default function Header() {
       dispatch(showConfirm({
         message: 'Do you want to logout?',
         onConfirm: async () => {
-          const logoutRes: AxiosResponse = await axios(logoutConfig);
+          const logoutRes = await axios(logoutConfig);
           if (logoutRes.status == 200) {
             dispatch(logout());
             dispatch(showNotification({
               message: 'User Logged Out',
               type: 'success'
             }));
-            router.push('/');
+            router.push('');
             window.location.reload();
           }
         }

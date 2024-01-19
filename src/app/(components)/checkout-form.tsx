@@ -2,16 +2,41 @@
 import { useDispatch } from "react-redux";
 import { showDialog, hideDialog, initialDialogState } from "../lib/dialog/dialogSlice";
 import LoginForm from './login-form';
+import { useEffect, useRef, useState } from "react";
+import api from "../service/interceptor/interceptor";
 
 const CheckoutForm = () => {
     const dispatch = useDispatch();
+    const [paymentType, setPaymentType] = useState<any>([]);
+    const paymentTypesFetched = useRef<boolean>(false);
+
+    useEffect(() => {
+        if(!paymentTypesFetched.current){
+            getPaymentTypes();
+        }
+
+        return () => {
+            paymentTypesFetched.current = true;
+        }
+    },[])
+
+    const getPaymentTypes = async () => {
+        try{
+            const response = await api.get('http://localhost:8080/api/v1/orders/paymentTypes');
+            const data = await response.data;
+            setPaymentType(data.paymentTypes);
+        }catch(e){
+            console.error(e)
+        }
+    }
+
     const handleDialogClose = () => {
-        dispatch(hideDialog(initialDialogState))
+        dispatch(hideDialog())
     }
 
     const handleOpenLogin = () => {
         handleDialogClose();
-        dispatch(showDialog({show: true, title: 'Login', component: LoginForm}));
+        dispatch(showDialog({title: 'Login', component: LoginForm}));
     }
 
     return (
@@ -44,6 +69,19 @@ const CheckoutForm = () => {
                         <div className="form-group">
                             <label htmlFor="address" className="form-label">Address</label>
                             <input type="text" id="address" className="form-control" />
+                        </div>
+                    </div>
+                    <div className="form-row two-col">
+                        <div className="form-group">
+                            <label htmlFor="payment_type" className="form-label">Payment Type</label>
+                            <select name="payment_type" id="payment_type" className="form-control">
+                                <option value="default">--Choose Payment Type</option>
+                                {
+                                    paymentType.map((payment: any, index: number) => (
+                                        <option value={payment.payment_id} key={index} className="capitalized">{payment.payment_type}</option>
+                                    ))
+                                }
+                            </select>
                         </div>
                     </div>
                 </div>
