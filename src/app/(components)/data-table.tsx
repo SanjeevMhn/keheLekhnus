@@ -1,11 +1,13 @@
 'use client'
 
 import { ChangeEvent, FC } from "react"
+import ReactHtmlParser from 'react-html-parser';
 
 export type Columns = {
     title: string,
     field: string
-    hidden?: boolean
+    hidden?: boolean,
+    customHTML?: any
 }
 
 export type PagerConfig = {
@@ -29,6 +31,7 @@ type DataTableType = {
 
 const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showActionCol, onEditAction, onDeleteAction, onPaginate, onPageSizeChange, onSearch }) => {
 
+    const parser = new DOMParser();
     const sendEditData = (id: number) => {
         onEditAction(id);
     }
@@ -99,10 +102,11 @@ const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showA
                                         )
                                     }
                                     {
-                                        columns.map((col: any, index: number) => {
+                                        columns.map((col: Columns, index: number) => {
                                             return (
                                                 !col.hidden ? (
                                                     Object.keys(d).map((value: any, index: number) => {
+
                                                         if (value == col.field) {
                                                             if (col.title === 'image') {
                                                                 return (
@@ -110,6 +114,13 @@ const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showA
                                                                         <div className="img-container">
                                                                             <img src={d[value]} alt="" />
                                                                         </div>
+                                                                    </td>
+                                                                )
+                                                            }
+                                                            if (col.customHTML && col.customHTML !== null) {
+                                                                return (
+                                                                    <td key={index}>
+                                                                        {ReactHtmlParser((col.customHTML.replaceAll('{0}', d[col.field])), 'text/html')}
                                                                     </td>
                                                                 )
                                                             }

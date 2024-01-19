@@ -133,3 +133,30 @@ body {
   right: 25px;
   opacity: .5;
 }
+
+
+.status{
+  padding: 5px 10px;
+  color: #fff;
+  border-radius: 100vh;
+  font-size: 15px;
+  border: 2px solid;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.status.CANCELLED{
+  border-color: rgb(255, 0, 0);
+  background-color: rgba(255, 0, 0, 0.582);
+}
+
+.status.COMPLETED{
+  border-color: rgb(0, 93, 0);
+  background-color: rgba(28, 128, 0, 0.484);
+}
+
+.status.PENDING{
+  border-color: rgb(255, 158, 0);
+  background-color: rgba(255, 158, 0, 0.54);
+}

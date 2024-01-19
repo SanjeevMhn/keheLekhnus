@@ -30,7 +30,8 @@ export default function Page() {
         },
         {
             title: 'Order Status',
-            field: 'order_status'
+            field: 'order_status',
+            customHTML: "<div class='status {0}'>{0}</div>"
         },
         {
             title: 'User Name',
@@ -58,7 +59,8 @@ export default function Page() {
         },
         {
             title: 'Payment Status',
-            field: 'payment_status'
+            field: 'payment_status',
+            customHTML: "<div class='status {0}'>{0}</div>"
         },
         {
             title: 'Payment Type',
