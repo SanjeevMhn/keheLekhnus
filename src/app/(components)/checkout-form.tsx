@@ -80,10 +80,18 @@ const CheckoutForm = () => {
         })
 
         if (name !== null && name !== '') {
-            setCheckoutFormData({
-                ...checkoutFormData,
-                user_name: name
-            })
+            if(name.length >= 8){
+                 setCheckoutFormData({
+                    ...checkoutFormData,
+                    user_name: name
+                })   
+            }else{
+                setCheckoutFormErr({
+                    ...checkoutFormErr,
+                    user_name: 'User name cannot be less than 5 characters'
+                })
+            }
+           
         } else {
             setCheckoutFormErr({
                 ...checkoutFormErr,
