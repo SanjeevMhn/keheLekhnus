@@ -198,7 +198,7 @@ const CheckoutForm = () => {
         e.preventDefault();
         let errCount = 0;
         Object.keys(checkoutFormData).map((value: any, index: number) => {
-            if (checkoutFormData[value] === null) {
+            if (checkoutFormData[value] === null || checkoutFormData[value] === 'default') {
                 errCount += 1;
                 setCheckoutFormErr((prev) => ({
                     ...prev,
