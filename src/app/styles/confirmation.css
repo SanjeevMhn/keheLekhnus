@@ -11,6 +11,33 @@
     z-index: 100;
 }
 
+.confirmation-overlay .order-bill {
+    width: 210mm;
+    height: auto;
+    background: var(--base-color);
+    position: relative;
+}
+
+.confirmation-overlay .order-bill .close-btn {
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    background: var(--card-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -16px;
+    right: -16px;
+}
+
+
+.confirmation-overlay .order-bill .close-btn svg {
+    fill: #fff;
+    width: 50%;
+    height: auto;
+}
+
 .confirmation-overlay .confirmation-box {
     border-radius: 8px;
     max-width: 400px;
@@ -18,28 +45,28 @@
     overflow: hidden;
 }
 
-.confirmation-overlay .confirmation-box.dialog{
+.confirmation-overlay .confirmation-box.dialog {
     max-width: 550px;
     max-height: 600px;
     height: auto;
     /* height: 90%; */
 }
 
-.confirmation-overlay .confirmation-box .confirm-header{
+.confirmation-overlay .confirmation-box .confirm-header {
     background-color: var(--card-color);
     display: flex;
     justify-content: flex-end;
 }
 
-.confirmation-overlay .confirmation-box.dialog .confirm-header{
+.confirmation-overlay .confirmation-box.dialog .confirm-header {
     justify-content: unset;
 }
 
-.confirmation-overlay .confirmation-box.dialog .confirm-header .title{
+.confirmation-overlay .confirmation-box.dialog .confirm-header .title {
     margin: 0 auto;
 }
 
-.confirmation-overlay .confirmation-box .confirm-header .close-btn{
+.confirmation-overlay .confirmation-box .confirm-header .close-btn {
     fill: var(--base-color);
     display: flex;
     align-items: center;
@@ -47,13 +74,13 @@
     padding: 8px;
 }
 
-.confirmation-overlay .confirmation-box .confirm-header .close-btn svg{
+.confirmation-overlay .confirmation-box .confirm-header .close-btn svg {
     height: 20px;
     width: 20px;
 }
 
-.confirmation-overlay .confirmation-box .confirm-body{
-    padding: 20px 20px 0; 
+.confirmation-overlay .confirmation-box .confirm-body {
+    padding: 20px 20px 0;
     background-color: var(--base-color);
 }
 
@@ -89,25 +116,25 @@
     color: var(--card-color);
 }
 
-.confirmation-overlay .confirmation-box.dialog .confirm-header{
+.confirmation-overlay .confirmation-box.dialog .confirm-header {
     align-items: center;
     padding-left: 10px;
 }
 
-.confirmation-overlay .confirmation-box.dialog .confirm-header .title{
+.confirmation-overlay .confirmation-box.dialog .confirm-header .title {
     color: var(--base-color);
     font-size: 20px;
 }
 
-.confirmation-overlay .confirmation-box.dialog .confirm-body{
+.confirmation-overlay .confirmation-box.dialog .confirm-body {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: calc(100% - 40px);
-    padding: 20px!important;
+    padding: 20px !important;
 }
 
-.confirmation-overlay .confirmation-box.dialog .confirm-body .input-group{
+.confirmation-overlay .confirmation-box.dialog .confirm-body .input-group {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -115,7 +142,7 @@
     width: 100%;
 }
 
-.confirmation-overlay .confirmation-box.dialog .confirm-body .input-group input{
+.confirmation-overlay .confirmation-box.dialog .confirm-body .input-group input {
     width: 100%;
     font-size: 18px;
     padding: 5px 8px;
@@ -124,21 +151,21 @@
     border: 1px solid var(--card-color);
 }
 
-.confirmation-overlay .confirmation-box.dialog .confirm-body .input-group .search-btn{
+.confirmation-overlay .confirmation-box.dialog .confirm-body .input-group .search-btn {
     position: absolute;
     right: 8px;
 }
 
-.search-result-list .list-item .product-item{
+.search-result-list .list-item .product-item {
     padding: 5px;
     border-radius: 5px;
 }
 
-.search-result-list .list-item .product-item .img-container{
+.search-result-list .list-item .product-item .img-container {
     border-radius: 50%;
     overflow: hidden;
 }
 
-.search-result-list .list-item:nth-child(odd) .product-item{
+.search-result-list .list-item:nth-child(odd) .product-item {
     background-color: #4a7c59a6;
 }

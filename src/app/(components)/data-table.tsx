@@ -31,7 +31,6 @@ type DataTableType = {
 
 const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showActionCol, onEditAction, onDeleteAction, onPaginate, onPageSizeChange, onSearch }) => {
 
-    const parser = new DOMParser();
     const sendEditData = (id: number) => {
         onEditAction(id);
     }

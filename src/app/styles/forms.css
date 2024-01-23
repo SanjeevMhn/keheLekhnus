@@ -154,3 +154,11 @@ select.form-control {
 	font-size: 14px;
 	color: #ff1500;
 }
+
+.grp .title {
+	font-weight: 600;
+}
+
+.grp .data {
+	margin-left: 8px;
+}

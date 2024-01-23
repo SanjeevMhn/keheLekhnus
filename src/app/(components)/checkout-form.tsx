@@ -1,9 +1,13 @@
 'use client'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showDialog, hideDialog, initialDialogState } from "../lib/dialog/dialogSlice";
 import LoginForm from './login-form';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import api from "../service/interceptor/interceptor";
+import { v4 as uuidv4 } from 'uuid';
+import { CartItem, clearCart } from "../lib/cart/cartSlice";
+import { showNotification } from "../lib/notifications/notificationSlice";
+import { showPDFViewer } from "../lib/pdfView/pdfViewSlice";
 
 type PaymentType = 'cash' | 'esewa' | 'khalti' | 'default'; 
 
@@ -25,6 +29,8 @@ type CheckoutFormErrType = {
 
 const CheckoutForm = () => {
     const dispatch = useDispatch();
+    const cart = useSelector((state: any) => state.cart);
+    const pdfView = useSelector((state: any) => state.pdfViewer)
     const [paymentType, setPaymentType] = useState<any>([]);
     const paymentTypesFetched = useRef<boolean>(false);
     const [checkoutFormData, setCheckoutFormData] = useState<CheckoutFormType>({
@@ -80,12 +86,12 @@ const CheckoutForm = () => {
         })
 
         if (name !== null && name !== '') {
-            if(name.length >= 8){
-                 setCheckoutFormData({
+            if (name.length >= 8) {
+                setCheckoutFormData({
                     ...checkoutFormData,
                     user_name: name
                 })   
-            }else{
+            } else {
                 setCheckoutFormErr({
                     ...checkoutFormErr,
                     user_name: 'User name cannot be less than 5 characters'
@@ -202,7 +208,7 @@ const CheckoutForm = () => {
         }
     }
 
-    const handleCheckoutFormSubmit = (e: FormEvent) => {
+    const handleCheckoutFormSubmit = async (e: FormEvent) => {
         e.preventDefault();
         let errCount = 0;
         Object.keys(checkoutFormData).map((value: any, index: number) => {
@@ -215,8 +221,46 @@ const CheckoutForm = () => {
             }
         });
 
+
+        let date = new Date();
+        let orderDate = `${date.getFullYear()}-${(1 + date.getMonth()).toString()}-${date.getDate().toString().padStart(2, '0')}`;
+        let orderTotal = cart.reduce((acc: number, data: CartItem) => {
+            return acc + data.total;
+        }, 0)
+
+
         if (errCount == 0) {
-            dispatch(hideDialog());
+            let orderReceipt = {
+                order_number: uuidv4(),
+                user_id: null,
+                order_date: orderDate,
+                order_total: orderTotal,
+                delivery_address: checkoutFormData.user_address,
+                user_name: checkoutFormData.user_name,
+                user_email: checkoutFormData.user_email,
+                user_contact: checkoutFormData.user_contact,
+                payment_type: checkoutFormData.payment_type,
+                order_products: cart
+            }
+
+            const response = await api.post('http://localhost:8080/api/v1/orders', orderReceipt);
+            if (response.status == 201) {
+                dispatch(hideDialog());
+                dispatch(clearCart());
+                dispatch(showNotification({
+                    message: 'Your order has been placed!!',
+                    type: 'success'
+                }))
+                dispatch(showPDFViewer({
+                    order_date: orderDate,
+                    order_products: cart,
+                    order_total: orderTotal,
+                    user_name: checkoutFormData.user_name,
+                    user_email: checkoutFormData.user_email,
+                    user_contact: String(checkoutFormData.user_contact),
+                    user_address: checkoutFormData.user_address
+                }))
+            }
         }
 
     }

@@ -34,6 +34,19 @@ export default function Page() {
             customHTML: "<div class='status {0}'>{0}</div>"
         },
         {
+            title: 'Payment Status',
+            field: 'payment_status',
+            customHTML: "<div class='status {0}'>{0}</div>"
+        },
+        {
+            title: 'Order Total',
+            field: 'order_total'
+        },
+        {
+            title: 'Payment Type',
+            field: 'payment_type'
+        },
+        {
             title: 'User Name',
             field: 'user_name'
         },
@@ -53,19 +66,7 @@ export default function Page() {
             title: 'Delivery Address',
             field: 'delivery_address'
         },
-        {
-            title: 'Order Total',
-            field: 'order_total'
-        },
-        {
-            title: 'Payment Status',
-            field: 'payment_status',
-            customHTML: "<div class='status {0}'>{0}</div>"
-        },
-        {
-            title: 'Payment Type',
-            field: 'payment_type'
-        }
+        
     ]
     return (
         <div className="grid-container">

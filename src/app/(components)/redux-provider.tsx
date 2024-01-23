@@ -12,6 +12,7 @@ import { injectStore } from "../service/interceptor/interceptor";
 import Header from "./Header";
 import Link from "next/link";
 import SideNav from "./sidenav";
+import OrderPDFView from "./orderPDFView";
 
 injectStore(store);
 
@@ -26,7 +27,7 @@ export default function ReduxProvider({ children }: ReduxProviderType) {
             <div className={`wrapper ${adminUser ? 'has-sidenav' : ''}`}>
                 {
                     adminUser ? (
-                        <SideNav/>
+                        <SideNav />
                     ) : null
                 }
                 <Header />
@@ -38,5 +39,6 @@ export default function ReduxProvider({ children }: ReduxProviderType) {
             <NotificationList />
             <ConfrimationContainer />
             <Dialog />
+            <OrderPDFView />
         </Provider>)
 }
