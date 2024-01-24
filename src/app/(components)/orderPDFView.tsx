@@ -3,6 +3,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { PDFViewType, hidePDFViewer } from "../lib/pdfView/pdfViewSlice";
 import { CartItem } from "../lib/cart/cartSlice";
+import { useEffect } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const OrderPDFView = () => {
 	const view: PDFViewType = useSelector((state: any) => state.pdfViewer);
@@ -20,10 +23,28 @@ const OrderPDFView = () => {
 		dispatch(hidePDFViewer());
 	}
 
+	const generatePDF = () => {
+		const input: HTMLElement = document.getElementById('order-bill')!;
+		html2canvas(input)
+			.then((canvas) => {
+				const imgData = canvas.toDataURL('image/png');
+				const pdf = new jsPDF('p', 'mm', 'a4');
+				pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+				pdf.save("order-bill");
+			})
+	}
+
+	useEffect(() => {
+		if (view?.show) {
+			generatePDF();
+		}
+
+	}, [view])
+
 	return (
 		view?.show ? (
-			<div className="confirmation-overlay">
-				<div className="order-bill p-[30px]">
+			<div className="order-bill-overlay">
+				<div id="order-bill" className="order-bill p-[30px]">
 					<button className="close-btn" onClick={() => handleHidePDF()}>
 						<svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512">
 							<path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
@@ -33,7 +54,7 @@ const OrderPDFView = () => {
 						<h2 className="brand-name">Sanu's Nursery</h2>
 						<p>Dhapakhel-24, Lalitpur</p>
 					</div>
-					<div className="form-layout no-border no-shadow pb-[20px]">
+					<div className="form-layout h-auto no-border no-shadow pb-[20px]">
 						<div className="form-row default">
 							<div className="grp">
 								<span className="title">Date:</span>

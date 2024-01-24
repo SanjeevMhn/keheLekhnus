@@ -9,16 +9,32 @@
     justify-content: center;
     align-items: center;
     z-index: 100;
+    overflow-y: auto;
 }
 
-.confirmation-overlay .order-bill {
+
+.order-bill-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0000007a;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.order-bill-overlay .order-bill {
+    margin-top: 40px;
     width: 210mm;
-    height: auto;
+    height: 297mm;
     background: var(--base-color);
     position: relative;
 }
 
-.confirmation-overlay .order-bill .close-btn {
+.order-bill-overlay .order-bill .close-btn {
     position: absolute;
     height: 35px;
     width: 35px;
@@ -27,12 +43,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    top: -16px;
-    right: -16px;
+    top: -35px;
+    right: -35px;
 }
 
 
-.confirmation-overlay .order-bill .close-btn svg {
+.order-bill-overlay .order-bill .close-btn svg {
     fill: #fff;
     width: 50%;
     height: auto;
