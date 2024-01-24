@@ -22,6 +22,7 @@ type DataTableType = {
     pagerConfig: PagerConfig,
     title?: string,
     showActionCol?: boolean,
+    customElement?: any,
     onEditAction: (id: number) => void,
     onDeleteAction: (id: number) => void,
     onPaginate: (page: number) => void,
@@ -29,7 +30,7 @@ type DataTableType = {
     onSearch: (search: string) => void
 }
 
-const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showActionCol, onEditAction, onDeleteAction, onPaginate, onPageSizeChange, onSearch }) => {
+const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showActionCol, customElement, onEditAction, onDeleteAction, onPaginate, onPageSizeChange, onSearch }) => {
 
     const sendEditData = (id: number) => {
         onEditAction(id);
@@ -58,6 +59,7 @@ const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showA
         <div className="data-table-container">
             <div className="data-table-header">
                 <h4 className="title">{title}</h4>
+                {customElement ? (customElement) : null}
                 <div className="input-group">
                     <input type="text" name="" id="" className="form-control" placeholder="Search..." onChange={(e) => handleInputChange(e)} />
                     <button className="search-btn">

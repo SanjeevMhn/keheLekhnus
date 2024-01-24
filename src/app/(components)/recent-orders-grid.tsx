@@ -4,7 +4,15 @@ import { FC, useEffect, useRef, useState } from "react"
 import api from "../service/interceptor/interceptor";
 import DataTable, { Columns, PagerConfig } from "./data-table";
 
-const RecentOrdersGrid:FC<{propColumns?: Array<Columns>}> = ({ propColumns }) => {
+type RecectOrdersGridProps = {
+    propPagerConfig?: PagerConfig, 
+    propData?: any, 
+    customElement?: any, 
+    propColumns?: Array<Columns>, 
+    onPropPaginate: (page: number) => void
+}
+
+const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData, customElement, propColumns, onPropPaginate }) => {
     const [orders, setOrders] = useState<Array<any>>([]);
     const [pagerConfig, setPagerConfig] = useState<PagerConfig>({
         currentPage: 1,
@@ -14,16 +22,16 @@ const RecentOrdersGrid:FC<{propColumns?: Array<Columns>}> = ({ propColumns }) =>
     const ordersFetched = useRef<boolean>(false);
 
     useEffect(() => {
-        if(!ordersFetched.current){
+        if (!ordersFetched.current) {
             getOrders();
         }
         return () => {
             ordersFetched.current = true;
         }
-    },[])
+    }, [])
 
-    const getOrders = async (page=pagerConfig.currentPage,pageSize=pagerConfig.pageSize ) => {
-        try{
+    const getOrders = async (page = pagerConfig.currentPage, pageSize = pagerConfig.pageSize) => {
+        try {
             const response = await api.get(`http://localhost:8080/api/v1/orders?page=${page}&pageSize=${pageSize}`);
             const data = await response.data;
             setOrders(data.orders);
@@ -32,7 +40,7 @@ const RecentOrdersGrid:FC<{propColumns?: Array<Columns>}> = ({ propColumns }) =>
                 pageSize: data.pageSize,
                 totalPages: data.totalPages
             })
-        }catch(e){
+        } catch (e) {
             console.error(e)
         }
     }
@@ -72,18 +80,29 @@ const RecentOrdersGrid:FC<{propColumns?: Array<Columns>}> = ({ propColumns }) =>
         }
     ]
 
+    const handlePropPaginate = (page: number) => {
+        onPropPaginate(page)
+    }
+
     const handlePaginate = (page: number) => {
-        getOrders(page);
-    } 
+        if (propData && propData.length !== 0) {
+            handlePropPaginate(page)
+        } else {
+            getOrders(page);
+        }
+    }
+
+    
 
     return (
         <DataTable 
             columns={propColumns && propColumns.length !== 0 ? propColumns : columns} 
-            data={orders}
+            data={propData && propData.length !== 0 ? propData : orders}
             title='Recent Orders'
-            pagerConfig={pagerConfig}
+            customElement={customElement}
+            pagerConfig={propPagerConfig ? propPagerConfig : pagerConfig}
             onPaginate={handlePaginate}
-             />
+        />
     )
 }
 
