@@ -1,21 +1,21 @@
-.dashboard-card-container{
+.dashboard-card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: 20px
 }
 
-.dashboard-card-container .card{
+.dashboard-card-container .card {
     border-radius: 15px;
     background: var(--card-color);
-    box-shadow: 
-       0 4px 8px #00000085;
+    box-shadow:
+        0 4px 8px #00000085;
     display: grid;
     grid-template-columns: auto auto;
     row-gap: 10px;
     overflow: hidden;
 }
 
-.dashboard-card-container .card .data-col{
+.dashboard-card-container .card .data-col {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -25,18 +25,18 @@
     padding: 15px 15px 0 0;
 }
 
-.dashboard-card-container .card .data-col .num{
+.dashboard-card-container .card .data-col .num {
     font-size: 38px;
     font-weight: 600;
     color: var(--base-color);
 }
 
-.dashboard-card-container .card .data-col .label-text{
+.dashboard-card-container .card .data-col .label-text {
     font-size: 25px;
     color: var(--base-color);
 }
 
-.dashboard-card-container .card .icon-container{
+.dashboard-card-container .card .icon-container {
     display: flex;
     justify-content: center;
     grid-row: 1;
@@ -44,13 +44,13 @@
     align-items: center;
 }
 
-.dashboard-card-container .card .icon-container svg{
+.dashboard-card-container .card .icon-container svg {
     height: 45%;
     width: 45%;
     fill: var(--base-color);
 }
 
-.dashboard-card-container .card .more-info{
+.dashboard-card-container .card .more-info {
     color: var(--base-color);
     font-size: 18px;
     padding: 5px;
@@ -61,7 +61,7 @@
     grid-column: 1 / span 2;
 }
 
-.dashboard-grid-container{
+.dashboard-grid-container {
     padding: 20px 0;
     display: grid;
     grid-template-columns: auto;
@@ -69,9 +69,10 @@
 
 }
 
-@media (min-width: 1370px){
-    .dashboard-grid-container{
-        grid-template-columns: repeat(2,auto);
+@media (min-width: 1370px) {
+    .dashboard-grid-container {
+        grid-template-columns: repeat(2, auto);
         padding-bottom: 0;
+        max-height: calc(100% - 250px);
     }
 }
