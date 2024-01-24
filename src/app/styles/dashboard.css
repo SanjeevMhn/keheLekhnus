@@ -66,13 +66,17 @@
     display: grid;
     grid-template-columns: auto;
     gap: 20px;
+}
 
+
+.dashboard-grid-container .data-table-container{
+    height: auto!important;
 }
 
 @media (min-width: 1370px) {
     .dashboard-grid-container {
         grid-template-columns: repeat(2, auto);
         padding-bottom: 0;
-        max-height: calc(100% - 250px);
+        max-height: calc(100% - 200px);
     }
 }
