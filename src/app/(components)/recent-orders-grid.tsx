@@ -3,6 +3,7 @@
 import { FC, useEffect, useRef, useState } from "react"
 import api from "../service/interceptor/interceptor";
 import DataTable, { Columns, PagerConfig } from "./data-table";
+import { useRouter } from "next/navigation";
 
 type RecectOrdersGridProps = {
     propPagerConfig?: PagerConfig, 
@@ -92,6 +93,12 @@ const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData
         }
     }
 
+    const router = useRouter();
+
+    const handleEdit = (id: number) => {
+        router.push(`/admin/orders/detail/${id}`);
+    }
+
     
 
     return (
@@ -102,6 +109,7 @@ const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData
             customElement={customElement}
             pagerConfig={propPagerConfig ? propPagerConfig : pagerConfig}
             onPaginate={handlePaginate}
+            onEditAction={handleEdit}
         />
     )
 }

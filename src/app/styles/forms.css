@@ -89,7 +89,7 @@
 .form-layout .form-row.two-col>*:not(:last-child)>*,
 .form-layout .form-row.three-col>*:not(:last-child)>*,
 .form-layout .form-row.four-col>*:not(:last-child)>* {
-	width: 92%;
+	width: 96%;
 }
 
 .form-row.form-row.default>* {

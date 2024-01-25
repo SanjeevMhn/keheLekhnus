@@ -68,9 +68,20 @@
     gap: 20px;
 }
 
+.dashboard-grid-container .data-table-container {
+    height: auto !important;
+}
 
-.dashboard-grid-container .data-table-container{
-    height: auto!important;
+.order-detail-grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 20px;
+
+}
+
+.order-detail-grid-container .grid-card .data-table-container {
+    height: auto !important;
 }
 
 @media (min-width: 1370px) {

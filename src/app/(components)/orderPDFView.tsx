@@ -87,7 +87,7 @@ const OrderPDFView = () => {
 							<tr>
 								<th>S.N</th>
 								<th>Product</th>
-								<th>Qunatity</th>
+								<th>Quantity</th>
 								<th>Price</th>
 								<th>Total</th>
 							</tr>
