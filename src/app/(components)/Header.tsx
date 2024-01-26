@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import Link from "next/link";
 import CartMenuItem from "./cart-menu-item";
 import { usePathname, useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import { TAuthState, logout, setUserData } from "../lib/auth/authSlice";
 import { showConfirm } from "../lib/confirmation/confirmationSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import api from "../service/interceptor/interceptor";
 
 export default function Header() {
@@ -61,25 +61,34 @@ export default function Header() {
 
   }
 
-  useEffect(() => {
-    const checkUser = async () => {
-      if (!authUser.is_authenticated) {
-        const checkUserReq = await api.get('http://localhost:8080/api/v1/auth/me');
-        const checkUserRes = checkUserReq.data;
-        dispatch(setUserData({
-          user_name: checkUserRes.user[0].user_name,
-          user_email: checkUserRes.user[0].user_email,
-          is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false
-        }))
-        if (checkUserRes.user[0].user_role === 'admin') {
-          router.push('/admin/');
-          router.refresh();
-        }
-      }
+  const userChecked = useRef<boolean>(false);
 
+  useEffect(() => {
+    if (!userChecked.current) {
+      checkUser();
     }
-    checkUser();
+
+    return () => {
+      userChecked.current = true;
+    }
   }, [])
+
+  const checkUser = async () => {
+    if (!authUser.is_authenticated) {
+      const checkUserReq = await api.get('http://localhost:8080/api/v1/auth/me');
+      const checkUserRes = checkUserReq.data;
+      dispatch(setUserData({
+        user_name: checkUserRes.user[0].user_name,
+        user_email: checkUserRes.user[0].user_email,
+        is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false
+      }))
+      if (checkUserRes.user[0].user_role === 'admin') {
+        router.push('/admin/');
+        router.refresh();
+      }
+    }
+
+  }
 
   return (
     <nav className="md: px-[40px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40">

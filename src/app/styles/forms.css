@@ -37,7 +37,7 @@
 	background: var(--base-color);
 	padding: 0 8px;
 	line-height: 1;
-
+	width: auto;
 }
 
 
