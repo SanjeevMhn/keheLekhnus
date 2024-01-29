@@ -23,8 +23,10 @@ const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData
     const ordersFetched = useRef<boolean>(false);
 
     useEffect(() => {
-        if (!ordersFetched.current) {
-            getOrders();
+        if(!propData || propData.length == 0){
+            if (!ordersFetched.current) {
+                getOrders();
+            }
         }
         return () => {
             ordersFetched.current = true;

@@ -54,7 +54,8 @@ export default function Page() {
                     const response = await api.get(`http://localhost:8080/api/v1/products/name?prod_name=${searchText}`);
                     const data = await response.data;
                     setProducts(data.products);
-                } else {
+                }
+                if(searchText == ''){
                     getProducts();
                 }
             } catch (e) {
