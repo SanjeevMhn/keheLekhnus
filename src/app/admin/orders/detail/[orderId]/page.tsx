@@ -4,6 +4,7 @@ import BreadCrumb, { TBreadCrumb } from "@/app/(components)/breadcrumb";
 import DataTable, { Columns, PagerConfig } from "@/app/(components)/data-table";
 import { showNotification } from "@/app/lib/notifications/notificationSlice";
 import api from "@/app/service/interceptor/interceptor";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux";
 
@@ -22,6 +23,7 @@ export default function Page({ params }: { params: { orderId: number } }) {
 		totalPages: 1
 	}
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	useEffect(() => {
 		if (!orderDetailFetched.current) {
@@ -110,11 +112,11 @@ export default function Page({ params }: { params: { orderId: number } }) {
 		}
 	]
 
-	const handleUpdateDetail = (e:ChangeEvent<any>) => {
+	const handleUpdateDetail = (e: ChangeEvent<any>) => {
 		let update = e.target.value;
 		let element = e.target.name;
 
-		if(update !== null && update !== ''){
+		if (update !== null && update !== '') {
 			setUpdateOrderDetail({
 				...updatedOrderDetail,
 				[element]: update
@@ -122,17 +124,25 @@ export default function Page({ params }: { params: { orderId: number } }) {
 		}
 	}
 
-	const handleOrderDetailSubmit = async(e: FormEvent) => {
+	const handleOrderDetailSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		if(Object.keys(updatedOrderDetail).length !== 0){
-			const response = await api.patch(`http://localhost:8080/api/v1/orders/id/${params.orderId}`,updatedOrderDetail);
-			if(response.status == 200){
-				dispatch(showNotification({
-					message: "Order Detail Updated!",
-					type: "success"
-				}))
-				getOrderDetail(params.orderId);
+		if (updatedOrderDetail !== null) {
+			if (Object.keys(updatedOrderDetail).length !== 0) {
+				const response = await api.patch(`http://localhost:8080/api/v1/orders/id/${params.orderId}`, updatedOrderDetail);
+				if (response.status == 200) {
+					dispatch(showNotification({
+						message: "Order Detail Updated!",
+						type: "success"
+					}))
+					router.push('/admin/orders');
+				}
 			}
+
+		} else {
+			dispatch(showNotification({
+				message: "No Updates Found!",
+				type: "error"
+			}))
 		}
 	}
 
