@@ -77,19 +77,26 @@
 }
 
 .form-layout .form-row {
-	margin-bottom: 12px;
+	margin-bottom: 2px;
 }
 
 .form-layout .form-row.two-col,
 .form-layout .form-row.three-col,
 .form-layout .form-row.four-col {
 	display: flex;
+	flex-wrap: wrap
 }
 
 .form-layout .form-row.two-col>*:not(:last-child)>*,
 .form-layout .form-row.three-col>*:not(:last-child)>*,
 .form-layout .form-row.four-col>*:not(:last-child)>* {
 	width: 96%;
+}
+
+.form-layout .form-row.two-col>*,
+.form-layout .form-row.three-col>*,
+.form-layout .form-row.four-col>*{
+	margin-bottom: 10px;
 }
 
 .form-row.form-row.default>* {
@@ -145,8 +152,8 @@
 	accent-color: var(--card-color);
 }
 
-select.form-control {
-	flex: 1;
+.form-control {
+	height: 41px;
 }
 
 .err-msg {

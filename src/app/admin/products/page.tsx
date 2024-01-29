@@ -55,7 +55,7 @@ export default function Page() {
                     const data = await response.data;
                     setProducts(data.products);
                 }
-                if(searchText == ''){
+                if (searchText == '') {
                     getProducts();
                 }
             } catch (e) {
