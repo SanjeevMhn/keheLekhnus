@@ -1,4 +1,5 @@
 'use client'
+import { setNewToken } from "@/app/lib/auth/authSlice";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 let store: any;
@@ -34,6 +35,7 @@ api.interceptors.response.use(
                 }
                 const newTokenRes = await axios(refreshTokenConfig);
                 const newToken = await newTokenRes.data.accessToken;
+                store.dispatch(setNewToken(newToken))
                 error.config.headers.Authorization = `Bearer ${newToken}`;
                 const response = await axios(error.config);
                 return response;

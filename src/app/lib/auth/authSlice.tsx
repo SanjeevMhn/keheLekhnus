@@ -38,11 +38,18 @@ export const authReducer = createSlice({
             }
         },
 
+        setNewToken: (state: TAuthState, action: PayloadAction<string>) => {
+            return {
+                ...state,
+                user_token: action.payload
+            }
+        },
+
         logout: () => {
             return initialAuthState;
         }
     }
 })
 
-export const { login , setUserData, logout } = authReducer.actions;
+export const { login , setUserData, setNewToken, logout } = authReducer.actions;
 export default authReducer.reducer;
