@@ -93,6 +93,7 @@
 	width: 96%;
 }
 
+.form-layout .form-row.default>*,
 .form-layout .form-row.two-col>*,
 .form-layout .form-row.three-col>*,
 .form-layout .form-row.four-col>*{

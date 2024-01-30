@@ -78,12 +78,13 @@ const LoginForm = () => {
             const userDataRes = await axios(userDataConfig);
             const userData = await userDataRes.data;
             dispatch(setUserData({
+                user_id: userData[0].user_id,
                 user_name: userData.user[0].user_name,
                 user_email: userData.user[0].user_email,
                 is_admin: userData.user[0].user_role === 'admin' ? true : false
             }))
 
-            router.refresh();
+            // router.refresh();
 
             if(userData.user[0].user_role === 'admin'){
                 router.push('/admin');
@@ -91,7 +92,7 @@ const LoginForm = () => {
             }
 
         } catch (e: any) {
-            setErrMsg(e.response.data.message)
+            setErrMsg(e.response.message)
         }
         //dispatch(hideDialog(initialDialogState))
     }

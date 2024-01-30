@@ -47,6 +47,7 @@
     top: -6px;
     right: -6px;
     border: 1px solid var(--base-color);
+    font-size: 11px;
 }
 
 .cart .cart-items-num {
@@ -114,11 +115,17 @@
     position: relative;
 }
 
-.user-btn:hover .dropdown-list {
+.notify-btn .dropdown-list{
+    display: none;
+}
+
+.user-btn:hover .dropdown-list,
+.notify-btn:hover .dropdown-list {
     display: table;
 }
 
-.user-btn .dropdown-list {
+.user-btn .dropdown-list,
+.notify-btn .dropdown-list {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -131,24 +138,72 @@
     box-shadow: 6px 5px 16px 1px #7a7a60;
 }
 
-.user-btn .dropdown-list:hover {
+.notify-btn .dropdown-list .header-text{
+    padding: 8px 10px;
+    background-color: var(--base-color);
+    text-align: left;
+    color: var(--base-color);
+    background-color: var(--card-color);
+    font-size: 18px;
+    border-radius: 5px 5px 0 0;
+    line-height: 1;
+}
+
+.notify-btn .dropdown-list {
+    min-width: 220px;
+    height: 250px;
+    overflow-y: auto;
+    background-color: var(--base-color);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.notify-btn .dropdown-list .dropdown-item:not(:last-child){
+    border-bottom: 2px solid #b7c278;
+}
+
+.notify-btn .dropdown-list .dropdown-item .dropdown-link{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 7px;
+}
+
+.notify-btn .dropdown-list .dropdown-item .dropdown-link .icon-container{
+    height: 15px;
+    width: 15px;
+}
+
+.notify-btn .dropdown-list .dropdown-item .dropdown-link .icon-container svg{
+    height: 100%;
+    width: 100%;
+    fill: var(--card-color);
+}
+
+.user-btn .dropdown-list:hover,
+.notify-btn .dropdown-list:hover {
     display: table;
 }
 
-.user-btn .dropdown-list .dropdown-item {
+
+.user-btn .dropdown-list .dropdown-item,
+.notify-btn .dropdown-list .dropdown-item {
     padding: 6px 10px;
     background-color: var(--base-color);
     text-align: left;
 }
 
-.user-btn .dropdown-list .dropdown-item:first-child {
+.user-btn .dropdown-list .dropdown-item:first-child,
+.notify-btn .dropdown-list .dropdown-item:first-child {
     border-radius: 5px 5px 0 0;
 }
 
-.user-btn .dropdown-list .dropdown-item:last-child {
+.user-btn .dropdown-list .dropdown-item:last-child,
+.notify-btn .dropdown-list .dropdown-item:last-child {
     border-radius: 0 0 5px 5px;
 }
 
-.user-btn .dropdown-list .dropdown-item:hover {
+.user-btn .dropdown-list .dropdown-item:hover,
+.notify-btn .dropdown-list .dropdown-item:hover {
     background-color: #ccd791;
 }
