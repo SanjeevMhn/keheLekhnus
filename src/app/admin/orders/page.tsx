@@ -73,57 +73,7 @@ export default function Page() {
 
   ]
 
-  const [orders, setOrders] = useState<any>([]);
   const [orderStatus, setOrderStatus] = useState<string>('');
-  const ordersFetch = useRef<boolean>(false);
-  const [pagerConfig, setPagerConfig] = useState<PagerConfig>({
-    pageSize: 5,
-    currentPage: 1,
-    totalPages: 1
-  })
-
-  const getOrderStatus = async (status: string, page = 1, pageSize = 5) => {
-    try {
-
-      const response = await api.get(`http://localhost:8080/api/v1/orders/status/${status}?page=${page}&pageSize=${pageSize}`);
-      const data = await response.data;
-      setOrders(data.orders);
-      setPagerConfig({
-        pageSize: data.pageSize,
-        currentPage: data.currentPage,
-        totalPages: data.totalPages
-      })
-
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  useEffect(() => {
-    if (!ordersFetch.current) {
-      getOrderStatus('PENDING');
-    }
-    return () => {
-      ordersFetch.current = true;
-    }
-  }, [])
-
-
-  useEffect(() => {
-    if (orderStatus !== '') {
-      getOrderStatus(orderStatus)
-    }
-    return () => {
-    }
-  }, [orderStatus])
-
-  const handlePagination = (page: number) => {
-    if (orderStatus === '') {
-      getOrderStatus('PENDING', page)
-    } else {
-      getOrderStatus(orderStatus, page)
-    }
-  }
 
   const customElement =
     <div className="checkbox-container flex gap-2 pr-4">
@@ -148,11 +98,9 @@ export default function Page() {
         <BreadCrumb crumbs={crumbs} />
       </div>
       <RecentOrdersGrid
-        propPagerConfig={pagerConfig}
-        propData={orders}
         customElement={customElement}
         propColumns={columns}
-        onPropPaginate={handlePagination} />
+        propStatus={orderStatus}/>
     </div>
   )
 }

@@ -78,16 +78,18 @@ export default function Header() {
     if (!authUser.is_authenticated) {
       const checkUserReq = await api.get('http://localhost:8080/api/v1/auth/me');
       const checkUserRes = checkUserReq.data;
+      if (checkUserRes.user[0].user_role == 'admin') {
+        router.push('/admin');
+        router.refresh();
+        // window.location.href = '/admin';
+      }
       dispatch(setUserData({
         user_id: checkUserRes.user[0].user_id,
         user_name: checkUserRes.user[0].user_name,
         user_email: checkUserRes.user[0].user_email,
         is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false,
       }))
-      if (checkUserRes.user[0].user_role === 'admin') {
-        router.push('/admin/');
-        router.refresh();
-      }
+
     }
 
   }

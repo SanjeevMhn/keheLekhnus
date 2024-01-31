@@ -1,16 +1,18 @@
 'use client'
 
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 import api from "../service/interceptor/interceptor";
 import Link from "next/link";
 import { TUserInfo } from "../lib/auth/authSlice";
 import { useSelector } from "react-redux";
+import { io } from "socket.io-client";
 
 const AdminNotify: FC = () => {
 
     const [notifications, setNotifications] = useState<Array<any>>([]);
     const authState = useSelector((state: any) => state.auth);
     const userId = Number(authState.user_info.user_id)
+    const fectchedNotify = useRef<boolean>(false);
 
     const fetchNotifications = async () => {
         try {
@@ -19,26 +21,34 @@ const AdminNotify: FC = () => {
             setNotifications(data.notifications);
         } catch (err) {
             console.error(err);
-        } finally {
-            setTimeout(() => {
-                fetchNotifications();
-            }, 10000);
         }
     }
 
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
+        // const timeoutId = setTimeout(() => {
+        //     fetchNotifications();
+        // }, 10000);
+        if(!fectchedNotify.current){
             fetchNotifications();
-        }, 10000);
+        }
+
+        const socket = io('http://localhost:8080');
+
+        socket.on('orderAdded', fetchNotifications);
 
         return () => {
-            clearTimeout(timeoutId)
+            // clearTimeout(timeoutId)
+            socket.disconnect();
+            fectchedNotify.current = true;
         }
     }, [])
 
     const handleUpdateNotify = async (id: number) => {
         try {
             const response = await api.post(`http://localhost:8080/api/v1/notifications/id/${id}`);
+            if(response.status == 204){
+                fetchNotifications();
+            }
         } catch (err) {
             console.error(err)
         }
