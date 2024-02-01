@@ -1,5 +1,5 @@
 .wrapper.has-sidenav {
-    height: 100vh;
+    height: calc(100vh - 65px);
     margin-left: 300px;
     overflow-y: auto;
 }
@@ -11,6 +11,8 @@
     width: 300px;
     position: fixed;
     left: 0;
+    top: 0;
+    z-index: 100;
 }
 
 .wrapper.has-sidenav .sidenav-container .brand-link {

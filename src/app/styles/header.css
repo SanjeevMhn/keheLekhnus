@@ -5,6 +5,11 @@
     padding: 10px 0;
 }
 
+.main-navigation.admin-nav{
+    width: calc(100% - 300px);
+    margin-left: auto;
+}
+
 .main-navigation .nav-list {
     display: flex;
     align-items: center;

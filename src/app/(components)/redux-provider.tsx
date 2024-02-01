@@ -21,21 +21,12 @@ type ReduxProviderType = {
 }
 
 export default function ReduxProvider({ children }: ReduxProviderType) {
-    const adminUser = store.getState().auth.user_info?.is_admin;
     return (
         <Provider store={store}>
-            <div className={`wrapper ${adminUser ? 'has-sidenav' : ''}`}>
-                {
-                    adminUser ? (
-                        <SideNav />
-                    ) : null
-                }
-                <Header />
-                <section className="child-container">
-                    {children}
-                </section>
-
-            </div>
+            <Header />
+            <section className="child-container">
+                {children}
+            </section>
             <NotificationList />
             <ConfrimationContainer />
             <Dialog />

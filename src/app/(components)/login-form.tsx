@@ -81,10 +81,8 @@ const LoginForm = () => {
                 if (userDataRes.status == 200) {
                     const userData = await userDataRes.data;
                     if (userData.user[0].user_role == 'admin') {
-                        // router.push('/admin');
-                        window.location.href = '/admin';
-                        window.location.reload();
-                        router.refresh();
+                        router.push('/admin');
+                         window.location.reload();
                     }
                     dispatch(setUserData({
                         user_id: userData[0].user_id,
@@ -93,7 +91,6 @@ const LoginForm = () => {
                         is_admin: userData.user[0].user_role === 'admin' ? true : false
                     }))
 
-                    router.refresh();
 
 
                 }
@@ -114,7 +111,7 @@ const LoginForm = () => {
                 <button className="btn-primary">Login with Google</button>
                 <button className="btn-outline-md">Login with Facebook</button>
             </div>
-            <form className="login-form form-layout no-shadow pt-[20px]" onSubmit={handleSubmit}>
+            <form className="login-form form-layout no-shadow floating-label pt-[20px]" onSubmit={handleSubmit}>
                 {
                     errMsg !== null ? (
                         <h2 className="text-red-600 text-lg text-center">{errMsg}</h2>
@@ -124,7 +121,7 @@ const LoginForm = () => {
                     <div className="form-row default">
                         <div className="form-group">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="email" name="email" id="email" className={`form-control ${emailErr !== null ? 'border-red-500' : ''}`} onBlur={handleCheckEmail} onChange={handleCheckEmail} autoFocus required />
+                            <input type="email" name="email" id="email" className={`form-control ${emailErr !== null ? 'border-red-500' : ''}`} onBlur={handleCheckEmail} onChange={handleCheckEmail} placeholder="Email" autoFocus required />
                             {emailErr !== null ? (<span className="text-red-600">
                                 {emailErr}
                             </span>) : (null)}
@@ -133,7 +130,7 @@ const LoginForm = () => {
                     <div className="form-row default">
                         <div className="form-group">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" name="password" id="password" className={`form-control ${passwordErr !== null ? 'border-red-500' : ''}`} onBlur={handleCheckPassword} onChange={handleCheckPassword} required />
+                            <input type="password" name="password" id="password" className={`form-control ${passwordErr !== null ? 'border-red-500' : ''}`} onBlur={handleCheckPassword} onChange={handleCheckPassword} placeholder="Password" required />
                             {passwordErr !== null ? (<span className="text-red-600">
                                 {passwordErr}
                             </span>) : (null)}

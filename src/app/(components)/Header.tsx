@@ -48,8 +48,9 @@ export default function Header() {
               message: 'User Logged Out',
               type: 'success'
             }));
-            router.push('');
-            window.location.reload();
+            // router.push('');
+            // window.location.reload();
+            window.location.href = '/';
           }
         }
       }))
@@ -80,8 +81,6 @@ export default function Header() {
       const checkUserRes = checkUserReq.data;
       if (checkUserRes.user[0].user_role == 'admin') {
         router.push('/admin');
-        router.refresh();
-        // window.location.href = '/admin';
       }
       dispatch(setUserData({
         user_id: checkUserRes.user[0].user_id,
@@ -95,7 +94,7 @@ export default function Header() {
   }
 
   return (
-    <nav className="md: px-[40px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40">
+    <nav className={`md: px-[40px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40 ${authUser.user_info?.is_admin ? 'admin-nav' : ''}`}>
       <div className={`main-navigation ${!authUser.user_info?.is_admin ? 'main-wrapper' : ''}`}>
         <Link href="/" className={`brand-name ${authUser.user_info?.is_admin ? 'hidden' : ''}`}>
           Sanu's Nursery
