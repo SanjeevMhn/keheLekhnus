@@ -1,10 +1,11 @@
 'use client';
 import { useSelector, useDispatch } from "react-redux";
 import { DialogComponentType, DialogState, hideDialog, initialDialogState } from "../lib/dialog/dialogSlice";
+import { useEffect } from "react";
 
 
 const Dialog = () => {
-    const state: DialogState = useSelector((state:any) => state.dialog);
+    const state: DialogState = useSelector((state: any) => state.dialog);
     const dispatch = useDispatch();
 
 
@@ -12,7 +13,22 @@ const Dialog = () => {
         dispatch(hideDialog());
     }
 
-    const DynamicComponent: DialogComponentType  = state?.component;
+    const handleHideDialogOnEsc = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            handleHideDialog();
+        }
+    }
+
+    useEffect(() => {
+        if (state.show) {
+            window.addEventListener('keydown', handleHideDialogOnEsc)
+        }
+        return () => {
+            window.removeEventListener('keydown', handleHideDialogOnEsc);
+        }
+    }, [state])
+
+    const DynamicComponent: DialogComponentType = state?.component;
 
 
 

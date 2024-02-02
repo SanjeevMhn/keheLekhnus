@@ -170,7 +170,7 @@ export default function Header() {
 
           <li className="nav-item ml-5">
             {
-              authUser.user_info ? (
+              authUser.user_info !== null ? (
                 <button className="btn-outline user-btn font-medium text-md flex items-center gap-2">
                   <span className="img-container bg-blue-400">
                   </span>

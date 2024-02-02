@@ -1,6 +1,7 @@
 'use client'
 import { useDispatch, useSelector } from "react-redux"
 import { showConfirm, hideConfirm, ConfirmationType } from "../lib/confirmation/confirmationSlice"
+import { useEffect } from "react";
 
 const ConfrimationContainer = () => {
     const confirm: ConfirmationType = useSelector((state: any) => state.confirmation);
@@ -16,6 +17,16 @@ const ConfrimationContainer = () => {
     const handleCancel = () => {
         dispatch(hideConfirm())
     }
+
+    useEffect(() => {
+        if(confirm?.show){
+            window.addEventListener('keydown',(e:KeyboardEvent) => {
+                if(e.key === 'Escape'){
+                    handleCancel();
+                }
+            })
+        }
+    },[confirm]) 
 
     return (
         confirm.show ? (
