@@ -1,6 +1,7 @@
 import ProductDetailCard from "@/app/(components)/product-detail-card";
 import BreadCrumb from "@/app/(components)/breadcrumb";
 import { TBreadCrumb } from "@/app/(components)/breadcrumb";
+import RelatedProductsList from "@/app/(components)/related-products-list";
 
 type ParamsType = {
   productId: number;
@@ -15,6 +16,12 @@ export default async function ProductDetail({
     { cache: "no-store" },
   );
   const { product } = await response.json();
+  const relatedProductsResponse = await fetch(
+    `http://localhost:8080/api/v1/products/category/related/${product[0].prod_category}?prod_id=${product[0].prod_id}`,
+    { cache: "no-store" },
+  )
+  const { products } = await relatedProductsResponse.json();
+
   const crumbs: Array<TBreadCrumb> = [
     {
       name: "home",
@@ -38,6 +45,11 @@ export default async function ProductDetail({
     <div className="main-wrapper">
       <BreadCrumb crumbs={crumbs} />
       <ProductDetailCard product={product[0]} />
+      {
+        products && products.length > 0 ? (
+          <RelatedProductsList products={products} />
+        ):( null )
+      }
     </div>
   );
 }

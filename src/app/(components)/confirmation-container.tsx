@@ -18,13 +18,18 @@ const ConfrimationContainer = () => {
         dispatch(hideConfirm())
     }
 
+    const handleHideConfirmOnEsc = (e: KeyboardEvent)  => {
+        if(e.key === 'Escape'){
+            handleCancel();
+        }
+     }
+
     useEffect(() => {
         if(confirm?.show){
-            window.addEventListener('keydown',(e:KeyboardEvent) => {
-                if(e.key === 'Escape'){
-                    handleCancel();
-                }
-            })
+            window.addEventListener('keydown',handleHideConfirmOnEsc);
+        }
+        return () => {
+            window.removeEventListener('keydown',handleHideConfirmOnEsc);
         }
     },[confirm]) 
 
