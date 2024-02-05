@@ -94,7 +94,7 @@ export default function Header() {
   }
 
   return (
-    <nav className={`md: px-[40px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40 ${authUser.user_info?.is_admin ? 'admin-nav' : ''}`}>
+    <nav className={`px-[5px] md:px-[40px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40 ${authUser.user_info?.is_admin ? 'admin-nav' : ''}`}>
       <div className={`main-navigation ${!authUser.user_info?.is_admin ? 'main-wrapper' : ''}`}>
         <Link href="/" className={`brand-name ${authUser.user_info?.is_admin ? 'hidden' : ''}`}>
           Sanu's Nursery

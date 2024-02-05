@@ -1,6 +1,5 @@
 .wrapper.has-sidenav {
     height: calc(100vh - 65px);
-    margin-left: 300px;
     overflow-y: auto;
 }
 
@@ -13,6 +12,18 @@
     left: 0;
     top: 0;
     z-index: 100;
+    display: none;
+}
+
+@media (min-width: 1056px){
+
+    .wrapper.has-sidenav{
+        margin-left: 300px;
+    }
+    
+    .wrapper.has-sidenav .sidenav-container {
+        display: block;
+    }
 }
 
 .wrapper.has-sidenav .sidenav-container .brand-link {
