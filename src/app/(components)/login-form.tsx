@@ -8,6 +8,7 @@ import { TAuthState, login, setUserData } from "../lib/auth/authSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import { useRouter } from "next/navigation";
 import api from "../service/interceptor/interceptor";
+import Link from "next/link";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -102,10 +103,9 @@ const LoginForm = () => {
 
 
         } catch (e: any) {
-            // setErrMsg(e.response.message)
             console.error(e);
+            setErrMsg(e.response.data.message);
         }
-        //dispatch(hideDialog(initialDialogState))
     }
 
     return (
@@ -137,6 +137,11 @@ const LoginForm = () => {
                             {passwordErr !== null ? (<span className="text-red-600">
                                 {passwordErr}
                             </span>) : (null)}
+                        </div>
+                    </div>
+                    <div className="form-row ml-auto">
+                        <div className="form-group">
+                            <Link href="#" className="text-right text-[var(--card-color)] text-[15px] underline">Forgot Password?</Link>
                         </div>
                     </div>
                 </div>
