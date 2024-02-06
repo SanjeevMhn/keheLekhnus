@@ -5,6 +5,7 @@
 .breadcrumb-nav .breadcrumb-list {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .breadcrumb-nav .breadcrumb-list .breadcrumb-link {

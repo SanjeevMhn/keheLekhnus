@@ -196,8 +196,8 @@ const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_i
                     }
 
                 </div>
-                <form className="entry-form form-layout no-shadow" onSubmit={handleFormSubmit}>
-                    <div className="form-body">
+                <form className="entry-form form-layout no-shadow !h-auto" onSubmit={handleFormSubmit}>
+                    <div className="form-body !h-auto">
                         <div className="form-row three-col">
                             <div className="form-group">
                                 <label htmlFor="name" className="form-label">Product Name</label>
