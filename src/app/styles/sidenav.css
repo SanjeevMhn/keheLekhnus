@@ -3,35 +3,60 @@
     overflow-y: auto;
 }
 
-.wrapper.has-sidenav .sidenav-container {
 
-    background-color: var(--card-color);
-    height: 100%;
-    width: 300px;
+.wrapper.has-sidenav .sidenav-container {
     position: fixed;
     left: 0;
     top: 0;
     z-index: 100;
     display: none;
+    width: 300px;
 }
 
-@media (min-width: 1056px){
-
-    .wrapper.has-sidenav{
-        margin-left: 300px;
-    }
-    
-    .wrapper.has-sidenav .sidenav-container {
-        display: block;
-    }
+.resp-view .sidenav-container {
+    position: relative;
+    width: min(75%, 300px);
+    margin-left: auto;
 }
 
-.wrapper.has-sidenav .sidenav-container .brand-link {
+.resp-view .sidenav-container .btn-close {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--base-color);
+}
+
+.resp-view .sidenav-container .btn-close svg {
+    width: 70%;
+    height: 70%;
+    fill: var(--card-color);
+}
+
+.wrapper.has-sidenav .sidenav-container,
+.resp-view .sidenav-container {
+    background-color: var(--card-color);
+    height: 100%;
+}
+
+
+.wrapper.has-sidenav .sidenav-container .brand-link,
+.resp-view .sidenav-container .brand-link {
     padding: 10px 40px;
     position: relative;
 }
 
-.wrapper.has-sidenav .sidenav-container .brand-link::after {
+.resp-view .sidenav-container .brand-link {
+    display: none;
+}
+
+.wrapper.has-sidenav .sidenav-container .brand-link::after,
+.resp-view .sidenav-container .brand-link::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -43,12 +68,25 @@
 
 .wrapper.has-sidenav .sidenav-container .sidenav-menulist {
     padding-top: 15px;
+}
+
+.resp-view .sidenav-container .user-btn-container{
+    padding-top: 55px;
+}
+
+.resp-view .sidenav-container .sidenav-menulist {
+    padding-top: 20px;
+}
+
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist,
+.resp-view .sidenav-container .sidenav-menulist {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link {
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link,
+.resp-view .sidenav-container .sidenav-menulist .list-item .list-link {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -59,22 +97,27 @@
     cursor: pointer;
 }
 
-.wrapper.has-sidenav .sidenav-container .sidenav-menulist .sub-menulist {
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .sub-menulist,
+.resp-view .sidenav-container .sidenav-menulist .sub-menulist {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link .icon-container svg {
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link .icon-container svg,
+.resp-view .sidenav-container .sidenav-menulist .list-item .list-link .icon-container svg {
     fill: var(--base-color);
 }
 
-.wrapper.has-sidenav .sidenav-container .sidenav-menulist .sub-menulist .list-item .list-link {
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .sub-menulist .list-item .list-link,
+.resp-view .sidenav-container .sidenav-menulist .sub-menulist .list-item .list-link {
     padding-left: 70px;
 }
 
 .wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link:hover,
-.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link.active {
+.wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link.active,
+.resp-view .sidenav-container .sidenav-menulist .list-item .list-link:hover,
+.resp-view .sidenav-container .sidenav-menulist .list-item .list-link.active {
     background-color: #5b996e;
 }
 
@@ -85,4 +128,23 @@
 
 .wrapper.has-sidenav .child-container .root-wrapper {
     height: 100%;
+}
+
+@media (min-width: 1056px) {
+
+    .wrapper.has-sidenav {
+        margin-left: 300px;
+    }
+
+    .wrapper.has-sidenav .sidenav-container {
+        display: block;
+    }
+
+    .wrapper.has-sidenav .sidenav-container .btn-close {
+        display: none;
+    }
+
+    .wrapper.has-sidenav .sidenav-container .user-btn-container {
+        display: none;
+    }
 }

@@ -76,7 +76,7 @@ export default function Page() {
   const [orderStatus, setOrderStatus] = useState<string>('');
 
   const customElement =
-    <div className="checkbox-container flex gap-2 pr-4">
+    <div className="checkbox-container">
       <div className="grp">
         <input type="radio" name="status" id="pending" onChange={() => setOrderStatus("PENDING")} defaultChecked={true} />
         <label htmlFor="pending" className="data status PENDING">Pending</label>

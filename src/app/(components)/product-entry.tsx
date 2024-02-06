@@ -241,7 +241,7 @@ const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_i
                             </div>
                         </div>
                     </div>
-                    <div className="form-actions !justify-end">
+                    <div className="form-actions  lg:!justify-end">
                         {/* <button type="button" className="btn-outline-md">Cancel</button> */}
                         <button type="submit" className="btn-primary">Submit</button>
                     </div>

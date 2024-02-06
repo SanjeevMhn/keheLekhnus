@@ -55,7 +55,7 @@ const AdminNotify: FC = () => {
     }
 
     return (
-        <li className="nav-item">
+        <li className="nav-item admin-nav-item">
             <button type="button" className="notify-btn flex">
                 <span className="icon-container">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">

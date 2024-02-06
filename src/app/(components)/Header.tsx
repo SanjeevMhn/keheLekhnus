@@ -10,9 +10,11 @@ import { TAuthState, logout, setUserData } from "../lib/auth/authSlice";
 import { showConfirm } from "../lib/confirmation/confirmationSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "../service/interceptor/interceptor";
 import AdminNotify from "./admin-notify";
+import ResponsiveNav from "./responsive-nav";
+import SideNav from "./sidenav";
 
 export default function Header() {
   const pathName = usePathname();
@@ -20,6 +22,7 @@ export default function Header() {
   const authUser: TAuthState = useSelector((state: any) => state.auth)
   const store = useStore();
   const router = useRouter();
+  const [showSideMenu, setShowSideMenu] = useState<boolean>(false);
   const handleShowSearchDialog = () => {
     dispatch(showDialog({ title: 'Search Products', component: SearchProducts }));
   };
@@ -94,12 +97,12 @@ export default function Header() {
   }
 
   return (
-    <nav className={`px-[5px] md:px-[40px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40 ${authUser.user_info?.is_admin ? 'admin-nav' : ''}`}>
+    <nav className={`nav-primary px-[15px] md:px-[40px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40 ${authUser.user_info?.is_admin ? 'admin-nav' : ''}`}>
       <div className={`main-navigation ${!authUser.user_info?.is_admin ? 'main-wrapper' : ''}`}>
-        <Link href="/" className={`brand-name ${authUser.user_info?.is_admin ? 'hidden' : ''}`}>
+        <Link href="/" className={`brand-name`}>
           Sanu's Nursery
         </Link>
-        <ul className="nav-list">
+        <ul className="nav-list main-nav-list">
           {
             !authUser.user_info?.is_admin ? (
               <>
@@ -168,7 +171,7 @@ export default function Header() {
             )
           }
 
-          <li className="nav-item ml-5">
+          <li className="nav-item ml-5 user-state">
             {
               authUser.user_info !== null ? (
                 <button className="btn-outline user-btn font-medium text-md flex items-center gap-2">
@@ -206,7 +209,33 @@ export default function Header() {
             }
 
           </li>
+          <li className="nav-item resp-menu-btn">
+            <button className="btn btn-ham" onClick={() => setShowSideMenu(true)}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" /></svg>
+            </button>
+          </li>
         </ul>
+        {
+          showSideMenu ? authUser.user_info?.is_admin ? (
+            <div className="resp-view">
+              <SideNav 
+                showSideMenu={showSideMenu}
+                setShowSideMenu={setShowSideMenu}
+                authUser={authUser}
+                handleLogout={handleLogout} />
+            </div>
+          ) : (
+            <ResponsiveNav
+              authUser={authUser}
+              pathName={pathName}
+              handleLogout={handleLogout}
+              handleShowLoginDialog={handleShowLoginDialog}
+              showSideMenu={showSideMenu}
+              setShowSideMenu={setShowSideMenu}
+            />
+          ) : null
+        }
+
       </div>
     </nav>
   );

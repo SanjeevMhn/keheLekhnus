@@ -12,6 +12,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
 .data-table-container .data-table-header .title {

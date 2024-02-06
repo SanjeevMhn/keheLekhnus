@@ -34,7 +34,7 @@ export default function Page() {
   ]
 
   const handleCheckout = () => {
-    dispatch(showDialog({show: true, title: 'Checkout Form', component: CheckoutForm}));
+    dispatch(showDialog({ show: true, title: 'Checkout Form', component: CheckoutForm }));
   }
 
 
@@ -43,42 +43,44 @@ export default function Page() {
       <BreadCrumb crumbs={crumbs} />
       {
         cart.length > 0 ? (
-          <div className="cart-container flex flex-col items-center gap-[45px]">
-            <table className="cart-table w-full">
-              <thead>
-                <tr>
-                  <th>SN</th>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Quantity</th>
-                  <th>Amount</th>
-                  <th>Total</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  cart.map((item: CartItem, index: number) => {
-                    return (
-                      <tr key={item.id}>
-                        <CartItemRow item={item} index={index} />
-                      </tr>
-                    )
-                  })
-                }
+          <div className="cart-container flex flex-col items-center gap-[45px] px-[15px]">
+            <div className="table-container w-full overflow-x-auto">
+              <table className="cart-table w-full">
+                <thead>
+                  <tr>
+                    <th>SN</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    cart.map((item: CartItem, index: number) => {
+                      return (
+                        <tr key={item.id}>
+                          <CartItemRow item={item} index={index} />
+                        </tr>
+                      )
+                    })
+                  }
 
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>Sub Total</td>
-                  <td className="text-right">Rs.&nbsp;{getCartTotal()}</td>
-                </tr>
-              </tfoot>
-            </table>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Sub Total</td>
+                    <td className="text-right">Rs.&nbsp;{getCartTotal()}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
             <div className="checkout-cart" onClick={() => handleCheckout()}>
               <button className="btn-primary">Checkout</button>
             </div>

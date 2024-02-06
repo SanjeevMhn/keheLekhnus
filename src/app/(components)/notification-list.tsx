@@ -23,7 +23,7 @@ const NotificationList = () => {
 
 
     return (
-        <div className="notification-list">
+        <div className={`notification-list ${notifications.length > 0 ? 'p-[20px]' : ''}`}>
             {
                 notifications.map((notification:NotificationType) => {
                     return (
