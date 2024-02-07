@@ -52,10 +52,10 @@ const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
           <img src={product.prod_img} alt="" />
         </div>
         <div className="product-detail">
-          <h2 className="product-name text-[35px]">
+          <h2 className="product-name text-[28px] lg:text-[35px]">
             {product.prod_name}
           </h2>
-          <p className="product-price text-[28px]">
+          <p className="product-price text-[22px] lg:text-[28px]">
             Rs.&nbsp;{product.prod_price}
           </p>
         </div>

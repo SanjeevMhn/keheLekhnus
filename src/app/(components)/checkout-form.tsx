@@ -267,7 +267,7 @@ const CheckoutForm = () => {
 
     return (
         <>
-            <div className="third-party-login flex justify-center gap-2 pb-[20px] w-full">
+            <div className="third-party-login flex justify-center gap-2 pb-[20px] w-full flex-wrap">
                 <button className="btn-primary" onClick={() => { handleOpenLogin() }}>Login</button>
                 <button className="btn-outline-md">Signup</button>
             </div>
@@ -347,7 +347,7 @@ const CheckoutForm = () => {
                         </div>
                     </div>
                 </div>
-                <div className="form-actions">
+                <div className="form-actions flex-wrap">
                     <button className="btn-outline-md" onClick={() => handleDialogClose()} type="button">Cancel</button>
                     <button className="btn-primary" type="submit">Checkout</button>
                 </div>

@@ -198,7 +198,7 @@ const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_i
                 </div>
                 <form className="entry-form form-layout no-shadow !h-auto" onSubmit={handleFormSubmit}>
                     <div className="form-body !h-auto">
-                        <div className="form-row three-col">
+                        <div className="form-row two-col">
                             <div className="form-group">
                                 <label htmlFor="name" className="form-label">Product Name</label>
                                 <input type="text" name="name" id="name" className="form-control" value={productDetail?.prod_name} onChange={(e) => setProductDetail({ ...productDetail, prod_name: e.target.value })} required />
@@ -215,7 +215,7 @@ const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_i
                                 </select>
                             </div>
                         </div>
-                        <div className="form-row three-col">
+                        <div className="form-row two-col">
                             <div className="form-group">
                                 <label htmlFor="price" className="form-label">Product Price</label>
                                 <input type="text" name="price" id="price" className="form-control" value={productDetail?.prod_price} onChange={(e) => setProductDetail({ ...productDetail, prod_price: e.target.value })} required />

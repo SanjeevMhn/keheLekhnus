@@ -180,7 +180,7 @@ export default function Page() {
           <h2 className="page-title">Categories List</h2>
 
         </div>
-        <button className="btn btn-primary ml-auto mr-5" onClick={handleAddCategory}>
+        <button className="btn btn-primary lg:ml-auto lg:mr-5" onClick={handleAddCategory}>
           Add Category
         </button>
         <BreadCrumb crumbs={crumbs} />

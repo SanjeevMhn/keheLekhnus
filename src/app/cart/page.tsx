@@ -45,7 +45,7 @@ export default function Page() {
         cart.length > 0 ? (
           <div className="cart-container flex flex-col items-center gap-[45px] px-[15px]">
             <div className="table-container w-full overflow-x-auto">
-              <table className="cart-table w-full">
+              <table className="cart-table resp-cart-table w-full">
                 <thead>
                   <tr>
                     <th>SN</th>
@@ -71,12 +71,8 @@ export default function Page() {
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Sub Total</td>
-                    <td className="text-right">Rs.&nbsp;{getCartTotal()}</td>
+                    <td colSpan={6} className="text-right">Sub Total</td>
+                    <td data-col="Sub Total"  className="text-right">Rs.&nbsp;{getCartTotal()}</td>
                   </tr>
                 </tfoot>
               </table>

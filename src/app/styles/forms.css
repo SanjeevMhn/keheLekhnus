@@ -171,14 +171,14 @@ textarea.form-control{
 
 	
 	.form-layout .form-row.two-col>* {
-		flex: 1 0 calc(100% / 2);
+		flex: 0 0 calc(100% / 2);
 	}
 
 	.form-layout .form-row.three-col>* {
-		flex: 1 0 calc(100% / 3);
+		flex: 0 0 calc(100% / 3);
 	}
 
 	.form-layout .form-row.four-col>* {
-		flex: 1 0 calc(100% / 4);
+		flex: 0 0 calc(100% / 4);
 	}
 }

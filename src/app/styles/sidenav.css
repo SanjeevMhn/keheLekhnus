@@ -130,7 +130,7 @@
     height: 100%;
 }
 
-@media (min-width: 1056px) {
+@media (min-width: 1156px) {
 
     .wrapper.has-sidenav {
         margin-left: 300px;

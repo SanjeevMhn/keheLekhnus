@@ -23,7 +23,7 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
   }
   return (
     <>
-      <td>{index + 1}</td>
+      <td data-col="index">{index + 1}</td>
       <td>
         <Link href={`/product/${item.id}`} className="product-detail">
           <span className="img-container">
@@ -32,7 +32,7 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
           <div className="product-name">{item.name}</div>
         </Link>
       </td>
-      <td>
+      <td data-col="category">
         <Link href={`products/${item.category}`} className="product-category">{item.category}</Link>
       </td>
       <td>
@@ -51,8 +51,8 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
         </div>
 
       </td>
-      <td className="text-right">Rs.&nbsp;{item.price}</td>
-      <td className="text-right">Rs.&nbsp;{item.total}</td>
+      <td className="text-right" data-col="price">Rs.&nbsp;{item.price}</td>
+      <td className="text-right" data-col="total">Rs.&nbsp;{item.total}</td>
       <td>
         <button className="remove-btn mx-auto flex" onClick={() => handleRemoveCartItem(item)}>
           <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">

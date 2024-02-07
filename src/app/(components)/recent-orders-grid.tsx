@@ -31,11 +31,12 @@ const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData
     useEffect(() => {
         // if (!ordersFetched.current) {
         if (propStatus !== '') {
-            // setOrderStatus(propStatus)
+            setOrderStatus(propStatus)
             getOrders(propStatus, 1);
         } else {
+            setOrderStatus('PENDING');
             if (!ordersFetched.current) {
-                getOrders();
+                getOrders('PENDING', 1);
             }
         }
         return () => {
@@ -101,7 +102,7 @@ const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData
         if (propData && propData.length !== 0) {
             handlePropPaginate(page)
         } else {
-            getOrders(propStatus, page);
+            getOrders(orderStatus, page);
         }
     }
 

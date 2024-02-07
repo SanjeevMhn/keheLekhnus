@@ -21,6 +21,10 @@
   text-transform: capitalize;
 }
 
+.breadcrumb-nav .breadcrumb-list .breadcrumb-item:last-child .breadcrumb-link{
+  padding-right: 0;
+}
+
 .breadcrumb-nav
   .breadcrumb-list
   .breadcrumb-item:not(:last-child)

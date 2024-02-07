@@ -27,11 +27,19 @@
 }
 
 .order-bill-overlay .order-bill {
-    margin-top: 40px;
+    margin-top: 70px;
     width: 210mm;
     height: 297mm;
     background: var(--base-color);
     position: relative;
+    padding: 30px;
+}
+
+@media (max-width: 768px){
+    .order-bill-overlay .order-bill {
+        width: 90%;
+        padding: 10px;
+    }
 }
 
 .order-bill-overlay .order-bill .close-btn {
@@ -43,8 +51,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    top: -35px;
-    right: -35px;
+    top: -45px;
+    left: 50%;
+    transform: translateY(-50%);
 }
 
 

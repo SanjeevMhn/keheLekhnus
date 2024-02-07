@@ -23,7 +23,7 @@ const RelatedProductsList: FC<{ products: Array<any> }> = ({ products }) => {
   }
   return (
     <div className="related-products-container">
-      <h2 className="title">Related Products</h2>
+      <h2 className="title text-[24px] lg:text-[28px]">Related Products</h2>
       <div className="related-products">
         <ul className="related-product-list" ref={scrollDiv}>
           {
