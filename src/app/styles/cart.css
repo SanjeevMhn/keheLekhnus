@@ -209,7 +209,8 @@
     .order-list-table thead th,
     .order-list-table tbody td,
     .order-list-table tfoot td{
-        font-size: 13px;
+        font-size: 11px;
+        padding: 5px;
     }
      
 }

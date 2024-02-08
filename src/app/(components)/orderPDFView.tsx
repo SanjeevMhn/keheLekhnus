@@ -29,7 +29,9 @@ const OrderPDFView = () => {
 			.then((canvas) => {
 				const imgData = canvas.toDataURL('image/png');
 				const pdf = new jsPDF('p', 'mm', 'a4');
-				pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+				let fileWidth = 210;
+      	let fileHeight = (canvas.height * fileWidth) / canvas.width;		
+				pdf.addImage(imgData, 'PNG', 0, 0, fileWidth, fileHeight);
 				pdf.save("order-bill");
 			})
 	}

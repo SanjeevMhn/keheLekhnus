@@ -40,6 +40,23 @@
         width: 90%;
         padding: 10px;
     }
+
+    .order-bill-overlay .order-bill .company-detail .brand-name{
+        font-size: 22px; 
+    }
+
+    .order-bill-overlay .order-bill .company-detail .address{
+        font-size: 12px; 
+    }
+
+    .order-bill-overlay .order-bill .order-detail-form .form-row>*{
+        font-size: 11px!important;
+        margin-bottom: 5px!important;
+    }
+    
+    .order-bill-overlay .order-bill .order-detail-form .form-row.two-col>*{
+        flex: 0 0 calc(100% / 2)!important;
+    }
 }
 
 .order-bill-overlay .order-bill .close-btn {

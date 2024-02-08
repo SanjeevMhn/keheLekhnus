@@ -162,6 +162,12 @@ textarea.form-control{
 	margin-left: 8px;
 }
 
+@media (max-width: 768px){
+	.grp .data {
+		margin-left: 2px;
+	}
+}
+
 @media (min-width: 768px){
 	.form-layout .form-row.two-col>*:not(:last-child)>*,
 	.form-layout .form-row.three-col>*:not(:last-child)>*,
