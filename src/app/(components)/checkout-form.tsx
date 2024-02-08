@@ -28,6 +28,7 @@ type CheckoutFormErrType = {
 }
 
 const CheckoutForm = () => {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const dispatch = useDispatch();
     const cart = useSelector((state: any) => state.cart);
     const pdfView = useSelector((state: any) => state.pdfViewer)
@@ -60,7 +61,7 @@ const CheckoutForm = () => {
 
     const getPaymentTypes = async () => {
         try {
-            const response = await api.get('http://localhost:8080/api/v1/orders/paymentTypes');
+            const response = await api.get(`${baseUrl}/orders/paymentTypes`);
             const data = await response.data;
             setPaymentType(data.paymentTypes);
         } catch (e) {
@@ -243,7 +244,7 @@ const CheckoutForm = () => {
                 order_products: cart
             }
 
-            const response = await api.post('http://localhost:8080/api/v1/orders', orderReceipt);
+            const response = await api.post(`${baseUrl}/orders`, orderReceipt);
             if (response.status == 201) {
                 dispatch(hideDialog());
                 dispatch(clearCart());

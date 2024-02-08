@@ -17,6 +17,7 @@ import ResponsiveNav from "./responsive-nav";
 import SideNav from "./sidenav";
 
 export default function Header() {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const pathName = usePathname();
   const dispatch = useDispatch();
   const authUser: TAuthState = useSelector((state: any) => state.auth)
@@ -35,7 +36,7 @@ export default function Header() {
     try {
       const logoutConfig: AxiosRequestConfig = {
         method: 'post',
-        url: 'http://localhost:8080/api/v1/auth/logout',
+        url: `${baseUrl}/auth/logout`,
         withCredentials: true,
         headers: {
           authorization: `Bearer ${authUser.user_token}`
@@ -80,7 +81,7 @@ export default function Header() {
 
   const checkUser = async () => {
     if (!authUser.is_authenticated) {
-      const checkUserReq = await api.get('http://localhost:8080/api/v1/auth/me');
+      const checkUserReq = await api.get(`${baseUrl}/auth/me`);
       const checkUserRes = checkUserReq.data;
       if (checkUserRes.user[0].user_role == 'admin') {
         router.push('/admin');

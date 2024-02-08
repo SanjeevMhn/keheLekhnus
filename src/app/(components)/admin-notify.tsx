@@ -9,6 +9,7 @@ import { io } from "socket.io-client";
 
 const AdminNotify: FC = () => {
 
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const [notifications, setNotifications] = useState<Array<any>>([]);
     const authState = useSelector((state: any) => state.auth);
     const userId = Number(authState.user_info.user_id)
@@ -16,7 +17,7 @@ const AdminNotify: FC = () => {
 
     const fetchNotifications = async () => {
         try {
-            const response = await api.get(`http://localhost:8080/api/v1/notifications/id/${userId}`);
+            const response = await api.get(`${baseUrl}/notifications/id/${userId}`);
             const data = response.data;
             setNotifications(data.notifications);
         } catch (err) {
@@ -32,7 +33,7 @@ const AdminNotify: FC = () => {
             fetchNotifications();
         }
 
-        const socket = io('http://localhost:8080');
+        const socket = io(`${baseUrl}`);
 
         socket.on('orderAdded', fetchNotifications);
 
@@ -45,7 +46,7 @@ const AdminNotify: FC = () => {
 
     const handleUpdateNotify = async (id: number) => {
         try {
-            const response = await api.post(`http://localhost:8080/api/v1/notifications/id/${id}`);
+            const response = await api.post(`${baseUrl}/notifications/id/${id}`);
             if(response.status == 204){
                 fetchNotifications();
             }

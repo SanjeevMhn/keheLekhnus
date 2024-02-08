@@ -24,8 +24,9 @@ const ProductOrderFrequencyGrid:FC = () => {
     },[])
 
     const getProducts = async () => {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL;
         try{
-            const response = await api.get('http://localhost:8080/api/v1/orders/repeatedProducts');
+            const response = await api.get(`${baseUrl}/orders/repeatedProducts`);
             const data = await response.data;
             setProducts(data.products);
             setPagerConfig({

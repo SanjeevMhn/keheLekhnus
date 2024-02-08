@@ -9,6 +9,8 @@ import { showNotification } from "../lib/notifications/notificationSlice";
 import { revalidatePath } from "next/cache";
 
 const CategoryEntry: FC<{ catId?: number }> = ({ catId }) => {
+    
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const dispatch = useDispatch();
     const data: DialogState = useSelector((state: any) => state.dialog);
     const categoryFetched = useRef<boolean>(false);
@@ -27,7 +29,7 @@ const CategoryEntry: FC<{ catId?: number }> = ({ catId }) => {
 
     const getCategory = async (catId: number) => {
         try {
-            const response = await api.get(`http://localhost:8080/api/v1/categories/id/${catId}`);
+            const response = await api.get(`${baseUrl}/categories/id/${catId}`);
             const data = await response.data;
             setCategoryData({ ...data.category });
         } catch (e) {
@@ -52,7 +54,7 @@ const CategoryEntry: FC<{ catId?: number }> = ({ catId }) => {
         e.preventDefault();
         try {
             if (editMode) {
-                const editResponse = await api.patch(`http://localhost:8080/api/v1/categories/id/${categoryData?.prod_cat_id}`, { category_name: categoryName });
+                const editResponse = await api.patch(`${baseUrl}/categories/id/${categoryData?.prod_cat_id}`, { category_name: categoryName });
                 const data = await editResponse.data
                 if (editResponse.status == 201) {
                     dispatch(showNotification({ message: 'Category Updated Successfully', type: 'success' }))
@@ -62,7 +64,7 @@ const CategoryEntry: FC<{ catId?: number }> = ({ catId }) => {
                 }
                 return;
             }
-            const response = await api.post('http://localhost:8080/api/v1/categories', { category_name: categoryName })
+            const response = await api.post(`${baseUrl}/categories`, { category_name: categoryName })
             const data = await response.data;
             if (response.status == 201) {
                 dispatch(showNotification({ message: 'Category Added Successfully', type: 'success' }))

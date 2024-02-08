@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 export default function Page() {
     // const response = await fetch('http://localhost:8080/api/v1/products', { cache: 'no-cache', headers:{ 'Cache-Control' : 'no-cache' } })
     // const { products } = await response?.json();
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const [products, setProducts] = useState<Array<any>>([])
     const [pagerConfig, setPagerConfig] = useState<PagerConfig>({
         currentPage: 1,
@@ -24,7 +25,7 @@ export default function Page() {
 
     const getProducts = async () => {
         try {
-            const response = await api.get('http://localhost:8080/api/v1/products');
+            const response = await api.get(`${baseUrl}/products`);
             const data = await response.data;
             setProducts(data.products);
             setPagerConfig({
@@ -51,7 +52,7 @@ export default function Page() {
         const timeoutId = setTimeout(async () => {
             try {
                 if (searchText !== null && searchText !== '') {
-                    const response = await api.get(`http://localhost:8080/api/v1/products/name?prod_name=${searchText}`);
+                    const response = await api.get(`${baseUrl}/products/name?prod_name=${searchText}`);
                     const data = await response.data;
                     setProducts(data.products);
                 }
@@ -118,7 +119,7 @@ export default function Page() {
             message: 'Do you want to delete this product',
             onConfirm: async () => {
                 try {
-                    const response = await api.delete(`http://localhost:8080/api/v1/products/id/${id}`);
+                    const response = await api.delete(`${baseUrl}/products/id/${id}`);
                     if (response.status == 200) {
                         dispatch(showNotification({ message: 'Product deleted successfully', type: 'success' }));
                         getProducts();
@@ -133,7 +134,7 @@ export default function Page() {
 
     const handlePagination = async (page: number) => {
         try {
-            const response = await api.get(`http://localhost:8080/api/v1/products?page=${page}&pageSize=${pagerConfig.pageSize}`);
+            const response = await api.get(`${baseUrl}/products?page=${page}&pageSize=${pagerConfig.pageSize}`);
             const data = await response.data;
             setProducts(data.products);
             setPagerConfig({
@@ -148,7 +149,7 @@ export default function Page() {
 
     const handleChangePageSize = async (pageSize: number) => {
         try {
-            const response = await api.get(`http://localhost:8080/api/v1/products?page=${1}&pageSize=${pageSize}`);
+            const response = await api.get(`${baseUrl}/products?page=${1}&pageSize=${pageSize}`);
             const data = await response.data;
             setProducts(data.products);
             setPagerConfig({

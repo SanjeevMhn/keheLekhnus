@@ -21,9 +21,10 @@ const SearchProducts = () => {
 
     useEffect(() => {
         const timeoutId = setTimeout(async () => {
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL;
             try {
                 if (searchTerm !== '') {
-                    let response = await api.get(`http://localhost:8080/api/v1/products/name?prod_name=${searchTerm}`);
+                    let response = await api.get(`${baseUrl}/products/name?prod_name=${searchTerm}`);
                     let data = await response.data;
                     setSearchResult(data.products);
                 } else {

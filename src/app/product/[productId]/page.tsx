@@ -11,13 +11,14 @@ export default async function ProductDetail({
 }: {
   params: ParamsType;
 }) {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const response = await fetch(
-    `http://localhost:8080/api/v1/products/id/${params.productId}`,
+    `${baseUrl}/products/id/${params.productId}`,
     { cache: "no-store" },
   );
   const { product } = await response.json();
   const relatedProductsResponse = await fetch(
-    `http://localhost:8080/api/v1/products/category/related/${product[0].prod_category}?prod_id=${product[0].prod_id}`,
+    `${baseUrl}/products/category/related/${product[0].prod_category}?prod_id=${product[0].prod_id}`,
     { cache: "no-store" },
   )
   const { products } = await relatedProductsResponse.json();

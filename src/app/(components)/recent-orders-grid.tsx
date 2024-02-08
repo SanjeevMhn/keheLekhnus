@@ -18,6 +18,8 @@ type RecectOrdersGridProps = {
 }
 
 const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData, customElement, propColumns, propStatus, onPropPaginate }) => {
+    
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const [orders, setOrders] = useState<Array<any>>([]);
     const [orderStatus, setOrderStatus] = useState<string>('');
     const [pagerConfig, setPagerConfig] = useState<PagerConfig>({
@@ -46,7 +48,7 @@ const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData
 
     const getOrders = async (status = 'PENDING', page = pagerConfig.currentPage, pageSize = pagerConfig.pageSize) => {
         try {
-            const response = await api.get(`http://localhost:8080/api/v1/orders/status/${status}?page=${page}&pageSize=${pageSize}`);
+            const response = await api.get(`${baseUrl}/orders/status/${status}?page=${page}&pageSize=${pageSize}`);
             const data = await response.data;
             setOrders(data.orders);
             setPagerConfig({
@@ -117,7 +119,7 @@ const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData
             message: 'Delete this order?',
             onConfirm: async () => {
                 try {
-                    const res = await api.delete(`http://localhost:8080/api/v1/orders/id/${id}`);
+                    const res = await api.delete(`${baseUrl}/orders/id/${id}`);
                     if (res.status == 200) {
                         dispatch(showNotification({
                             message: 'Order deleted successfully',

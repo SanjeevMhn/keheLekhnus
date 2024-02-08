@@ -49,10 +49,11 @@ const LoginForm = () => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL;
         try {
             const config: AxiosRequestConfig = {
                 method: 'post',
-                url: 'http://localhost:8080/api/v1/auth',
+                url: `${baseUrl}/auth`,
                 data: {
                     user_email: email,
                     user_password: password
@@ -78,7 +79,7 @@ const LoginForm = () => {
                     withCredentials: true
                 }
 
-                const userDataRes = await api.get('http://localhost:8080/api/v1/auth/me');
+                const userDataRes = await api.get(`${baseUrl}/auth/me`);
                 if (userDataRes.status == 200) {
                     const userData = await userDataRes.data;
                     if (userData.user[0].user_role == 'admin') {

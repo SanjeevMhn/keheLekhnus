@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 
 export default function Page({ params }: { params: { orderId: number } }) {
 
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 	const [orderDetail, setOrderDetail] = useState<{ order: any | null, orderItems: Array<any> | null }>({
 		order: null,
 		orderItems: null
@@ -38,7 +39,7 @@ export default function Page({ params }: { params: { orderId: number } }) {
 
 	const getPaymentTypes = async () => {
 		try {
-			const response = await api.get('http://localhost:8080/api/v1/orders/paymentTypes');
+			const response = await api.get(`${baseUrl}/orders/paymentTypes`);
 			const data = await response.data;
 			setPaymentType(data.paymentTypes);
 		} catch (e) {
@@ -48,7 +49,7 @@ export default function Page({ params }: { params: { orderId: number } }) {
 
 	const getOrderDetail = async (id: number) => {
 		try {
-			const response = await api.get(`http://localhost:8080/api/v1/orders/id/${id}`);
+			const response = await api.get(`${baseUrl}/orders/id/${id}`);
 			const data = await response.data;
 			setOrderDetail({
 				order: data.order,
@@ -128,7 +129,7 @@ export default function Page({ params }: { params: { orderId: number } }) {
 		e.preventDefault();
 		if (updatedOrderDetail !== null) {
 			if (Object.keys(updatedOrderDetail).length !== 0) {
-				const response = await api.patch(`http://localhost:8080/api/v1/orders/id/${params.orderId}`, updatedOrderDetail);
+				const response = await api.patch(`${baseUrl}/orders/id/${params.orderId}`, updatedOrderDetail);
 				if (response.status == 200) {
 					dispatch(showNotification({
 						message: "Order Detail Updated!",

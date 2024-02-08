@@ -13,6 +13,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Page() {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -60,7 +61,7 @@ export default function Page() {
 
   const getCategories = async (pageSize = 5, page = 1) => {
     try {
-      const response = await api.get(`http://localhost:8080/api/v1/categories?page=${page}&pageSize=${pageSize}`)
+      const response = await api.get(`${baseUrl}/categories?page=${page}&pageSize=${pageSize}`)
       const data = await response.data;
       setCategories(data.categories);
       setPagerConfig({
@@ -93,7 +94,7 @@ export default function Page() {
     const timeoutId = setTimeout(async () => {
       try {
         if (searchText !== null && searchText !== '') {
-          const response = await api.get(`http://localhost:8080/api/v1/categories/name?category_name=${searchText}`);
+          const response = await api.get(`${baseUrl}/categories/name?category_name=${searchText}`);
           const data = response.data;
           setCategories(data.categories);
         }
@@ -133,7 +134,7 @@ export default function Page() {
       message: 'Delete this category?',
       onConfirm: async () => {
         try {
-          const response = await api.delete(`http://localhost:8080/api/v1/categories/id/${id}`);
+          const response = await api.delete(`${baseUrl}/categories/id/${id}`);
           if (response.status == 200) {
             dispatch(showNotification({
               message: 'Category deleted successfully',
@@ -151,7 +152,7 @@ export default function Page() {
 
   const handlePagination = async (page: number) => {
     try {
-      const response = await api.get(`http://localhost:8080/api/v1/categories?page=${page}`);
+      const response = await api.get(`${baseUrl}/categories?page=${page}`);
       const data = await response.data;
       setCategories(data.categories);
       setPagerConfig({

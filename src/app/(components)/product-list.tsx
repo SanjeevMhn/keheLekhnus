@@ -16,23 +16,24 @@ type ProductListPropType = {
 };
 
 const ProductList: FC<ProductListPropType> = async ({ category, product_count }) => {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   let response;
   if (!category) {
     if (product_count) {
       response = await fetch(
-        `http://localhost:8080/api/v1/products?pageSize=${product_count}`,
+        `${baseUrl}/products?pageSize=${product_count}`,
         {
           cache: "no-cache",
         },
       );
     } else {
-      response = await fetch("http://localhost:8080/api/v1/products/", {
+      response = await fetch(`${baseUrl}/products/`, {
         cache: "no-cache",
       });
     }
   } else {
     response = await fetch(
-      `http://localhost:8080/api/v1/products/category/${category}`,
+      `${baseUrl}/products/category/${category}`,
       { cache: "no-cache" },
     );
   }

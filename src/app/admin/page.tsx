@@ -25,8 +25,9 @@ export default function Home() {
     }, [])
 
     const getTotalCount = async () => {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL;
         try {
-            const response = await api.get('http://localhost:8080/api/v1/products/count');
+            const response = await api.get(`${baseUrl}/products/count`);
             const data = await response.data;
             setTotalProducts(data.productCount)
             setTotalCategories(data.categoryCount)

@@ -9,6 +9,7 @@ import { AxiosRequestConfig } from "axios";
 import { useRouter } from "next/navigation";
 
 const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_id': number, 'prod_cat_name': string }> }> = ({ productId, prod_categories }) => {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const dispatch = useDispatch();
     const router = useRouter();
     const [productImg, setProductImg] = useState<string | null>(null);
@@ -55,7 +56,7 @@ const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_i
 
     const getProductDetail = async (id: number) => {
         try {
-            const response = await api.get(`http://localhost:8080/api/v1/products/id/${id}`);
+            const response = await api.get(`${baseUrl}/products/id/${id}`);
             const data = await response.data.product[0];
             // const updatedProductDetail = { ...productDetail, ...data };
             setProductDetail(data);
@@ -141,7 +142,7 @@ const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_i
                 if(productNewImg !== null){
                     formData.append('image', productNewImg);
                 }
-                const response = await api.patch(`http://localhost:8080/api/v1/products/id/${productDetail.prod_id}`, formData);
+                const response = await api.patch(`${baseUrl}/products/id/${productDetail.prod_id}`, formData);
                 if (response.status == 200) {
                     dispatch(showNotification({ message: 'Product updated Successfully', type: 'success' }));
                     router.push('/admin/products');
@@ -151,7 +152,7 @@ const ProductEntry: FC<{ productId: number, prod_categories: Array<{ 'prod_cat_i
             }
 
             formData.append('image', productDetail.prod_img);
-            const response = await api.post('http://localhost:8080/api/v1/products', formData);
+            const response = await api.post(`${baseUrl}/products`, formData);
             const data = response.data;
             if (response.status == 201) {
                 dispatch(showNotification({ message: 'Product Added Successfully', type: 'success' }));

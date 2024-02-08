@@ -13,8 +13,9 @@ type ParamsType = {
 };
 
 export default async function Page({ params }: { params: ParamsType }) {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const response = await fetch(
-    "http://localhost:8080/api/v1/products/categories", { cache: 'no-cache' }
+    `${baseUrl}/products/categories`, { cache: 'no-cache' }
   );
   const { categories } = await response.json();
 
