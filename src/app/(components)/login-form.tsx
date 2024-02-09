@@ -146,7 +146,7 @@ const LoginForm = () => {
                         </div>
                     </div>
                 </div>
-                <div className="form-actions">
+                <div className="form-actions flex-wrap">
                     <button type="reset" className="btn-outline-md" onClick={() => handleCloseLogin()}>Cancel</button>
                     <button type="submit" className="btn-primary">Login</button>
                 </div>
