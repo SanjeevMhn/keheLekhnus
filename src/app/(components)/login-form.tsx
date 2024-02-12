@@ -113,7 +113,7 @@ const LoginForm = () => {
         <>
             <div className="third-party-login flex flex-wrap justify-center gap-2 pb-[20px] border-b-2 border-[var(--card-color)] w-full">
                 <button className="btn-primary">Login with Google</button>
-                <button className="btn-outline-md">Login with Facebook</button>
+                {/*<button className="btn-outline-md">Login with Facebook</button>*/}
             </div>
             <form className="login-form form-layout no-shadow floating-label pt-[20px]" onSubmit={handleSubmit}>
                 {

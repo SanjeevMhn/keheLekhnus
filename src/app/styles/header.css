@@ -340,10 +340,10 @@
         display: none;
     }
 
-    .notify-btn .dropdown-list {
+    /* .notify-btn .dropdown-list {
         right: unset;
         left: 50%;
         transform: translateX(-50%);
-    }
+    } */
     
 }

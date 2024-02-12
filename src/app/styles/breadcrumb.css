@@ -1,5 +1,12 @@
 .breadcrumb-nav {
-  padding: 10px 15px;
+  /*padding: 10px 15px;*/
+  padding: 10px 0 10px 15px;
+}
+
+@media (min-width: 768px){
+  .breadcrumb-nav{
+    padding: 10px 15px;
+  }
 }
 
 .breadcrumb-nav .breadcrumb-list {
@@ -66,5 +73,14 @@
 }
 
 .header .page-title{
-  font-size: 25px;
+  font-size: 18px;
 }
+
+@media (min-width: 768px){
+  
+  .header .page-title{
+    font-size: 25px;
+  }
+
+}
+
