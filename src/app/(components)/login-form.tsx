@@ -9,6 +9,7 @@ import { showNotification } from "../lib/notifications/notificationSlice";
 import { useRouter } from "next/navigation";
 import api from "../service/interceptor/interceptor";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,10 @@ const LoginForm = () => {
     const [passwordErr, setPasswordErr] = useState<string | null>(null);
     const [errMsg, setErrMsg] = useState<string | null>(null);
     const router = useRouter();
+
+    const handleSignInGoogle  = () => {
+        signIn('google');
+    }
 
     const handleCloseLogin = () => {
         dispatch(hideDialog())
@@ -112,8 +117,8 @@ const LoginForm = () => {
     return (
         <>
             <div className="third-party-login flex flex-wrap justify-center gap-2 pb-[20px] border-b-2 border-[var(--card-color)] w-full">
-                <button className="btn-primary">Login with Google</button>
-                {/*<button className="btn-outline-md">Login with Facebook</button>*/}
+                <button className="btn-primary" onClick={handleSignInGoogle}>Login with Google</button>
+                <button className="btn-outline-md">Login with Facebook</button>
             </div>
             <form className="login-form form-layout no-shadow floating-label pt-[20px]" onSubmit={handleSubmit}>
                 {

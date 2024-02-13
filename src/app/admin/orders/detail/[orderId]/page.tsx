@@ -204,6 +204,10 @@ export default function Page({ params }: { params: { orderId: number } }) {
 								</div>
 								<div className="form-row four-col">
 									<div className="form-group">
+										<label htmlFor="user_type" className="form-label">User Type</label>
+										<input type="text" name="user_type" id="user_type" className="form-control" defaultValue={orderDetail.order.user_type} readOnly />
+									</div>
+									<div className="form-group">
 										<label htmlFor="payment_status" className="form-label">Payment Status</label>
 										{
 											<select name="payment_status" id="payment_status" className="form-control" onChange={handleUpdateDetail}>
@@ -234,7 +238,7 @@ export default function Page({ params }: { params: { orderId: number } }) {
 
 								</div>
 								<div className="form-row four-col flex justify-end">
-									<div className="form-group flex items-end">
+									<div className="form-group flex items-center lg:items-end">
 										<button type="submit" className="btn-primary">Update</button>
 									</div>
 								</div>

@@ -13,6 +13,7 @@ import Header from "./Header";
 import Link from "next/link";
 import SideNav from "./sidenav";
 import OrderPDFView from "./orderPDFView";
+import SessionProviderParent from "./session-provider";
 
 injectStore(store);
 
@@ -22,14 +23,17 @@ type ReduxProviderType = {
 
 export default function ReduxProvider({ children }: ReduxProviderType) {
     return (
-        <Provider store={store}>
-            <Header />
-            <section className="child-container">
-                {children}
-            </section>
-            <NotificationList />
-            <ConfrimationContainer />
-            <Dialog />
-            <OrderPDFView />
-        </Provider>)
+        <SessionProviderParent>
+            <Provider store={store}>
+                <Header />
+                <section className="child-container">
+                    {children}
+                </section>
+                <NotificationList />
+                <ConfrimationContainer />
+                <Dialog />
+                <OrderPDFView />
+            </Provider>
+        </SessionProviderParent>
+    )
 }

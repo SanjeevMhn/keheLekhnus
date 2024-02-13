@@ -84,7 +84,6 @@
 .form-layout .form-row.three-col,
 .form-layout .form-row.four-col {
 	display: flex;
-	flex-wrap: wrap
 }
 
 
@@ -166,6 +165,12 @@ textarea.form-control{
 	.grp .data {
 		margin-left: 2px;
 	}
+	
+	.form-layout .form-row.two-col,
+	.form-layout .form-row.three-col,
+	.form-layout .form-row.four-col {
+		flex-wrap: wrap
+	}
 }
 
 @media (min-width: 768px){
@@ -173,6 +178,12 @@ textarea.form-control{
 	.form-layout .form-row.three-col>*:not(:last-child)>*,
 	.form-layout .form-row.four-col>*:not(:last-child)>* {
 		width: 96%;
+	}
+	
+	.form-layout .form-row.two-col>*:last-child>*,
+	.form-layout .form-row.three-col>*:last-child>*,
+	.form-layout .form-row.four-col>*:last-child>* {
+		width: 100%;
 	}
 
 	
