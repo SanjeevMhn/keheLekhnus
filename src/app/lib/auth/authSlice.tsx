@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export type TUserInfo = {
-    user_id: number | null,
-    user_name: string | null,
-    user_email: string | null,
+    user_id: any | null,
+    user_name: string | null | undefined,
+    user_email: string | null | undefined,
     is_admin: boolean
 }
 

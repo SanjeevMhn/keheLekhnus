@@ -1,6 +1,12 @@
-import api from "@/app/service/interceptor/interceptor";
+import { login, setUserData } from "@/app/lib/auth/authSlice";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
+
+let store:any;
+
+export const injectStore = (_store: any) => {
+  store = _store;
+}
 
 const handler = NextAuth({
   providers: [
@@ -10,12 +16,16 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
+    async signIn({user, account}){
+      if(account?.provider === 'google'){
+        console.log(user, account);
+        //TODO send the user id_token or access_token to the backend to verify and create new user or get existing user data
+        return true;
+      }
+      return true;
+    }
   },
- // events:{
- //   async signIn({user,account,profile}){
- //     console.log(user,account,profile);
- //   }
- // }
+ 
 })
 
 export {handler as GET, handler as POST}
