@@ -22,9 +22,11 @@ type ReduxProviderType = {
     children: ReactNode
 }
 
+const clientId = process.env.NEXT_PUBLIC_GOOGLE_ID ?? '';
+
 export default function ReduxProvider({ children }: ReduxProviderType) {
     return (
-        <GoogleOAuthProvider clientId={process.env.GOOGLE_ID || ''}>
+        <GoogleOAuthProvider clientId={clientId}>
             <Provider store={store}>
                 <Header />
                 <section className="child-container">
