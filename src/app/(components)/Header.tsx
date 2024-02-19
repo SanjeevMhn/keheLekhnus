@@ -15,15 +15,13 @@ import api from "../service/interceptor/interceptor";
 import AdminNotify from "./admin-notify";
 import ResponsiveNav from "./responsive-nav";
 import SideNav from "./sidenav";
-import { signOut, useSession } from "next-auth/react";
 
 export default function Header() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-  const { data:session } = useSession();
   const pathName = usePathname();
   const dispatch = useDispatch();
   const authUser: TAuthState = useSelector((state: any) => state.auth)
-  const store = useStore();
+  //const store = useStore();
   const router = useRouter();
   const [showSideMenu, setShowSideMenu] = useState<boolean>(false);
   const handleShowSearchDialog = () => {
@@ -35,10 +33,10 @@ export default function Header() {
   }
 
   const handleLogout = async () => {
-    if(session?.user){
-      signOut();
-      return;
-    }
+   // if(session?.user){
+   //   signOut();
+   //   return;
+   // }
     try {
       const logoutConfig: AxiosRequestConfig = {
         method: 'post',
@@ -180,17 +178,17 @@ export default function Header() {
 
           <li className="nav-item ml-5 user-state">
             {
-              authUser.user_info !== null || (session !== null) ? (
+              authUser.user_info !== null ? (
                 <button className="btn-outline user-btn font-medium text-md flex items-center gap-2">
                   <span className="img-container bg-blue-400">
-                    {
+                    {/*{
                       session?.user?.image ? (
                         <img src={session.user.image} />
                       ) : null
-                    }
+                    }*/}
                   </span>
                   <span className="user-name">
-                    {authUser.user_info?.user_name || session?.user?.name}
+                    {authUser.user_info?.user_name}
                   </span>
                   <span className="icon-container">
                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">

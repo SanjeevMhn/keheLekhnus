@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import api from "../service/interceptor/interceptor";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { GoogleLogin } from "@react-oauth/google";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -77,7 +78,7 @@ const LoginForm = () => {
                 }))
                 const userDataConfig: AxiosRequestConfig = {
                     method: 'get',
-                    url: 'http://localhost:8080/api/v1/auth/me',
+                    url: `${baseUrl}/auth/me`,
                     headers: {
                         'authorization': `Bearer ${token}`
                     },
@@ -95,7 +96,7 @@ const LoginForm = () => {
                          window.location.reload();
                     }
                     dispatch(setUserData({
-                        user_id: userData[0].user_id,
+                        user_id: userData.user[0].user_id,
                         user_name: userData.user[0].user_name,
                         user_email: userData.user[0].user_email,
                         is_admin: userData.user[0].user_role === 'admin' ? true : false
@@ -114,11 +115,20 @@ const LoginForm = () => {
         }
     }
 
+    const onGoogleLogin = () => {
+        
+    }
+
+    const onGoogleError = () => {
+        
+    }
+
     return (
         <>
             <div className="third-party-login flex flex-wrap justify-center gap-2 pb-[20px] border-b-2 border-[var(--card-color)] w-full">
-                <button className="btn-primary" onClick={handleSignInGoogle}>Login with Google</button>
-                <button className="btn-outline-md">Login with Facebook</button>
+                {/* <button className="btn-primary">Login with Google</button> */}
+                <GoogleLogin onSuccess={onGoogleLogin} onError={onGoogleError} />
+                {/* <button className="btn-outline-md">Login with Facebook</button> */}
             </div>
             <form className="login-form form-layout no-shadow floating-label pt-[20px]" onSubmit={handleSubmit}>
                 {

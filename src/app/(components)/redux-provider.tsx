@@ -14,6 +14,7 @@ import Link from "next/link";
 import SideNav from "./sidenav";
 import OrderPDFView from "./orderPDFView";
 import SessionProviderParent from "./session-provider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 injectStore(store);
 
@@ -23,7 +24,7 @@ type ReduxProviderType = {
 
 export default function ReduxProvider({ children }: ReduxProviderType) {
     return (
-        <SessionProviderParent>
+        <GoogleOAuthProvider clientId={process.env.GOOGLE_ID || ''}>
             <Provider store={store}>
                 <Header />
                 <section className="child-container">
@@ -34,6 +35,6 @@ export default function ReduxProvider({ children }: ReduxProviderType) {
                 <Dialog />
                 <OrderPDFView />
             </Provider>
-        </SessionProviderParent>
+        </GoogleOAuthProvider>
     )
 }
