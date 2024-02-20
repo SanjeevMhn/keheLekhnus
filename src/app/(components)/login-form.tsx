@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import api from "../service/interceptor/interceptor";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleCredentialResponse, GoogleLogin } from "@react-oauth/google";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -21,10 +21,6 @@ const LoginForm = () => {
     const [passwordErr, setPasswordErr] = useState<string | null>(null);
     const [errMsg, setErrMsg] = useState<string | null>(null);
     const router = useRouter();
-
-    const handleSignInGoogle  = () => {
-        signIn('google');
-    }
 
     const handleCloseLogin = () => {
         dispatch(hideDialog())
@@ -73,7 +69,7 @@ const LoginForm = () => {
                 dispatch(login(data.accessToken))
                 handleCloseLogin();
                 dispatch(showNotification({
-                    message: 'User Logged Successully',
+                    message: 'User logged in successully',
                     type: 'success'
                 }))
                 const userDataConfig: AxiosRequestConfig = {
@@ -90,15 +86,17 @@ const LoginForm = () => {
                     const userData = await userDataRes.data;
                     if (userData.user[0].user_role == 'admin') {
                         router.push('/admin');
-                         window.location.reload();
-                    }else{
+                        window.location.reload();
+                    } else {
                         router.push('/');
-                         window.location.reload();
+                        window.location.reload();
                     }
                     dispatch(setUserData({
                         user_id: userData.user[0].user_id,
                         user_name: userData.user[0].user_name,
                         user_email: userData.user[0].user_email,
+                        user_img: userData.user[0].user_img,
+                        authProvider: userData.user[0].authProvider,
                         is_admin: userData.user[0].user_role === 'admin' ? true : false
                     }))
 
@@ -115,12 +113,46 @@ const LoginForm = () => {
         }
     }
 
-    const onGoogleLogin = () => {
-        
+    const onGoogleLogin = async (response: GoogleCredentialResponse) => {
+        try {
+            const auth = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/google-auth`, {
+                token: response.credential,
+                client_id: response.clientId
+            });
+            const authData = auth.data;
+            dispatch(login(authData.accessToken));
+            sessionStorage.setItem('google-token',authData.accessToken);
+            handleCloseLogin();
+            dispatch(showNotification({
+                message: 'User logged in successfully',
+                type: 'success'
+            }));
+            const userDataRes = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`);
+            if (userDataRes.status == 200) {
+                const userData = await userDataRes.data;
+                if (userData.user[0].user_role == 'admin') {
+                    router.push('/admin');
+                    // window.location.reload();
+                } else {
+                    router.push('/');
+                    // window.location.reload();
+                }
+                dispatch(setUserData({
+                    user_id: userData.user[0].user_id,
+                    user_name: userData.user[0].user_name,
+                    user_email: userData.user[0].user_email,
+                    user_img: userData.user[0].user_img,
+                    authProvider: userData.user[0].authProvider,
+                    is_admin: userData.user[0].user_role === 'admin' ? true : false
+                }))
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     const onGoogleError = () => {
-        
+
     }
 
     return (

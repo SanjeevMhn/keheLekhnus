@@ -13,7 +13,6 @@ import Header from "./Header";
 import Link from "next/link";
 import SideNav from "./sidenav";
 import OrderPDFView from "./orderPDFView";
-import SessionProviderParent from "./session-provider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 injectStore(store);

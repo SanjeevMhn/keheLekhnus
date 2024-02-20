@@ -15,6 +15,7 @@ import api from "../service/interceptor/interceptor";
 import AdminNotify from "./admin-notify";
 import ResponsiveNav from "./responsive-nav";
 import SideNav from "./sidenav";
+import { googleLogout } from "@react-oauth/google";
 
 export default function Header() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -49,6 +50,12 @@ export default function Header() {
       dispatch(showConfirm({
         message: 'Do you want to logout?',
         onConfirm: async () => {
+          if(authUser.user_info?.authProvider === 'google'){
+            googleLogout();
+            sessionStorage.clear();
+            window.location.href = '/';
+            return;
+          }
           const logoutRes = await axios(logoutConfig);
           if (logoutRes.status == 200) {
             dispatch(logout());
@@ -94,6 +101,8 @@ export default function Header() {
         user_id: checkUserRes.user[0].user_id,
         user_name: checkUserRes.user[0].user_name,
         user_email: checkUserRes.user[0].user_email,
+        user_img: checkUserRes.user[0].user_img,
+        authProvider: checkUserRes.user[0].authProvider,
         is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false,
       }))
 
@@ -181,11 +190,11 @@ export default function Header() {
               authUser.user_info !== null ? (
                 <button className="btn-outline user-btn font-medium text-md flex items-center gap-2">
                   <span className="img-container bg-blue-400">
-                    {/*{
-                      session?.user?.image ? (
-                        <img src={session.user.image} />
+                    {
+                      authUser.user_info.user_img ? (
+                        <img src={authUser.user_info.user_img} />
                       ) : null
-                    }*/}
+                    }
                   </span>
                   <span className="user-name">
                     {authUser.user_info?.user_name}

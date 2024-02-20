@@ -4,20 +4,20 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 let store: any;
 
-export const injectStore = (_store:any) => {
+export const injectStore = (_store: any) => {
     store = _store;
 }
 
-const api:AxiosInstance = axios.create();
+const api: AxiosInstance = axios.create();
 
 api.interceptors.request.use(
-    (config:any | AxiosRequestConfig) => {
+    (config: any | AxiosRequestConfig) => {
         const accessToken = store.getState().auth.user_token;
         config.headers.Authorization = `Bearer ${accessToken}`;
         return config;
     },
     (error) => {
-        return Promise.reject(error)  
+        return Promise.reject(error)
     }
 )
 
@@ -26,21 +26,34 @@ api.interceptors.response.use(
         return response
     },
     async (error) => {
-        if(error.response && error.response.status == 401){
-            try{
-                const refreshTokenConfig: AxiosRequestConfig = {
-                    url: 'http://localhost:8080/api/v1/refresh',
-                    method: 'post',
-                    withCredentials: true  
+        if (error.response && error.response.status == 401) {
+            if (sessionStorage.getItem('google-token') != null) {
+                try{
+                    error.config.headers.Authorization = `Bearer ${sessionStorage.getItem('google-token')}`;
+                    const response = await axios(error.config);
+                    return response;
+                }catch(err){
+                    console.error(err);
+                    sessionStorage.clear();
+                    window.location.href = '/';
                 }
-                const newTokenRes = await axios(refreshTokenConfig);
-                const newToken = await newTokenRes.data.accessToken;
-                store.dispatch(setNewToken(newToken))
-                error.config.headers.Authorization = `Bearer ${newToken}`;
-                const response = await axios(error.config);
-                return response;
-            }catch(refreshError){
-                throw refreshError;
+
+            } else {
+                try {
+                    const refreshTokenConfig: AxiosRequestConfig = {
+                        url: 'http://localhost:8080/api/v1/refresh',
+                        method: 'post',
+                        withCredentials: true
+                    }
+                    const newTokenRes = await axios(refreshTokenConfig);
+                    const newToken = await newTokenRes.data.accessToken;
+                    store.dispatch(setNewToken(newToken))
+                    error.config.headers.Authorization = `Bearer ${newToken}`;
+                    const response = await axios(error.config);
+                    return response;
+                } catch (refreshError) {
+                    throw refreshError;
+                }
             }
         }
     }
