@@ -113,7 +113,13 @@ const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showA
                                                                 return (
                                                                     <td key={index}>
                                                                         <div className="img-container">
-                                                                            <img src={d[value]} alt="" />
+                                                                            {d[value] !== null ? (
+                                                                                <img src={d[value]} alt="" />
+                                                                            ):(
+                                                                                <span className="no-image">
+                                                                                    No Image
+                                                                                </span>
+                                                                            )}
                                                                         </div>
                                                                     </td>
                                                                 )
@@ -157,23 +163,30 @@ const DataTable: FC<DataTableType> = ({ columns, data, pagerConfig, title, showA
                     </div>
                     <span className="lable-text">Total items per page</span>
                 </div>
-                <div className="navigate-pages">
-                    <button className={`btn first ${pagerConfig.currentPage == 1 ? 'disabled' : ''}`} disabled={pagerConfig.currentPage == 1} onClick={() => goDirectToPage(1)}>
-                        <span className="icon-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M267.5 440.6c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29V96c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4l-192 160L64 241V96c0-17.7-14.3-32-32-32S0 78.3 0 96V416c0 17.7 14.3 32 32 32s32-14.3 32-32V271l11.5 9.6 192 160z" /></svg>
+                <div className="right-col flex flex-wrap gap-4">
+                    <div className="page-detail flex items-center">
+                        <span className="label-text text-[18px]">
+                            Page {pagerConfig.currentPage} of {pagerConfig.totalPages}
                         </span>
-                    </button>
-                    <button className={`btn prev ${pagerConfig.currentPage == 1 ? 'disabled' : ''}`} disabled={pagerConfig.currentPage == 1} onClick={() => goDirectToPage(pagerConfig.currentPage - 1)}>
-                        <span className="label-text">Previous</span>
-                    </button>
-                    <button className={`btn next ${pagerConfig.currentPage == pagerConfig.totalPages ? 'disabled' : ''}`} disabled={pagerConfig.currentPage == pagerConfig.totalPages} onClick={() => goDirectToPage(pagerConfig.currentPage + 1)}>
-                        <span className="label-text">Next</span>
-                    </button>
-                    <button className={`btn last ${pagerConfig.currentPage == pagerConfig.totalPages ? 'disabled' : ''}`} disabled={pagerConfig.currentPage == pagerConfig.totalPages} onClick={() => goDirectToPage(pagerConfig.totalPages)}>
-                        <span className="icon-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416V96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4l192 160L256 241V96c0-17.7 14.3-32 32-32s32 14.3 32 32V416c0 17.7-14.3 32-32 32s-32-14.3-32-32V271l-11.5 9.6-192 160z" /></svg>
-                        </span>
-                    </button>
+                    </div>
+                    <div className="navigate-pages">
+                        <button className={`btn first ${pagerConfig.currentPage == 1 ? 'disabled' : ''}`} disabled={pagerConfig.currentPage == 1} onClick={() => goDirectToPage(1)}>
+                            <span className="icon-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M267.5 440.6c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29V96c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4l-192 160L64 241V96c0-17.7-14.3-32-32-32S0 78.3 0 96V416c0 17.7 14.3 32 32 32s32-14.3 32-32V271l11.5 9.6 192 160z" /></svg>
+                            </span>
+                        </button>
+                        <button className={`btn prev ${pagerConfig.currentPage == 1 ? 'disabled' : ''}`} disabled={pagerConfig.currentPage == 1} onClick={() => goDirectToPage(pagerConfig.currentPage - 1)}>
+                            <span className="label-text">Previous</span>
+                        </button>
+                        <button className={`btn next ${pagerConfig.currentPage == pagerConfig.totalPages ? 'disabled' : ''}`} disabled={pagerConfig.currentPage == pagerConfig.totalPages} onClick={() => goDirectToPage(pagerConfig.currentPage + 1)}>
+                            <span className="label-text">Next</span>
+                        </button>
+                        <button className={`btn last ${pagerConfig.currentPage == pagerConfig.totalPages ? 'disabled' : ''}`} disabled={pagerConfig.currentPage == pagerConfig.totalPages} onClick={() => goDirectToPage(pagerConfig.totalPages)}>
+                            <span className="icon-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416V96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4l192 160L256 241V96c0-17.7 14.3-32 32-32s32 14.3 32 32V416c0 17.7-14.3 32-32 32s-32-14.3-32-32V271l-11.5 9.6-192 160z" /></svg>
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

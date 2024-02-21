@@ -87,6 +87,11 @@ const SideNav: FC<SideNavProps> = ({ authUser, showSideMenu, setShowSideMenu, ha
                         <div className="user-btn-container p-[10px]">
                             <button className="btn-outline w-full user-btn font-medium text-md flex items-center gap-2">
                                 <span className="img-container bg-blue-400">
+                                    {
+                                        authUser.user_info.user_img ? (
+                                            <img src={authUser.user_info.user_img} />
+                                        ):null
+                                    }
                                 </span>
                                 <span className="user-name">
                                     {authUser.user_info.user_name}

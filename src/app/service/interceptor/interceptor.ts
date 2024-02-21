@@ -27,9 +27,11 @@ api.interceptors.response.use(
     },
     async (error) => {
         if (error.response && error.response.status == 401) {
-            if (sessionStorage.getItem('google-token') != null) {
+            let gToken = sessionStorage.getItem('google-token');
+            if ( gToken !== null) {
                 try{
-                    error.config.headers.Authorization = `Bearer ${sessionStorage.getItem('google-token')}`;
+                    store.dispatch(setNewToken(gToken));
+                    error.config.headers.Authorization = `Bearer ${gToken}`;
                     const response = await axios(error.config);
                     return response;
                 }catch(err){

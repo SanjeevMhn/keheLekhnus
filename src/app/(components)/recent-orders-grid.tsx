@@ -34,11 +34,11 @@ const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData
         // if (!ordersFetched.current) {
         if (propStatus !== '') {
             setOrderStatus(propStatus)
-            getOrders(propStatus, 1);
+            getOrders(propStatus, 1, 5);
         } else {
             setOrderStatus('PENDING');
             if (!ordersFetched.current) {
-                getOrders('PENDING', 1);
+                getOrders('PENDING', 1, 5);
             }
         }
         return () => {

@@ -12,7 +12,7 @@ export default function Home() {
     const [totalProducts, setTotalProducts] = useState<number>(0);
     const [totalCategories, setTotalCategories] = useState<number>(0);
     const [totalOrders, setTotalOrders] = useState<number>(0)
-    const [totalUsers, setTotalUsers] = useState<number>(20);
+    const [totalUsers, setTotalUsers] = useState<number>(0);
     const dashboardFetched = useRef<boolean>(false);
 
     useEffect(() => {
@@ -27,11 +27,12 @@ export default function Home() {
     const getTotalCount = async () => {
         const baseUrl = process.env.NEXT_PUBLIC_API_URL;
         try {
-            const response = await api.get(`${baseUrl}/products/count`);
+            const response = await api.get(`${baseUrl}/admin/count`);
             const data = await response.data;
-            setTotalProducts(data.productCount)
-            setTotalCategories(data.categoryCount)
-            setTotalOrders(data.ordersCount)
+            setTotalProducts(data.productCount);
+            setTotalCategories(data.categoryCount);
+            setTotalOrders(data.ordersCount);
+            setTotalUsers(data.usersCount);
         } catch (e) {
             console.error(e);
         }
@@ -78,7 +79,7 @@ export default function Home() {
             label: 'Users',
             total: totalUsers,
             icon: <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" /></svg>,
-            link: '/admin/products/'
+            link: '/admin/users/'
         },
     ]
 

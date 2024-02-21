@@ -129,6 +129,8 @@
     height: 90px;
     width: 90px;
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 0 0 90px;
     border-radius: 12px;
     overflow: hidden;
