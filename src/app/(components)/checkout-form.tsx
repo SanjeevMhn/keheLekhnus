@@ -268,7 +268,7 @@ const CheckoutForm = () => {
 
     return (
         <>
-            <div className="third-party-login flex justify-center gap-2 pb-[20px] w-full flex-wrap">
+            <div className="third-party-login flex justify-center gap-2 pb-[20px] mb-[10px] w-full flex-wrap border-b-2 border-[var(--card-color)]">
                 <button className="btn-primary" onClick={() => { handleOpenLogin() }}>Login</button>
                 <button className="btn-outline-md">Signup</button>
             </div>

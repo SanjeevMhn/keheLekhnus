@@ -3,12 +3,14 @@
 import { FC, useState } from "react"
 import { Product } from "./product-list"
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "../lib/cart/cartSlice";
+import { addToCart, checkDuplicate } from "../lib/cart/cartSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import Link from "next/link";
+import { TAuthState } from "../lib/auth/authSlice";
 
 const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
+  const auth:TAuthState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleAddToCart = (product: Product) => {
@@ -22,6 +24,23 @@ const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
       total: Number(product.prod_price) * quantity
     }
     dispatch(addToCart(cartObj))
+    if(auth.is_authenticated){
+      
+    }else{
+      let cartSession = sessionStorage.getItem('cart');
+      if(cartSession !== null){
+        let cart:Array<any> = JSON.parse(cartSession);
+        if(!checkDuplicate(cart,cartObj)){
+          cart.push(cartObj);
+          sessionStorage.setItem('cart',JSON.stringify(cart));  
+        } 
+       
+      }else{
+        let cartData:Array<any> = [];
+        cartData.push(cartObj); 
+        sessionStorage.setItem('cart',JSON.stringify(cartData)); 
+      }
+    }
 
     dispatch(showNotification({ message: "Item Added To Cart", type: "success" }))
   }

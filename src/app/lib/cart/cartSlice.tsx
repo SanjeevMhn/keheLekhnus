@@ -13,9 +13,11 @@ export type CartItem = {
 
 type CartState = Array<CartItem>
 
-const initialState: CartState = [];
+const cartSession = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem('cart')) : null;
 
-const checkDuplicate = (cart: CartState, item: CartItem): boolean => {
+const initialState: CartState = cartSession !== null ? cartSession : [] ;
+
+export const checkDuplicate = (cart: CartState, item: CartItem): boolean => {
     let duplicate = cart.filter((ct) => {
         return ct.id == item.id
     })
