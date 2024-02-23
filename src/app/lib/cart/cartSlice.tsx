@@ -13,7 +13,7 @@ export type CartItem = {
 
 type CartState = Array<CartItem>
 
-const cartSession = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem('cart')) : null;
+const cartSession = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem('cart')!) : null;
 
 const initialState: CartState = cartSession !== null ? cartSession : [] ;
 
