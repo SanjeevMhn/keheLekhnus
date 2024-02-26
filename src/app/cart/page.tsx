@@ -34,7 +34,7 @@ export default function Page() {
   ]
 
   const handleCheckout = () => {
-    dispatch(showDialog({ show: true, title: 'Checkout Form', component: CheckoutForm }));
+    dispatch(showDialog({ title: 'Checkout Form', component: CheckoutForm }));
   }
 
 

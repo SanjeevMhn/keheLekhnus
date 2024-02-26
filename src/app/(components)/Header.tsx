@@ -16,6 +16,7 @@ import AdminNotify from "./admin-notify";
 import ResponsiveNav from "./responsive-nav";
 import SideNav from "./sidenav";
 import { googleLogout } from "@react-oauth/google";
+import { CartItem, sessionCart } from "../lib/cart/cartSlice";
 
 export default function Header() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -34,10 +35,10 @@ export default function Header() {
   }
 
   const handleLogout = async () => {
-   // if(session?.user){
-   //   signOut();
-   //   return;
-   // }
+    // if(session?.user){
+    //   signOut();
+    //   return;
+    // }
     try {
       const logoutConfig: AxiosRequestConfig = {
         method: 'post',
@@ -50,7 +51,7 @@ export default function Header() {
       dispatch(showConfirm({
         message: 'Do you want to logout?',
         onConfirm: async () => {
-          if(authUser.user_info?.authProvider === 'google'){
+          if (authUser.user_info?.authProvider === 'google') {
             googleLogout();
             sessionStorage.clear();
             window.location.href = '/';
@@ -106,6 +107,21 @@ export default function Header() {
         is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false,
       }))
 
+
+      if (checkUserRes.user[0].user_role !== 'admin') {
+        const cartData = await api.get(`${baseUrl}/cart/${checkUserRes.user[0].user_id}`);
+        const data = await cartData.data.cart;
+        if (data.length > 0) {
+          dispatch(sessionCart(data));
+        }
+      } else {
+        let memoryCart: Array<CartItem> = JSON.parse(sessionStorage.getItem('cart')!);
+        if (memoryCart.length > 0) {
+          dispatch(sessionCart(memoryCart));
+        }
+      }
+
+
     }
 
   }
@@ -114,7 +130,7 @@ export default function Header() {
     <nav className={`nav-primary px-[15px] md:px-[40px] shadow-xl sticky top-0 bg-[var(--base-color)] z-40 ${authUser.user_info?.is_admin ? 'admin-nav' : ''}`}>
       <div className={`main-navigation ${!authUser.user_info?.is_admin ? 'main-wrapper' : ''}`}>
         <Link href="/" className={`brand-name`}>
-          Sanu's Nursery
+          Sanu&apos;s Nursery
         </Link>
         <ul className="nav-list main-nav-list">
           {

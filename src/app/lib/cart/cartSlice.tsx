@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+'use client'
+import api from "@/app/service/interceptor/interceptor";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export type CartItem = {
@@ -13,9 +15,7 @@ export type CartItem = {
 
 type CartState = Array<CartItem>
 
-const cartSession = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem('cart')!) : null;
-
-const initialState: CartState = cartSession !== null ? cartSession : [] ;
+const initialState: CartState = [] || null;
 
 export const checkDuplicate = (cart: CartState, item: CartItem): boolean => {
     let duplicate = cart.filter((ct) => {
@@ -28,6 +28,9 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
+        sessionCart: (state, action: PayloadAction<Array<CartItem>>) => {
+            return state = action.payload
+        },
         addToCart: (state, action: PayloadAction<CartItem>) => {
             !checkDuplicate(state, action.payload) ? state.push(action.payload) : ''
         },
@@ -57,8 +60,8 @@ export const cartSlice = createSlice({
         clearCart: () => {
             return initialState 
         }
-    }
+    },
 })
 
-export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity, clearCart } = cartSlice.actions
+export const { sessionCart, addToCart, removeFromCart, incrementQuantity, decrementQuantity, clearCart } = cartSlice.actions
 export default cartSlice.reducer;

@@ -5,6 +5,8 @@ export type TUserInfo = {
     user_id: any | null,
     user_name: string | null | undefined,
     user_email: string | null | undefined,
+    user_img?: string | null | undefined,
+    authProvider: string | null | undefined,
     is_admin: boolean
 }
 
@@ -42,6 +44,7 @@ export const authReducer = createSlice({
         setNewToken: (state: TAuthState, action: PayloadAction<string>) => {
             return {
                 ...state,
+                is_authenticated: true,
                 user_token: action.payload
             }
         },

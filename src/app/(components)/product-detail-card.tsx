@@ -7,13 +7,14 @@ import { addToCart, checkDuplicate } from "../lib/cart/cartSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import Link from "next/link";
 import { TAuthState } from "../lib/auth/authSlice";
+import api from "../service/interceptor/interceptor";
 
 const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
-  const auth: TAuthState = useSelector((state) => state.auth);
+  const auth: TAuthState = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = async (product: Product) => {
     let cartObj = {
       id: product.prod_id,
       name: product.prod_name,
@@ -23,21 +24,33 @@ const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
       quantity: quantity,
       total: Number(product.prod_price) * quantity
     }
-    dispatch(addToCart(cartObj))
-    let cartSession = sessionStorage.getItem('cart');
-    if (cartSession !== null) {
-      let cart: Array<any> = JSON.parse(cartSession);
-      if (!checkDuplicate(cart, cartObj)) {
-        cart.push(cartObj);
-        sessionStorage.setItem('cart', JSON.stringify(cart));
+    if (auth.is_authenticated) {
+      const cartAuth = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
+        user_id: auth.user_info?.user_id,
+        cart_item: cartObj
+      })
+      const status = await cartAuth.status;
+      if (status == 200) {
+        dispatch(showNotification({ message: "Item Added To Cart", type: "success" }))
       }
-    } else {
-      let cartData: Array<any> = [];
-      cartData.push(cartObj);
-      sessionStorage.setItem('cart', JSON.stringify(cartData));
-    }
 
-    dispatch(showNotification({ message: "Item Added To Cart", type: "success" }))
+    } else {
+      dispatch(addToCart(cartObj))
+      let cartSession = sessionStorage.getItem('cart');
+      if (cartSession !== null) {
+        let cart: Array<any> = JSON.parse(cartSession);
+        if (!checkDuplicate(cart, cartObj)) {
+          cart.push(cartObj);
+          sessionStorage.setItem('cart', JSON.stringify(cart));
+        }
+      } else {
+        let cartData: Array<any> = [];
+        cartData.push(cartObj);
+        sessionStorage.setItem('cart', JSON.stringify(cartData));
+      }
+
+      dispatch(showNotification({ message: "Item Added To Cart", type: "success" }))
+    }
   }
 
   const handleBuyNow = (product: Product) => {

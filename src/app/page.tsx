@@ -9,7 +9,7 @@ export default async function Home() {
         <div className="main-wrapper">
           <div className="intro-info pl-[20px] lg:pl-0 lg:max-w-[50%]">
             <p className="text-[17px] lg:text-[22px]">Hello, Welcome to</p>
-            <h2 className="!text-[35px] lg:!text-[55px] brand-name">Sanu's Nursery</h2>
+            <h2 className="!text-[35px] lg:!text-[55px] brand-name">Sanu&apos;s Nursery</h2>
             <p className="text-[20px] pb-[20px]">We specilize in growing and selling plants ranging from vegetables, fruits to flowers and everything in between. We sell greminated plants which are ready for you to plant directly in your gardens.</p>
             <Link href="/products/">
               <button className="btn-primary">View Products</button>
