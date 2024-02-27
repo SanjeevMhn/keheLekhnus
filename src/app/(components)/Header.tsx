@@ -16,12 +16,12 @@ import AdminNotify from "./admin-notify";
 import ResponsiveNav from "./responsive-nav";
 import SideNav from "./sidenav";
 import { googleLogout } from "@react-oauth/google";
-import { CartItem, sessionCart } from "../lib/cart/cartSlice";
+import { CartItem, getCartApi, sessionCart } from "../lib/cart/cartSlice";
 
 export default function Header() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const pathName = usePathname();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const authUser: TAuthState = useSelector((state: any) => state.auth)
   //const store = useStore();
   const router = useRouter();
@@ -109,11 +109,7 @@ export default function Header() {
 
 
       if (checkUserRes.user[0].user_role !== 'admin') {
-        const cartData = await api.get(`${baseUrl}/cart/${checkUserRes.user[0].user_id}`);
-        const data = await cartData.data.cart;
-        if (data.length > 0) {
-          dispatch(sessionCart(data));
-        }
+        dispatch(getCartApi(checkUserRes.user[0].user_id));
       } else {
         let memoryCart: Array<CartItem> = JSON.parse(sessionStorage.getItem('cart')!);
         if (memoryCart.length > 0) {

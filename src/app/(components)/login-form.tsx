@@ -85,11 +85,11 @@ const LoginForm = () => {
                 if (userDataRes.status == 200) {
                     const userData = await userDataRes.data;
                     if (userData.user[0].user_role == 'admin') {
+                        window.location.reload();
                         router.push('/admin');
-                        window.location.reload();
                     } else {
-                        router.push('/');
                         window.location.reload();
+                        router.push('/');
                     }
                     dispatch(setUserData({
                         user_id: userData.user[0].user_id,

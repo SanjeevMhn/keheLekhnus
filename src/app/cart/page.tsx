@@ -12,7 +12,7 @@ export default function Page() {
   const getCartTotal = (): number => {
     let sum = 0;
     cart.map((item: CartItem) => {
-      sum += item.total;
+      sum += Number(item.price) * item.quantity;
     })
 
     return sum;
@@ -37,6 +37,7 @@ export default function Page() {
     dispatch(showDialog({ title: 'Checkout Form', component: CheckoutForm }));
   }
 
+      console.log(cart);
 
   return (
     <div className="pb-[40px] main-wrapper">

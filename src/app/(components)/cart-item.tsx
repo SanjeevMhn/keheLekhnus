@@ -1,5 +1,5 @@
 'use client'
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { CartItem, decrementQuantity } from "../lib/cart/cartSlice";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +34,6 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
       const itemToUpdate: CartItem = cartSession.find((cartItem: CartItem) => cartItem.id == item.id);
       if (itemToUpdate && itemToUpdate.quantity > 1) {
         itemToUpdate.quantity -= 1;
-        itemToUpdate.total = itemToUpdate.quantity * Number(itemToUpdate.price);
       }
       let updatedCart: Array<CartItem> = [];
       updatedCart.push(itemToUpdate);
@@ -52,7 +51,6 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
       const itemToUpdate: CartItem = cartSession.find((cartItem: CartItem) => cartItem.id == item.id);
       if (itemToUpdate) {
         itemToUpdate.quantity += 1;
-        itemToUpdate.total = itemToUpdate.quantity * Number(itemToUpdate.price);
       }
       let updatedCart: Array<CartItem> = [];
       updatedCart.push(itemToUpdate);
@@ -63,6 +61,10 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
       })
       sessionStorage.setItem('cart', JSON.stringify(updatedCart));
     }
+
+    useEffect(() => {
+      console.log(cart);
+    },[])
 
   }
 
@@ -97,7 +99,7 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
 
       </td>
       <td className="text-right" data-col="price">Rs.&nbsp;{item.price}</td>
-      <td className="text-right" data-col="total">Rs.&nbsp;{item.total}</td>
+      <td className="text-right" data-col="total">Rs.&nbsp;{Number(item.price) * item.quantity}</td>
       <td>
         <button className="remove-btn mx-auto flex" onClick={() => handleRemoveCartItem(item)}>
           <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">

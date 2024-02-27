@@ -3,7 +3,7 @@
 import { FC, useState } from "react"
 import { Product } from "./product-list"
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, checkDuplicate } from "../lib/cart/cartSlice";
+import { AddCartParams, CartItem, addToCart, addToCartApi, checkDuplicate } from "../lib/cart/cartSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import Link from "next/link";
 import { TAuthState } from "../lib/auth/authSlice";
@@ -12,28 +12,24 @@ import api from "../service/interceptor/interceptor";
 const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const auth: TAuthState = useSelector((state: any) => state.auth);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const handleAddToCart = async (product: Product) => {
-    let cartObj = {
+    let cartObj:CartItem = {
       id: product.prod_id,
       name: product.prod_name,
       category: product.prod_category,
       price: product.prod_price,
       img: product.prod_img,
       quantity: quantity,
-      total: Number(product.prod_price) * quantity
     }
     if (auth.is_authenticated) {
-      const cartAuth = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
+      let cartData:AddCartParams = {
         user_id: auth.user_info?.user_id,
         cart_item: cartObj
-      })
-      const status = await cartAuth.status;
-      if (status == 200) {
-        dispatch(showNotification({ message: "Item Added To Cart", type: "success" }))
       }
-
+      dispatch(addToCartApi(cartData))
+      dispatch(showNotification({ message: "Item Added To Cart", type: "success" }))
     } else {
       dispatch(addToCart(cartObj))
       let cartSession = sessionStorage.getItem('cart');
