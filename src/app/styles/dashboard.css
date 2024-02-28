@@ -91,7 +91,7 @@
     border-radius: 12px;
 }
 
-@media (min-width: 1370px) {
+@media (min-width: 1550px) {
     .dashboard-grid-container {
         grid-template-columns: repeat(2, auto);
         /* padding-bottom: 0; */
