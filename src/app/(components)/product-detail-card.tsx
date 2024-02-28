@@ -49,18 +49,18 @@ const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
     }
   }
 
-  const handleBuyNow = (product: Product) => {
-    let cartObj = {
-      id: product.prod_id,
-      name: product.prod_name,
-      category: product.prod_category,
-      price: product.prod_price,
-      img: product.prod_img,
-      quantity: quantity,
-      total: Number(product.prod_price) * quantity
-    }
-    dispatch(addToCart(cartObj))
-  }
+  // const handleBuyNow = (product: Product) => {
+  //   let cartObj = {
+  //     id: product.prod_id,
+  //     name: product.prod_name,
+  //     category: product.prod_category,
+  //     price: product.prod_price,
+  //     img: product.prod_img,
+  //     quantity: quantity,
+  //     total: Number(product.prod_price) * quantity
+  //   }
+  //   dispatch(addToCart(cartObj))
+  // }
 
 
   return (
@@ -97,7 +97,7 @@ const ProductDetailCard: FC<{ product: Product }> = ({ product }) => {
         <div className="product-action">
           <button className="btn" onClick={() => handleAddToCart(product)} disabled={!product.prod_inStock}>Add to Cart</button>
           <Link href="/cart">
-            <button className="btn" disabled={!product.prod_inStock} onClick={() => handleBuyNow(product)}>Buy Now</button>
+            <button className="btn" disabled={!product.prod_inStock} onClick={() => handleAddToCart(product)}>Buy Now</button>
           </Link>
         </div>
       </div>

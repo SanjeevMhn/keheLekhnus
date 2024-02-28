@@ -37,8 +37,6 @@ export default function Page() {
     dispatch(showDialog({ title: 'Checkout Form', component: CheckoutForm }));
   }
 
-      console.log(cart);
-
   return (
     <div className="pb-[40px] main-wrapper">
       <BreadCrumb crumbs={crumbs} />

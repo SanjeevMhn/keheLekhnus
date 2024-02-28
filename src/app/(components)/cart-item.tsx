@@ -1,30 +1,44 @@
 'use client'
 import { FC, useEffect, useState } from "react";
-import { CartItem, decrementQuantity } from "../lib/cart/cartSlice";
+import { AddCartParams, CartItem, decrementQuantity, removeCartItemApi } from "../lib/cart/cartSlice";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, incrementQuantity } from "../lib/cart/cartSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import { showConfirm } from "../lib/confirmation/confirmationSlice";
+import { TAuthState } from "../lib/auth/authSlice";
 
 const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const [quantity, setQuantity] = useState(0)
+  const authUser: TAuthState = useSelector((state: any) => state.auth);
 
   const handleRemoveCartItem = (item: CartItem) => {
-    let cartSession = JSON.parse(sessionStorage.getItem('cart')!);
-    dispatch(showConfirm({
-      message: "Remove item from cart?",
-      onConfirm: () => {
-        dispatch(removeFromCart(item))
-        dispatch(showNotification({ message: 'Item removed from cart', type: 'success' }))
-        const updatedCart = cartSession.filter((cartItem: CartItem) => {
-          return cartItem.id !== item.id
-        })
-        sessionStorage.setItem('cart',JSON.stringify(updatedCart));
-      }
-    }))
+    if (authUser.is_authenticated) {
+      dispatch(showConfirm({
+        message: 'Remove item from cart?',
+        onConfirm: () => {
 
+          if (authUser.is_authenticated) {
+            const params: AddCartParams = {
+              user_id: authUser.user_info?.user_id,
+              cart_item: item
+            }
+            dispatch(removeCartItemApi(params));
+            dispatch(showNotification({ message: 'Item removed from cart', type: 'success' }))
+          } else {
+            let cartSession = JSON.parse(sessionStorage.getItem('cart')!);
+            dispatch(removeFromCart(item))
+            dispatch(showNotification({ message: 'Item removed from cart', type: 'success' }))
+            const updatedCart = cartSession.filter((cartItem: CartItem) => {
+              return cartItem.id !== item.id
+            })
+            sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+          }
+
+        }
+      }))
+    }
   }
 
   const handleQuantityChange = (item: CartItem, action: string) => {
@@ -61,10 +75,6 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
       })
       sessionStorage.setItem('cart', JSON.stringify(updatedCart));
     }
-
-    useEffect(() => {
-      console.log(cart);
-    },[])
 
   }
 

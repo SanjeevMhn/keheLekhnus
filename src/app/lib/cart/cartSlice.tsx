@@ -53,6 +53,17 @@ export const getCartApi = createAsyncThunk('cart/get',async(userId: number,thunk
     } 
 })
 
+export const removeCartItemApi = createAsyncThunk('cart/delete',async(params:AddCartParams, thunkAPI) => {
+   try{
+        const delCart = await api.post(`${baseUrl}/cart/delete`,{
+            ...params
+        })        
+        return params.cart_item;
+    }catch(err:any){
+        console.error(err.response.data)
+    } 
+})
+
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -98,7 +109,12 @@ export const cartSlice = createSlice({
         })
         .addCase(getCartApi.fulfilled, (state, action:PayloadAction<Array<CartItem>>) => {
             return state = action.payload
-        })  
+        })
+        .addCase(removeCartItemApi.fulfilled,(state,action) => {
+            return state.filter((item: CartItem) => {
+                return item.id !== action.payload?.id
+            })
+        }) 
     }
 })
 
