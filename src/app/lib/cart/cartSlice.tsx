@@ -64,6 +64,19 @@ export const removeCartItemApi = createAsyncThunk('cart/delete',async(params:Add
     } 
 })
 
+export type UpdateCartParms = {
+    item: CartItem,
+    quantity: number
+}
+
+export const updateCartItemApi = createAsyncThunk('cart/update', async(parms: UpdateCartParms, thunkAPI) => {
+    try{
+        
+    }catch(err: any){
+       console.error(err.response.data) 
+    }
+})
+
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,

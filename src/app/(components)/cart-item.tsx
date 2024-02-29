@@ -44,19 +44,24 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
   const handleQuantityChange = (item: CartItem, action: string) => {
     if (action === 'decrease') {
       dispatch(decrementQuantity(item));
-      let cartSession = JSON.parse(sessionStorage.getItem('cart')!);
-      const itemToUpdate: CartItem = cartSession.find((cartItem: CartItem) => cartItem.id == item.id);
-      if (itemToUpdate && itemToUpdate.quantity > 1) {
-        itemToUpdate.quantity -= 1;
-      }
-      let updatedCart: Array<CartItem> = [];
-      updatedCart.push(itemToUpdate);
-      cartSession.map((cartItem: CartItem) => {
-        if (cartItem.id !== itemToUpdate.id) {
-          updatedCart.push(cartItem);
+      if(authUser.is_authenticated){
+         //TODO: add login for authenticated user to send updates to backend       
+      }else{
+        let cartSession = JSON.parse(sessionStorage.getItem('cart')!);
+        const itemToUpdate: CartItem = cartSession.find((cartItem: CartItem) => cartItem.id == item.id);
+        if (itemToUpdate && itemToUpdate.quantity > 1) {
+          itemToUpdate.quantity -= 1;
         }
-      })
-      sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+        let updatedCart: Array<CartItem> = [];
+        updatedCart.push(itemToUpdate);
+        cartSession.map((cartItem: CartItem) => {
+          if (cartItem.id !== itemToUpdate.id) {
+            updatedCart.push(cartItem);
+          }
+        })
+        sessionStorage.setItem('cart', JSON.stringify(updatedCart)); 
+      }
+      
     }
 
     if (action === 'increase') {

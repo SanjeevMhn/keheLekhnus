@@ -72,6 +72,8 @@ const LoginForm = () => {
                     message: 'User logged in successully',
                     type: 'success'
                 }))
+                
+                window.location.reload();
                 const userDataConfig: AxiosRequestConfig = {
                     method: 'get',
                     url: `${baseUrl}/auth/me`,
@@ -81,7 +83,7 @@ const LoginForm = () => {
                     withCredentials: true
                 }
 
-                const userDataRes = await api.get(`${baseUrl}/auth/me`);
+                /*const userDataRes = await api.get(`${baseUrl}/auth/me`);
                 if (userDataRes.status == 200) {
                     const userData = await userDataRes.data;
                     if (userData.user[0].user_role == 'admin') {
@@ -102,7 +104,7 @@ const LoginForm = () => {
 
 
 
-                }
+                }*/
 
             }
 
@@ -127,7 +129,8 @@ const LoginForm = () => {
                 message: 'User logged in successfully',
                 type: 'success'
             }));
-            const userDataRes = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`);
+            window.location.reload();
+            /*const userDataRes = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`);
             if (userDataRes.status == 200) {
                 const userData = await userDataRes.data;
                 if (userData.user[0].user_role == 'admin') {
@@ -145,7 +148,7 @@ const LoginForm = () => {
                     authProvider: userData.user[0].authProvider,
                     is_admin: userData.user[0].user_role === 'admin' ? true : false
                 }))
-            }
+            }*/
         } catch (err) {
             console.error(err);
         }
