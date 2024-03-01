@@ -16,7 +16,6 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
   const cartState: CartState = useSelector((state: any) => state.cart);
 
   const handleRemoveCartItem = (item: CartItem) => {
-    if (authUser.is_authenticated) {
       dispatch(showConfirm({
         message: 'Remove item from cart?',
         onConfirm: () => {
@@ -40,7 +39,6 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
 
         }
       }))
-    }
   }
 
   const handleQuantityChange = async(item: CartItem, action: string) => {
