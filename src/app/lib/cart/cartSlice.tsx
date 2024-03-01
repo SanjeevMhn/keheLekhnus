@@ -12,7 +12,7 @@ export type CartItem = {
     quantity: number,
 }
 
-type CartState = Array<CartItem>
+export type CartState = Array<CartItem>
 
 const initialState: CartState = [] || null;
 
@@ -24,12 +24,12 @@ export const checkDuplicate = (cart: CartState, item: CartItem): boolean => {
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-export type AddCartParams = {
+export type CartParams = {
     user_id: number,
     cart_item: CartItem
 }
 
-export const addToCartApi = createAsyncThunk('cart/add',async(cartData:AddCartParams,thunkAPI) => {
+export const addToCartApi = createAsyncThunk('cart/add',async(cartData:CartParams,thunkAPI) => {
     try{
         const cartAdd = await api.post(`${baseUrl}/cart`,{
             ...cartData
@@ -53,7 +53,7 @@ export const getCartApi = createAsyncThunk('cart/get',async(userId: number,thunk
     } 
 })
 
-export const removeCartItemApi = createAsyncThunk('cart/delete',async(params:AddCartParams, thunkAPI) => {
+export const removeCartItemApi = createAsyncThunk('cart/delete',async(params:CartParams, thunkAPI) => {
    try{
         const delCart = await api.post(`${baseUrl}/cart/delete`,{
             ...params
@@ -62,19 +62,6 @@ export const removeCartItemApi = createAsyncThunk('cart/delete',async(params:Add
     }catch(err:any){
         console.error(err.response.data)
     } 
-})
-
-export type UpdateCartParms = {
-    item: CartItem,
-    quantity: number
-}
-
-export const updateCartItemApi = createAsyncThunk('cart/update', async(parms: UpdateCartParms, thunkAPI) => {
-    try{
-        
-    }catch(err: any){
-       console.error(err.response.data) 
-    }
 })
 
 export const cartSlice = createSlice({

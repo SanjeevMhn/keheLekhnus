@@ -1,17 +1,19 @@
 'use client'
 import { FC, useEffect, useState } from "react";
-import { AddCartParams, CartItem, decrementQuantity, removeCartItemApi } from "../lib/cart/cartSlice";
+import { CartParams, CartItem, CartState, decrementQuantity, removeCartItemApi, getCartApi } from "../lib/cart/cartSlice";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, incrementQuantity } from "../lib/cart/cartSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import { showConfirm } from "../lib/confirmation/confirmationSlice";
 import { TAuthState } from "../lib/auth/authSlice";
+import api from "../service/interceptor/interceptor";
 
 const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => {
   const dispatch = useDispatch<any>();
   const [quantity, setQuantity] = useState(0)
   const authUser: TAuthState = useSelector((state: any) => state.auth);
+  const cartState: CartState = useSelector((state: any) => state.cart);
 
   const handleRemoveCartItem = (item: CartItem) => {
     if (authUser.is_authenticated) {
@@ -20,7 +22,7 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
         onConfirm: () => {
 
           if (authUser.is_authenticated) {
-            const params: AddCartParams = {
+            const params: CartParams = {
               user_id: authUser.user_info?.user_id,
               cart_item: item
             }
@@ -41,12 +43,26 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
     }
   }
 
-  const handleQuantityChange = (item: CartItem, action: string) => {
+  const handleQuantityChange = async(item: CartItem, action: string) => {
     if (action === 'decrease') {
-      dispatch(decrementQuantity(item));
       if(authUser.is_authenticated){
-         //TODO: add login for authenticated user to send updates to backend       
+        const itemToUpdate = cartState.find((cartItem: CartItem) => cartItem.id === item.id );
+               
+        if (itemToUpdate && itemToUpdate.quantity > 1) {
+          let objCopy = { ...itemToUpdate };
+          objCopy.quantity -= 1;
+          const update = await api.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart`,{
+            user_id: authUser.user_info?.user_id,
+            cart_item: objCopy 
+          });
+        
+          if(update.status == 200){
+            dispatch(getCartApi(authUser.user_info?.user_id));  
+          } 
+        }
+       
       }else{
+        dispatch(decrementQuantity(item));
         let cartSession = JSON.parse(sessionStorage.getItem('cart')!);
         const itemToUpdate: CartItem = cartSession.find((cartItem: CartItem) => cartItem.id == item.id);
         if (itemToUpdate && itemToUpdate.quantity > 1) {
@@ -65,20 +81,36 @@ const CartItemRow: FC<{ item: CartItem, index: number }> = ({ item, index }) => 
     }
 
     if (action === 'increase') {
-      dispatch(incrementQuantity(item));
-      let cartSession = JSON.parse(sessionStorage.getItem('cart')!);
-      const itemToUpdate: CartItem = cartSession.find((cartItem: CartItem) => cartItem.id == item.id);
-      if (itemToUpdate) {
-        itemToUpdate.quantity += 1;
-      }
-      let updatedCart: Array<CartItem> = [];
-      updatedCart.push(itemToUpdate);
-      cartSession.map((cartItem: CartItem) => {
-        if (cartItem.id !== itemToUpdate.id) {
-          updatedCart.push(cartItem);
+      if(authUser.is_authenticated){
+        const itemToUpdate = cartState.find((cartItem: CartItem) => cartItem.id === item.id );
+        if (itemToUpdate) {
+          let objCopy = { ...itemToUpdate };
+          objCopy.quantity += 1;
+          const update = await api.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart`,{
+            user_id: authUser.user_info?.user_id,
+            cart_item: objCopy 
+          });
+        
+          if(update.status == 200){
+            dispatch(getCartApi(authUser.user_info?.user_id));  
+          } 
+        }      
+      }else{
+        dispatch(incrementQuantity(item));
+        let cartSession = JSON.parse(sessionStorage.getItem('cart')!);
+        const itemToUpdate: CartItem = cartSession.find((cartItem: CartItem) => cartItem.id == item.id);
+        if (itemToUpdate) {
+          itemToUpdate.quantity += 1;
         }
-      })
-      sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+        let updatedCart: Array<CartItem> = [];
+        updatedCart.push(itemToUpdate);
+        cartSession.map((cartItem: CartItem) => {
+          if (cartItem.id !== itemToUpdate.id) {
+            updatedCart.push(cartItem);
+          }
+        })
+        sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+      }
     }
 
   }

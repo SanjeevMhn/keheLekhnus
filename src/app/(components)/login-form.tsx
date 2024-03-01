@@ -74,14 +74,14 @@ const LoginForm = () => {
                 }))
                 
                 window.location.reload();
-                const userDataConfig: AxiosRequestConfig = {
+                /*const userDataConfig: AxiosRequestConfig = {
                     method: 'get',
                     url: `${baseUrl}/auth/me`,
                     headers: {
                         'authorization': `Bearer ${token}`
                     },
                     withCredentials: true
-                }
+                }*/
 
                 /*const userDataRes = await api.get(`${baseUrl}/auth/me`);
                 if (userDataRes.status == 200) {
