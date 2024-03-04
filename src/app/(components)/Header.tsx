@@ -104,6 +104,8 @@ export default function Header() {
         user_email: checkUserRes.user[0].user_email,
         user_img: checkUserRes.user[0].user_img,
         authProvider: checkUserRes.user[0].authProvider,
+        user_contact: checkUserRes.user[0].user_contact,
+        user_address: checkUserRes.user[0].user_address,
         is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false,
       }))
 
@@ -217,7 +219,11 @@ export default function Header() {
                     </svg>
                   </span>
                   <ul className="dropdown-list">
-                    <li className="dropdown-item">Profile</li>
+                    <li className="dropdown-item">
+                      <Link href="/profile/" className="flex">
+                        Profile
+                      </Link>
+                    </li>
                     <li className="dropdown-item">Settings</li>
                     <li className="dropdown-item" onClick={handleLogout}>Logout</li>
                   </ul>

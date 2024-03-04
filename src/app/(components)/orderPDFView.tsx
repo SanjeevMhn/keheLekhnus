@@ -64,7 +64,7 @@ const OrderPDFView = () => {
 						</svg>
 					</button>
 					<div className="company-detail text-center pb-[30px]">
-						<h2 className="brand-name">Sanu's Nursery</h2>
+						<h2 className="brand-name">Sanu&apos;s Nursery</h2>
 						<p className="address">Dhapakhel-24, Lalitpur</p>
 					</div>
 					<div className="form-layout h-auto no-border no-shadow pb-[20px] order-detail-form">

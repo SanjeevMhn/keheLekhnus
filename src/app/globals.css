@@ -207,10 +207,11 @@ body {
     overflow-y: auto;
     flex-direction: row;
   }
-  
-  
 }
-
+.entry-form-container.row{
+  flex-direction: column!important;
+  overflow-y: auto;
+}
 
 .entry-form-container .product-img-container .upload-img-msg {
     background-color: #005bccab;
@@ -230,7 +231,7 @@ body {
 }
 
 .entry-form-container .product-img-container .img-container {
-    /* background-color: #005bccab; */
+    background-color: #005bccab;
     width: 100%;
     height: 100%;
     border-radius: 15px;
@@ -238,12 +239,13 @@ body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border: 1px solid var(--card-color);
 }
 
 .entry-form-container .product-img-container img {
     height: 100%;
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .checkbox-container{

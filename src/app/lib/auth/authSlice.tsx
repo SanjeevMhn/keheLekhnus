@@ -6,6 +6,8 @@ export type TUserInfo = {
     user_name: string | null | undefined,
     user_email: string | null | undefined,
     user_img?: string | null | undefined,
+    user_contact?: string | null | undefined,
+    user_address?: string | null | undefined,
     authProvider: string | null | undefined,
     is_admin: boolean
 }

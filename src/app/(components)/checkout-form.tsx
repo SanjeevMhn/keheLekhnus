@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { CartItem, clearCart } from "../lib/cart/cartSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import { showPDFViewer } from "../lib/pdfView/pdfViewSlice";
+import { TAuthState } from "../lib/auth/authSlice";
 
 type PaymentType = 'cash' | 'esewa' | 'khalti' | 'default'; 
 
@@ -48,6 +49,7 @@ const CheckoutForm = () => {
         user_address: null,
         payment_type: null
     });
+    const authUser:TAuthState = useSelector((state: any) => state.auth);
 
     useEffect(() => {
         if (!paymentTypesFetched.current) {
@@ -226,7 +228,7 @@ const CheckoutForm = () => {
         let date = new Date();
         let orderDate = `${date.getFullYear()}-${(1 + date.getMonth()).toString()}-${date.getDate().toString().padStart(2, '0')}`;
         let orderTotal = cart.reduce((acc: number, data: CartItem) => {
-            return acc + data.total;
+            return acc + (Number(data.price) * data.quantity);
         }, 0)
 
 
