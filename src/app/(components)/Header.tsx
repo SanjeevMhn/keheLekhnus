@@ -219,11 +219,16 @@ export default function Header() {
                     </svg>
                   </span>
                   <ul className="dropdown-list">
-                    <li className="dropdown-item">
-                      <Link href="/profile/" className="flex">
-                        Profile
-                      </Link>
-                    </li>
+                    {
+                      !authUser.user_info.is_admin ? (
+                        <li className="dropdown-item">
+                          <Link href="/profile/" className="flex">
+                            Profile
+                          </Link>
+                        </li>
+                      ) : null
+                    }
+
                     <li className="dropdown-item">Settings</li>
                     <li className="dropdown-item" onClick={handleLogout}>Logout</li>
                   </ul>
@@ -255,7 +260,7 @@ export default function Header() {
         {
           showSideMenu ? authUser.user_info?.is_admin ? (
             <div className="resp-view">
-              <SideNav 
+              <SideNav
                 showSideMenu={showSideMenu}
                 setShowSideMenu={setShowSideMenu}
                 authUser={authUser}

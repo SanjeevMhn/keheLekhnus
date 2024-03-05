@@ -1,7 +1,7 @@
 'use client'
 
 import { useDispatch, useSelector } from "react-redux"
-import { TAuthState } from "../lib/auth/authSlice"
+import { TAuthState, setUserData } from "../lib/auth/authSlice"
 import BreadCrumb, { TBreadCrumb } from "../(components)/breadcrumb";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { showNotification } from "../lib/notifications/notificationSlice";
@@ -38,21 +38,21 @@ export default function Page() {
     user_address?: string
   }
 
-  const [userProfileUpdate, setUserprofileUpdate]= useState<ProfileUpdate>({});
+  const [userProfileUpdate, setUserprofileUpdate] = useState<ProfileUpdate>({});
 
-  const handleProfileChange = (e:ChangeEvent<HTMLInputElement>) => {
-    if(e.target.value !== null || !e.target.value){
+  const handleProfileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value !== null || !e.target.value) {
       let update = {
         [e.target.name]: e.target.value
       }
-      setUserprofileUpdate({...userProfileUpdate, ...update})
+      setUserprofileUpdate({ ...userProfileUpdate, ...update })
     }
   }
 
   const dispatch = useDispatch<any>();
-  const handleFormSubmit = async (e:FormEvent) => {
+  const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if(Object.keys(userProfileUpdate).length == 0){
+    if (Object.keys(userProfileUpdate).length == 0) {
       dispatch(showNotification({
         message: 'No updates found!',
         type: 'error'
@@ -61,16 +61,27 @@ export default function Page() {
       return;
     }
 
-    try{
+    try {
       const update = await api.patch(`${process.env.NEXT_PUBLIC_API_URL}/user/${authUser.user_info?.user_id}`, userProfileUpdate);
-      if(update.status == 200){
+      if (update.status == 200) {
         dispatch(showNotification({
           message: "User data updated successfully",
           type: "success"
         }))
-        window.location.reload();
+        const checkUserReq = await api.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`);
+        const checkUserRes = checkUserReq.data;
+        dispatch(setUserData({
+          user_id: checkUserRes.user[0].user_id,
+          user_name: checkUserRes.user[0].user_name,
+          user_email: checkUserRes.user[0].user_email,
+          user_img: checkUserRes.user[0].user_img,
+          authProvider: checkUserRes.user[0].authProvider,
+          user_contact: checkUserRes.user[0].user_contact,
+          user_address: checkUserRes.user[0].user_address,
+          is_admin: checkUserRes.user[0].user_role == 'admin' ? true : false,
+        }))
       }
-    }catch(err: any){
+    } catch (err: any) {
       console.error(err);
     }
   }
@@ -84,7 +95,7 @@ export default function Page() {
           <BreadCrumb crumbs={crumbs} />
         </div>
         <div className="entry-form-container row">
-          <div className="product-img-container">
+          <div className="product-img-container !h-[330px] !max-w-[350px]">
             {
               authUser.user_info?.user_img !== null ? (
                 <div className="img-container">
@@ -112,17 +123,17 @@ export default function Page() {
                 </div>
                 <div className="form-group">
                   <label htmlFor="email" className="form-label">Email</label>
-                  <input type="email" name="user_email" id="email" className="form-control" defaultValue={authUser.user_info?.user_email || ''} onChange={handleProfileChange}  />
+                  <input type="email" name="user_email" id="email" className="form-control" defaultValue={authUser.user_info?.user_email || ''} onChange={handleProfileChange} />
                 </div>
               </div>
               <div className="form-row two-col">
                 <div className="form-group">
                   <label htmlFor="contact" className="form-label">Contact</label>
-                  <input type="text" name="user_contact" id="contact" className="form-control" defaultValue={authUser.user_info?.user_contact || ''} placeholder="Contact" onChange={handleProfileChange}  />
+                  <input type="text" name="user_contact" id="contact" className="form-control" defaultValue={authUser.user_info?.user_contact || ''} placeholder="Contact" onChange={handleProfileChange} />
                 </div>
                 <div className="form-group">
                   <label htmlFor="address" className="form-label">Address</label>
-                  <input type="text" name="user_address" id="address" className="form-control" defaultValue={authUser.user_info?.user_address || ''} placeholder="Address" onChange={handleProfileChange}  />
+                  <input type="text" name="user_address" id="address" className="form-control" defaultValue={authUser.user_info?.user_address || ''} placeholder="Address" onChange={handleProfileChange} />
                 </div>
               </div>
               <div className="form-row two-col">
