@@ -123,7 +123,7 @@ export default function Page() {
                 </div>
                 <div className="form-group">
                   <label htmlFor="email" className="form-label">Email</label>
-                  <input type="email" name="user_email" id="email" className="form-control" defaultValue={authUser.user_info?.user_email || ''} onChange={handleProfileChange} />
+                  <input type="email" name="user_email" id="email" className="form-control" defaultValue={authUser.user_info?.user_email || ''} onChange={handleProfileChange} readOnly={authUser.user_info?.authProvider === 'google' ? true : false} />
                 </div>
               </div>
               <div className="form-row two-col">

@@ -13,7 +13,7 @@ const OrderPDFView = () => {
 
 	const productTotal = (): number | undefined => {
 		let total = view?.order_products?.reduce((acc: number, product: CartItem) => {
-			return acc + product.total
+			return acc + (Number(product.price) * product.quantity)
 		}, 0);
 
 		return total
@@ -113,7 +113,7 @@ const OrderPDFView = () => {
 										<td>{product.name}</td>
 										<td>{product.quantity}</td>
 										<td>{product.price}</td>
-										<td>{product.total}</td>
+										<td>{Number(product.price) * product.quantity}</td>
 									</tr>
 								))
 							}	
