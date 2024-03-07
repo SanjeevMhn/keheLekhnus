@@ -102,7 +102,7 @@ const SideNav: FC<SideNavProps> = ({ authUser, showSideMenu, setShowSideMenu, ha
                                     </svg>
                                 </span>
                                 <ul className="dropdown-list">
-                                    <li className="dropdown-item">Profile</li>
+                                    {/* <li className="dropdown-item">Profile</li> */}
                                     <li className="dropdown-item">Settings</li>
                                     <li className="dropdown-item" onClick={handleLogout}>Logout</li>
                                 </ul>
