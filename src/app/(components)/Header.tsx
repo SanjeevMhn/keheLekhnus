@@ -16,7 +16,7 @@ import AdminNotify from "./admin-notify";
 import ResponsiveNav from "./responsive-nav";
 import SideNav from "./sidenav";
 import { googleLogout } from "@react-oauth/google";
-import { CartItem, getCartApi, sessionCart } from "../lib/cart/cartSlice";
+import { CartItem, CartParams, addToCartApi, getCartApi, sessionCart } from "../lib/cart/cartSlice";
 
 export default function Header() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -111,7 +111,25 @@ export default function Header() {
 
 
       if (checkUserRes.user[0].user_role !== 'admin') {
+
         dispatch(getCartApi(checkUserRes.user[0].user_id));
+
+        //if user adds items to cart and then logs in all the items in session will be added to db // 
+        let memoryCart = sessionStorage.getItem('cart');
+        if (memoryCart !== null) {
+
+          let cart: Array<CartItem> = JSON.parse(memoryCart);
+          if (cart.length !== 0) {
+
+            cart.map((mc: CartItem) => {
+              let cartParams: CartParams = {
+                user_id: checkUserRes.user[0].user_id,
+                cart_item: mc
+              }
+              dispatch(addToCartApi(cartParams))
+            })
+          }
+        }
       } else {
         let memoryCart: Array<CartItem> = JSON.parse(sessionStorage.getItem('cart')!);
         if (memoryCart.length > 0) {

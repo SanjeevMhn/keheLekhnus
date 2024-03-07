@@ -8,7 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { CartItem, clearCart, getCartApi } from "../lib/cart/cartSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
 import { showPDFViewer } from "../lib/pdfView/pdfViewSlice";
-import { TAuthState } from "../lib/auth/authSlice";
+import { TAuthState, login } from "../lib/auth/authSlice";
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 type PaymentType = 'cash' | 'esewa' | 'khalti' | 'default';
 
@@ -223,6 +225,30 @@ const CheckoutForm = () => {
     }
   }
 
+  const onGoogleLogin = async (response: GoogleCredentialResponse) => {
+    try {
+      const auth = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/google-auth`, {
+        token: response.credential,
+        client_id: response.clientId
+      });
+      const authData = auth.data;
+      dispatch(login(authData.accessToken));
+      sessionStorage.setItem('google-token', authData.accessToken);
+      dispatch(hideDialog);
+      dispatch(showNotification({
+        message: 'User logged in successfully',
+        type: 'success'
+      }));
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const onGoogleError = () => {
+
+  }
+
   const handleCheckoutFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     let errCount = 0;
@@ -324,8 +350,10 @@ const CheckoutForm = () => {
       {
         !authUser.is_authenticated ? (
           <div className="third-party-login flex justify-center gap-2 pb-[20px] mb-[10px] w-full flex-wrap border-b-2 border-[var(--card-color)]">
-            <button className="btn-primary" onClick={() => { handleOpenLogin() }}>Login</button>
-            <button className="btn-outline-md">Signup</button>
+            {/*<button className="btn-primary" onClick={() => { handleOpenLogin() }}>Login</button>
+            <button className="btn-outline-md">Signup</button>*/}
+
+            <GoogleLogin onSuccess={onGoogleLogin} onError={onGoogleError} />
           </div>
         ) : null
       }
