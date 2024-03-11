@@ -239,11 +239,18 @@ export default function Header() {
                   <ul className="dropdown-list">
                     {
                       !authUser.user_info.is_admin ? (
-                        <li className="dropdown-item">
-                          <Link href="/profile/" className="flex">
-                            Profile
-                          </Link>
-                        </li>
+                        <>
+                          <li className="dropdown-item">
+                            <Link href="/profile/" className="flex">
+                              Profile
+                            </Link>
+                          </li>
+                          <li className="dropdown-item">
+                            <Link href="/order-history" className="flex">
+                              Order History
+                            </Link>
+                          </li>                  
+                        </>
                       ) : null
                     }
 

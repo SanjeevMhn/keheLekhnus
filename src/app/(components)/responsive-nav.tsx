@@ -42,7 +42,11 @@ const ResponsiveNav: FC<ResponsiveNavProps> = ({ authUser, pathName, handleLogou
                                                 Profile
                                             </Link>
                                         </li>
-                                        <li className="dropdown-item">Settings</li>
+                                        <li className="dropdown-item">
+                                            <Link href="/order-history" className="flex flex-1" onClick={() => setShowSideMenu(false)}>
+                                                Order History
+                                            </Link>
+                                        </li>
                                         <li className="dropdown-item" onClick={handleLogout}>Logout</li>
                                     </ul>
                                 </button>

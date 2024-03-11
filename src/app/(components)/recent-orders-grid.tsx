@@ -12,12 +12,13 @@ type RecectOrdersGridProps = {
     propPagerConfig?: PagerConfig,
     propData?: any,
     propStatus?: any,
+    propTitle?: any,
     customElement?: any,
     propColumns?: Array<Columns>,
     onPropPaginate: (page: number) => void
 }
 
-const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData, customElement, propColumns, propStatus, onPropPaginate }) => {
+const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData, customElement, propColumns, propStatus,propTitle, onPropPaginate }) => {
     
     const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const [orders, setOrders] = useState<Array<any>>([]);
@@ -140,7 +141,7 @@ const RecentOrdersGrid: FC<RecectOrdersGridProps> = ({ propPagerConfig, propData
         <DataTable
             columns={propColumns && propColumns.length !== 0 ? propColumns : columns}
             data={propData && propData.length !== 0 ? propData : orders}
-            title='Recent Orders'
+            title={propTitle ? propTitle : 'Recent Orders'}
             customElement={customElement}
             pagerConfig={propPagerConfig ? propPagerConfig : pagerConfig}
             onPaginate={handlePaginate}
