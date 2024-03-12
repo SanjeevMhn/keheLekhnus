@@ -260,16 +260,28 @@ body {
 }
 
 .order-history-container .order-history-item:first-child{
-  border-top: 1px solid var(--card-color); 
+  border: 1px solid var(--card-color); 
+  border-radius: 5px 5px 0 0;
 }
 
 .order-history-container .order-history-item{
-  border-bottom: 1px solid var(--card-color); 
+  border: 1px solid var(--card-color); 
+  border-width: 0 1px 1px 1px;
+}
+
+.order-history-container .order-history-item:last-child{
+  border-radius: 0 0 5px 5px;
+}
+
+.order-history-container .order-history-item.active .order-history-details{
+  background-color: var(--card-color);
+  color: var(--base-color);  
+  fill: var(--base-color);
 }
 
 .order-history-details{
   display: grid;
-  grid-template-columns: 1fr 1fr 50px; 
+  grid-template-columns: 1fr 150px 50px; 
   align-items: center;
 }
 
@@ -286,9 +298,6 @@ body {
 .order-history-details .status{
   grid-row: 1  / span 2;
   grid-column: 2;
-  max-width: 200px;
-  min-width: 150px;
-  justify-self: end;
 }
 
 .order-history-details .icon-container{
