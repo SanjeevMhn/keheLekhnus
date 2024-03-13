@@ -321,6 +321,11 @@ body {
 .order-history-item.active .order-history-details .cancel-order svg{
   fill: #fff;
 }
+
+.order-history-item.active .order-history-details .status{
+  outline: 2px solid var(--base-color);
+}
+
 .order-history-details .show-table{
   grid-row: 1 / span 2;
   grid-column: 4;
