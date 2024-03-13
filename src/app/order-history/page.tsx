@@ -80,7 +80,7 @@ export default function Page() {
   const gridCol: Array<Columns> = [
     {
       title: 'id',
-      field: 'prod_id',
+      field: 'order_detail_id',
       hidden: true,
     },
     {
@@ -111,7 +111,7 @@ export default function Page() {
       message: 'Do you want to cancel this order?',
       onConfirm: async () => {
         try {
-          const response = await api.patch(`${process.env.NEXT_PUBLIC_API_URL}/orders/id/${orderId}`,{
+          const response = await api.patch(`${process.env.NEXT_PUBLIC_API_URL}/orders/id/${orderId}`, {
             order_status: 'CANCELLED'
           });
           if (response.status == 200) {
@@ -128,6 +128,38 @@ export default function Page() {
     }))
   }
 
+  const handleOrderItemDelete = (id: any) => {
+    dispatch(showConfirm({
+      message: 'Delete this item from your order?',
+      onConfirm: async () => {
+        try {
+          const response = await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/orders/order_detail/${id}`);
+          if (response.status == 200) {
+            dispatch(showNotification({
+              message: 'Item deleted from order successfully',
+              type: 'success'
+            }))
+            if (orderItems.length > 1 && orderActive) {
+              getOrderItems(orderActive)
+            } else {
+              const response = await api.patch(`${process.env.NEXT_PUBLIC_API_URL}/orders/id/${orderActive}`, {
+                order_status: 'CANCELLED'
+              });
+              if (response.status == 200) {
+                setOrderActive(null)
+                getOrderHistory()
+              }
+            }
+
+          }
+        } catch (err: any) {
+          console.error(err)
+        }
+      }
+    }))
+  }
+
+
   return (
     <div className="main-wrapper px-5 lg:px-0">
       <BreadCrumb crumbs={crumbs} />
@@ -143,6 +175,7 @@ export default function Page() {
             <Link href={`/products/`} className="btn go-to-shopping">
               continue shopping
             </Link>
+            <p className="info-text-sm px-4 text-center text-base">(Cancelled orders will be deleted from orders history)</p>
           </div>) : (
           <section className="pt-[15px] order-history-container">
             {
@@ -183,6 +216,7 @@ export default function Page() {
                         pagerConfig={pagerConfig}
                         columns={gridCol}
                         showActionCol={ord.order_status === 'CANCELLED' || ord.order_status === 'COMPLETED' ? false : true}
+                        onDeleteAction={handleOrderItemDelete}
                       />
                     ) : null
                   }

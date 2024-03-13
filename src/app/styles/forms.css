@@ -186,6 +186,11 @@ textarea.form-control{
 		width: 100%;
 	}
 
+	.form-layout .form-row.two-col>*:only-child>*,
+	.form-layout .form-row.three-col>*:only-child>*,
+	.form-layout .form-row.four-col>*:only-child>* {
+		width: 96%;
+	}	
 	
 	.form-layout .form-row.two-col>* {
 		flex: 0 0 calc(100% / 2);
