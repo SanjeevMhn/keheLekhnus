@@ -27,11 +27,11 @@ export default function Page() {
   }, [authUser.user_info])
 
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (dialogState.result) {
       getOrderItems(orderActive!)
     }
-  },[dialogState.result])
+  }, [dialogState.result])*/
 
   const getOrderHistory = async () => {
     try {
@@ -140,16 +140,16 @@ export default function Page() {
     }))
   }
 
-  const handleOrderItemEdit = (id: any) => {
+  /*const handleOrderItemEdit = (id: any) => {
     const item = orderItems.find((ot: any) => ot.order_detail_id == id);
     dispatch(showDialog({
       title: 'Order Item Detail',
       component: OrderItemDetail,
       data: item
     }));
-  }
+  }*/
 
-  const handleOrderItemDelete = (id: any) => {
+  /*const handleOrderItemDelete = (id: any) => {
     dispatch(showConfirm({
       message: 'Delete this item from your order?',
       onConfirm: async () => {
@@ -178,7 +178,7 @@ export default function Page() {
         }
       }
     }))
-  }
+  }*/
 
 
   return (
@@ -244,9 +244,7 @@ export default function Page() {
                         data={orderItems}
                         pagerConfig={pagerConfig}
                         columns={gridCol}
-                        showActionCol={ord.order_status === 'CANCELLED' || ord.order_status === 'COMPLETED' ? false : true}
-                        onDeleteAction={handleOrderItemDelete}
-                        onEditAction={handleOrderItemEdit}
+                        showActionCol={false}
                       />
                     ) : null
                   }

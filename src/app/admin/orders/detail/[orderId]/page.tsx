@@ -254,7 +254,9 @@ export default function Page({ params }: { params: { orderId: number } }) {
 								title='Order Items List'
 								data={orderDetail.orderItems}
 								columns={gridCol}
-								pagerConfig={pagerConfig} />
+								pagerConfig={pagerConfig}
+								showActionCol={false}
+							 />
 						) : null
 					}
 				</div>
