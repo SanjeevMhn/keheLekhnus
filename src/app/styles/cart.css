@@ -67,12 +67,12 @@
     font-weight: 500;
 }
 
-.cart-table tbody tr td .product-quantity{
+.product-quantity{
     display: flex;
     align-items: center;
 }
 
-.cart-table tbody tr td .product-quantity > *{
+ .product-quantity > *{
     height: 30px;
     width: 30px;
     display: flex;
@@ -80,28 +80,29 @@
     justify-content: center;
 }
 
-.cart-table tbody tr td .product-quantity .btn{
+.product-quantity .btn{
     background-color: var(--card-color);
     border: 1px solid var(--card-color);
 }
 
-.cart-table tbody tr td .product-quantity .btn.minus{
+.product-quantity .btn.minus{
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
 
-.cart-table tbody tr td .product-quantity .btn.plus{
+.product-quantity .btn.plus{
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-.cart-table tbody tr td .product-quantity .btn svg{
+.product-quantity .btn svg{
     fill: var(--base-color);
 }
 
-.cart-table tbody tr td .product-quantity input{
+.product-quantity input{
     border: 1px solid var(--card-color);
     border-width: 1px 0 1px 0;
+    width: 55px;
 }
 
 .cart-table tbody tr td .remove-btn{

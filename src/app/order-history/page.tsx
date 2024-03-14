@@ -9,12 +9,15 @@ import DataTable, { Columns, PagerConfig } from "../(components)/data-table";
 import Link from "next/link";
 import { showConfirm } from "../lib/confirmation/confirmationSlice";
 import { showNotification } from "../lib/notifications/notificationSlice";
+import { DialogState, showDialog } from "../lib/dialog/dialogSlice";
+import OrderItemDetail from "../(components)/order-item-detail";
 
 export default function Page() {
 
   const orderHistoryFetched = useRef<boolean>(false);
   const authUser: TAuthState = useSelector((state: any) => state.auth);
   const [orders, setOrders] = useState<Array<any>>([]);
+  const dialogState: DialogState = useSelector((state: any) => state.dialog);
 
   useEffect(() => {
     if (authUser.user_info !== null) {
@@ -22,6 +25,13 @@ export default function Page() {
     }
 
   }, [authUser.user_info])
+
+
+  useEffect(() => {
+    if (dialogState.result) {
+      getOrderItems(orderActive!)
+    }
+  },[dialogState.result])
 
   const getOrderHistory = async () => {
     try {
@@ -51,11 +61,13 @@ export default function Page() {
       getOrderItems(id);
     } else if (orderActive == id) {
       setOrderActive(null);
+      setOrderItems([]);
     } else if (orderActive !== id) {
       setOrderActive(id);
       getOrderItems(id);
     } else {
       setOrderActive(null);
+      setOrderItems([]);
     }
   }
 
@@ -128,6 +140,15 @@ export default function Page() {
     }))
   }
 
+  const handleOrderItemEdit = (id: any) => {
+    const item = orderItems.find((ot: any) => ot.order_detail_id == id);
+    dispatch(showDialog({
+      title: 'Order Item Detail',
+      component: OrderItemDetail,
+      data: item
+    }));
+  }
+
   const handleOrderItemDelete = (id: any) => {
     dispatch(showConfirm({
       message: 'Delete this item from your order?',
@@ -188,6 +209,14 @@ export default function Page() {
                     <div className="order-date">
                       <span className="font-semibold">Order Date</span>: &nbsp;{ord.order_date}
                     </div>
+
+                    {
+                      orderItems.length !== 0 ? (
+                        <div className="order-total">
+                          <span className="font-semibold">Order Total</span>: &nbsp;{orderItems.reduce((previous: any, it: any) => previous + (it.prod_price * it.prod_quantity), 0)}
+                        </div>
+                      ) : null
+                    }
                     {
                       ord.order_status === 'PENDING' ? (
                         <button className="icon-container cancel-order" onClick={() => handleCancelOrder(ord.order_id)}>
@@ -217,6 +246,7 @@ export default function Page() {
                         columns={gridCol}
                         showActionCol={ord.order_status === 'CANCELLED' || ord.order_status === 'COMPLETED' ? false : true}
                         onDeleteAction={handleOrderItemDelete}
+                        onEditAction={handleOrderItemEdit}
                       />
                     ) : null
                   }
