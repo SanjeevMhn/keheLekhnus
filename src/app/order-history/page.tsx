@@ -274,10 +274,11 @@ export default function Page() {
             <section className="pt-[15px] order-history-container">
               {
                 tabActive !== 'all'
-                ? orders.filter((ord: any) => ord.order_status.toLowerCase() === tabActive)
-                  .map((fil: any, index: any) => (
+                ? orders.filter((ord: any) => ord.order_status.toLowerCase() === tabActive).length > 0 
+                  ? orders.filter((ord: any) => ord.order_status.toLowerCase() === tabActive).map((fil: any, index: any) => (
                     <OrderHistoryItem ord={fil} key={index} />
-                  ))
+                  )) 
+                  : (<h2 className="text-xl">No {tabActive} orders </h2>)
                 : orders.map((ord: any, index: any) => (
                   <OrderHistoryItem ord={ord} key={index} />
                 ))

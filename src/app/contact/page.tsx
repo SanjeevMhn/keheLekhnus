@@ -1,5 +1,19 @@
+import BreadCrumb, { TBreadCrumb } from "../(components)/breadcrumb"
+
 export default function Page() {
+  const crumbs: Array<TBreadCrumb> = [
+    {
+      link: '/',
+      name: 'home'
+    },
+    {
+      link: '/contact',
+      name: 'contact'
+    }
+  ]
   return (
-    <h2>Login Page</h2>
+    <div className="main-wrapper">
+      <BreadCrumb crumbs={crumbs} />
+    </div>
   )
 }

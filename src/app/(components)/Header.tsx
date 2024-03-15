@@ -128,6 +128,7 @@ export default function Header() {
               }
               dispatch(addToCartApi(cartParams))
             })
+            sessionStorage.removeItem('cart');
           }
         }
       } else {
