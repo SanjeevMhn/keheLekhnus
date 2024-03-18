@@ -271,7 +271,7 @@ export default function Page() {
               }
 
             </div>
-            <section className="pt-[15px] order-history-container">
+            <section className="pt-[15px] pb-[35px] order-history-container">
               {
                 tabActive !== 'all'
                 ? orders.filter((ord: any) => ord.order_status.toLowerCase() === tabActive).length > 0 
