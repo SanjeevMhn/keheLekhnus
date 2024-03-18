@@ -34,7 +34,7 @@ const AdminNotify: FC = () => {
             fetchNotifications();
         }
 
-        const socket = io(`${baseUrl}`);
+        const socket = io(`${process.env.NEXT_PUBLIC_URL}`);
 
         socket.on('orderAdded', fetchNotifications);
 
