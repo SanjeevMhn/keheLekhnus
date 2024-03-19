@@ -20,7 +20,7 @@ type SideNavProps = {
 
 
 const SideNav: FC<SideNavProps> = ({ authUser, showSideMenu, setShowSideMenu, handleLogout }) => {
-    const [productActive, setProductActive] = useState<boolean>(false);
+    const [productActive, setProductActive] = useState<boolean>(true);
     const menuList: Array<TMenuItem> = [
         {
             name: 'dashboard',
