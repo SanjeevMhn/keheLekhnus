@@ -35,7 +35,7 @@ const Dialog = () => {
     return (
         state?.show ? (
             <div className="confirmation-overlay">
-                <div className="dialog confirmation-box">
+                <div className={`dialog confirmation-box ${state.size}`}>
                     <div className="confirm-header">
                         <h2 className="title">{state.title}</h2>
                         <button className="close-btn" onClick={() => handleHideDialog()}>

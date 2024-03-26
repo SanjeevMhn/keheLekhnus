@@ -2,7 +2,9 @@
 
 import BreadCrumb, { TBreadCrumb } from "@/app/(components)/breadcrumb"
 import DataTable, { Columns, PagerConfig } from "@/app/(components)/data-table"
+import UserDetail from "@/app/(components)/user-detail";
 import { showConfirm } from "@/app/lib/confirmation/confirmationSlice";
+import { showDialog } from "@/app/lib/dialog/dialogSlice";
 import { showNotification } from "@/app/lib/notifications/notificationSlice";
 import api from "@/app/service/interceptor/interceptor";
 import { useEffect, useRef, useState } from "react"
@@ -96,6 +98,16 @@ export default function Page() {
         }))
     }
 
+    const handleEdit = (id: number) => {
+        const filteredUser = users.filter((user: any) => user.user_id == id);
+        dispatch(showDialog({
+            title: 'User Detail',
+            component: UserDetail,
+            size: 'lg',
+            data: filteredUser[0]
+        }));
+    }
+
     return (
         <div className="grid-container">
             <div className="header">
@@ -107,7 +119,8 @@ export default function Page() {
                 data={users} 
                 pagerConfig={pagerConfig}
                 onPaginate={handlePagination}
-                onDeleteAction={handleDelete} />
+                onDeleteAction={handleDelete}
+                onEditAction={handleEdit} />
         </div>
     )
 }

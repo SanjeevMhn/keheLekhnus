@@ -367,3 +367,29 @@ body {
     grid-column: 1 / span 2;
   }
 }
+
+.tabs{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+.tabs .tab-item{
+  cursor: pointer;
+  padding: 5px;
+  font-size: 17.5px;
+  position: relative;
+  text-transform: capitalize;
+}
+
+.tabs .tab-item.active::after{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  width: 100%;
+  height: 4px; 
+  background-color: var(--card-color);
+}
