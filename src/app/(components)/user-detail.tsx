@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import api from "../service/interceptor/interceptor";
 import { useDispatch, useSelector } from "react-redux";
 import DataTable, { Columns, PagerConfig } from "./data-table";
@@ -11,13 +11,18 @@ const UserDetail: FC = () => {
 	const [orders, setOrders] = useState<Array<any>>([]);
 	const user = useSelector((state: any) => state.dialog);
 	const dispatch = useDispatch<any>();
+	const orderHistoryFetched = useRef<boolean>(false);
 
 	useEffect(() => {
-		if (user.data !== null) {
-			console.log(user.data);
+		if(!orderHistoryFetched.current){
 			getOrderHistory();
 		}
-	}, [user.data])
+
+		return () => {
+			orderHistoryFetched.current = true;
+		}
+
+	}, [])
 
 	const getOrderHistory = async () => {
 		try {
@@ -84,6 +89,12 @@ const UserDetail: FC = () => {
 					</div>
 					<form className="form entry-form form-layout no-shadow !h-auto">
 						<div className="form-body !h-auto">
+						<div className="form-row two-col">
+							<div className="form-group">
+								<label htmlFor="joined-date" className="form-label">Joined Date</label>
+								<input type="text" name="joined_date" id="date" className="form-control" defaultValue={user.data?.created_at.split(' ')[0] || ''} readOnly />
+							</div>
+						</div>
 							<div className="form-row two-col">
 								<div className="form-group">
 									<label htmlFor="name" className="form-label">Name</label>
