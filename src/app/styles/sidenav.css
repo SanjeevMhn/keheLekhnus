@@ -90,7 +90,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 40px;
+    padding: 10px 25px;
     font-size: 18px;
     color: var(--base-color);
     text-transform: capitalize;
@@ -111,7 +111,7 @@
 
 .wrapper.has-sidenav .sidenav-container .sidenav-menulist .sub-menulist .list-item .list-link,
 .resp-view .sidenav-container .sidenav-menulist .sub-menulist .list-item .list-link {
-    padding-left: 70px;
+    padding-left: 55px;
 }
 
 .wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link:hover,
@@ -146,5 +146,15 @@
 
     .wrapper.has-sidenav .sidenav-container .user-btn-container {
         display: none;
+    }
+
+    .wrapper.has-sidenav .sidenav-container .sidenav-menulist .list-item .list-link,
+    .resp-view .sidenav-container .sidenav-menulist .list-item .list-link{
+        padding: 10px 40px;
+    }
+
+    .wrapper.has-sidenav .sidenav-container .sidenav-menulist .sub-menulist .list-item .list-link,
+    .resp-view .sidenav-container .sidenav-menulist .sub-menulist .list-item .list-link {
+        padding-left: 70px;
     }
 }
